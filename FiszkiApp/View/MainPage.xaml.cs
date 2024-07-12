@@ -10,6 +10,8 @@ namespace FiszkiApp
         {
             InitializeComponent();
             BindingContext = new MainViewModel();
+
+            Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
         }
 
         //private void OnCounterClicked(object sender, EventArgs e)

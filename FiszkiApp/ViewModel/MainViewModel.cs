@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Runtime.CompilerServices;
-
+using FiszkiApp;
 
 namespace FiszkiApp.ViewModel
 {
@@ -31,5 +30,8 @@ namespace FiszkiApp.ViewModel
 
             IsBusy = false;
         }
+
+        [RelayCommand]
+        Task NavigateToRegister() => Shell.Current.GoToAsync(nameof(RegisterPage));
     }
 }

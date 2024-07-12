@@ -45,6 +45,10 @@
                 Command="{Binding TapCommand}"
                 Text="Zaloguj się"  
                 HorizontalOptions="Center"/>
+            <Button                 
+                Command="{Binding NavigateToRegisterCommand}"
+                Text="Zarejestruj"
+                HorizontalOptions="Center"/>
         </VerticalStackLayout>
     </ScrollView>
 

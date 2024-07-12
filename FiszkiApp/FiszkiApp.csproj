@@ -57,6 +57,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="ViewModel\Class1.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
@@ -66,6 +70,15 @@
 	<ItemGroup>
 	  <Folder Include="NewFolder1\" />
 	  <Folder Include="NewFolder\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="View\NewPage1.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\RegisterPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>
