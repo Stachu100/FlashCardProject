@@ -9,13 +9,12 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace FiszkiApp.ViewModel
 {
-    public partial class RegisterViewModel : ObservableObject
+    public partial class RegisterViewModel : MainViewModel
     {
 
         [RelayCommand]
-        void RegisterAccept()
+        private void RegisterAccept()
         {
-
         }
     }
 }
