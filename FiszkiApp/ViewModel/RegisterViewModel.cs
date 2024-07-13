@@ -11,10 +11,22 @@ namespace FiszkiApp.ViewModel
 {
     public partial class RegisterViewModel : MainViewModel
     {
+        [ObservableProperty]
+        private string _userName;
+
+        [ObservableProperty]
+        private string _userPassword;
+
+        [ObservableProperty]
+        private string _userRepeatPassword;
+
+        [ObservableProperty]
+        private string _userEmail;
 
         [RelayCommand]
-        private void RegisterAccept()
+        public async void Register()
         {
+
         }
     }
 }

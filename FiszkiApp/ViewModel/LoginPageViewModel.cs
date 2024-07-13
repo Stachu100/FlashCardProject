@@ -16,7 +16,7 @@ namespace FiszkiApp.ViewModel
         [ObservableProperty]
         private string _password;
 
-        [RelayCommand]
+        [RelayCommand] // to jest  [ICommand] ale w aktualizacaji CommunityToolkit.Mvvm.Input (8.0.0-preview4 release notes.) zmienili nazwe
         public async void Login()
         {
 

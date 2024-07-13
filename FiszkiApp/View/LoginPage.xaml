@@ -32,7 +32,7 @@
             <Label Grid.Row="1" Text="Witaj!" HorizontalOptions="Center" FontSize="Title" FontAttributes="Bold" Padding="0" Margin="0"/>
             <Label Grid.Row="2" Text="Zaloguj się" HorizontalOptions="Center" FontSize="Subtitle"/>
 
-            <StackLayout Grid.Row="3" Orientation="Vertical" HorizontalOptions="FillAndExpand">
+            <StackLayout Grid.Row="3" Orientation="Vertical" HorizontalOptions="FillAndExpand" Spacing="10">
                 <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                         <Entry Text="{Binding UserName}" Placeholder="Nazwa" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
@@ -53,7 +53,12 @@
 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Margin="0,60,0,0" Padding="0">
                     <Label Text="Jesteś nowy?" TextColor="DarkGray" FontSize="Small"/>
-                    <Label Text="Zarejestruj się" TextColor="Black" FontAttributes="Bold" FontSize="Small"/>
+                    <Label Text="Zarejestruj się" TextColor="Black" FontAttributes="Bold" FontSize="Small">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Tapped="OnLabelTapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
                 </StackLayout>
             </StackLayout>
         </Grid>
