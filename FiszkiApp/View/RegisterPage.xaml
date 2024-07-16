@@ -3,14 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:FiszkiApp.ViewModel"
              x:DataType="viewmodel:RegisterViewModel"
-             x:Class="FiszkiApp.RegisterPage"
-             Title="RegisterPage">
+             x:Class="FiszkiApp.RegisterPage">
     <Grid BackgroundColor="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="220"/>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="50"/>
-        </Grid.RowDefinitions>
+
 
         <Grid RowSpacing="5" Grid.Row="1" Margin="20,20,20,0" HorizontalOptions="FillAndExpand">
             <Grid.RowDefinitions>
@@ -31,6 +26,21 @@
                 </Frame>
                 <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                        <Entry Text="{Binding UserFisrtName}" Placeholder="Imię" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
+                    </StackLayout>
+                </Frame>
+                <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                        <Entry Text="{Binding UserLastName}" Placeholder="Nazwisko" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
+                    </StackLayout>
+                </Frame>
+                <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                        <Entry Text="{Binding UserCountry}" Placeholder="Kraj pochodzenia" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
+                    </StackLayout>
+                </Frame>
+                <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                         <Entry Text="{Binding UserPassword}" Placeholder="Hasło" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
                     </StackLayout>
                 </Frame>
@@ -44,6 +54,8 @@
                         <Entry Text="{Binding UserEmail}" Placeholder="Email" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
                     </StackLayout>
                 </Frame>
+                
+                <Button Text="Wybierz avatar" FontAttributes="Bold" CornerRadius="30" WidthRequest="200" Margin="0,15,0,0" Command="{Binding RegisterCommand}"/>                
 
                 <Button Text="Zarejestruj się" FontAttributes="Bold" CornerRadius="30" WidthRequest="200" Margin="0,15,0,0" Command="{Binding RegisterCommand}"/>
 

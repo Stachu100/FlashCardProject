@@ -15,6 +15,15 @@ namespace FiszkiApp.ViewModel
         private string _userName;
 
         [ObservableProperty]
+        private string _UserFisrtName;
+
+        [ObservableProperty]
+        private string _UserLastName;
+
+        [ObservableProperty]
+        private string _UserCountry;
+
+        [ObservableProperty]
         private string _userPassword;
 
         [ObservableProperty]
@@ -22,6 +31,10 @@ namespace FiszkiApp.ViewModel
 
         [ObservableProperty]
         private string _userEmail;
+
+
+
+
 
         [RelayCommand]
         public async void Register()
