@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="FiszkiApp.LoginPage"
-             xmlns:local="clr-namespace:FiszkiApp.ViewModel"
+             xmlns:vm="clr-namespace:FiszkiApp.ViewModel"
+             x:DataType="vm:LoginPageViewModel"    
              Title="LoginPage"
              Shell.NavBarIsVisible="False">
-    
+
     <Grid BackgroundColor="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="220"/>
@@ -35,7 +37,15 @@
             <StackLayout Grid.Row="3" Orientation="Vertical" HorizontalOptions="FillAndExpand" Spacing="10">
                 <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                        <Entry Text="{Binding UserName}" Placeholder="Nazwa" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
+                        <Entry Text="{Binding UserName}" Placeholder="Nazwa" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0">
+                            <Entry.Behaviors>
+                                <toolkit:TextValidationBehavior 
+                                    x:Name="UserNameValidation"
+                                    Flags="ValidateOnValueChanged,ValidateOnAttaching"
+                                    MinimumLength="1"
+                                    MaximumLength="10" />                   
+                            </Entry.Behaviors>
+                        </Entry>
                     </StackLayout>
                 </Frame>
                 <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
@@ -49,7 +59,7 @@
                     <Label Text="Zapamiętaj mnie" TextColor="DarkGray" FontSize="Small" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                     <Label Text="Nie pamiętam hasła" TextColor="Black" FontAttributes="Bold" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                 </StackLayout>
-                <Button Text="Zaloguj się" FontAttributes="Bold" CornerRadius="30" WidthRequest="200" Margin="0,15,0,0" Command="{Binding LoginCommand}"/>
+                <Button Text="Zaloguj się" FontAttributes="Bold" CornerRadius="30" WidthRequest="200" Margin="0,15,0,0" Command="{Binding LoginCommandCommand}"/>
 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Margin="0,60,0,0" Padding="0">
                     <Label Text="Jesteś nowy? " TextColor="DarkGray" FontSize="Small"/>
