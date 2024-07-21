@@ -8,79 +8,45 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace FiszkiApp.ViewModel
 {
     public partial class RegisterViewModel : MainViewModel
     {
-        [ObservableProperty]
-        private string _userName;
 
-        [ObservableProperty]
-        private string _userFirstName;
+        private EntityClasses.User user;
 
-        [ObservableProperty]
-        private string _userLastName;
-
-        [ObservableProperty]
-        private string _userCountry;
-
-        [ObservableProperty]
-        private string _userPassword;
-
-        [ObservableProperty]
-        private string _userRepeatPassword;
-
-        [ObservableProperty]
-        private string _userEmail;
-
-        private readonly Dictionary<string, string> _userDetails;
 
         public RegisterViewModel()
         {
-            _userDetails = new Dictionary<string, string>
-            {
-                { nameof(UserName), _userName },
-                { nameof(UserFirstName), _userFirstName },
-                { nameof(UserLastName), _userLastName },
-                { nameof(UserCountry), _userCountry },
-                { nameof(UserPassword), _userPassword },
-                { nameof(UserRepeatPassword), _userRepeatPassword },
-                { nameof(UserEmail), _userEmail }
-            };
+            user = new EntityClasses.User();
         }
+
+        
+        public EntityClasses.User User
+        {
+            get => user;
+            set => SetProperty(ref user, value);
+        }
+
         string pattern = @"^[^\s@]+@[^\s@]+\.[^\s@]+$";
 
         [RelayCommand]
         public async void Register()
         {
-            if (AnyPropertyIsNullOrEmpty())
-            {
-                await Application.Current.MainPage.DisplayAlert("Error", "Wypełnij wszystkie pola", "OK");
-            }
 
-            if (!Regex.IsMatch(UserEmail, pattern))
+
+            if (!Regex.IsMatch(User.Email, pattern))
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "Nie poprawny email", "OK");
-            }
 
-
-
-            
+            }            
         }
-
-        private bool AnyPropertyIsNullOrEmpty()
+        [RelayCommand]
+        public async void Avatar()
         {
-
-            foreach (var entry in _userDetails)
-            {
-                if (string.IsNullOrEmpty(entry.Value))
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
     }
 }

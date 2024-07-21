@@ -9,10 +9,10 @@
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
-            <Button                 
+            <!--<Button                 
                 Command="{Binding NavigateToRegisterCommand}"
                 Text="Zarejestruj"
-                HorizontalOptions="Center"/>
+                HorizontalOptions="Center"/>-->
         </VerticalStackLayout>
     </ScrollView>
 

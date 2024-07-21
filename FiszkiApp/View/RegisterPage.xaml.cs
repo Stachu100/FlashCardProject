@@ -1,13 +1,14 @@
 using FiszkiApp.ViewModel;
 
-namespace FiszkiApp
+namespace FiszkiApp;
+
+public partial class RegisterPage : ContentPage
 {
-    public partial class RegisterPage : ContentPage
+    public RegisterPage()
     {
-	    public RegisterPage()
-	    {
-            InitializeComponent();
-            BindingContext = new RegisterViewModel();
-        }
+        InitializeComponent();
+        BindingContext = new RegisterViewModel();
+
     }
+
 }

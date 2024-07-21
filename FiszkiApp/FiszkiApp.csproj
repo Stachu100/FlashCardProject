@@ -57,11 +57,23 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="CommandClasses\**" />
+	  <AndroidResource Remove="Common\**" />
 	  <AndroidResource Remove="NewFolder1\**" />
+	  <Compile Remove="CommandClasses\**" />
+	  <Compile Remove="Common\**" />
 	  <Compile Remove="NewFolder1\**" />
+	  <EmbeddedResource Remove="CommandClasses\**" />
+	  <EmbeddedResource Remove="Common\**" />
 	  <EmbeddedResource Remove="NewFolder1\**" />
+	  <MauiCss Remove="CommandClasses\**" />
+	  <MauiCss Remove="Common\**" />
 	  <MauiCss Remove="NewFolder1\**" />
+	  <MauiXaml Remove="CommandClasses\**" />
+	  <MauiXaml Remove="Common\**" />
 	  <MauiXaml Remove="NewFolder1\**" />
+	  <None Remove="CommandClasses\**" />
+	  <None Remove="Common\**" />
 	  <None Remove="NewFolder1\**" />
 	</ItemGroup>
 

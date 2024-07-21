@@ -4,16 +4,8 @@ using FiszkiApp;
 
 namespace FiszkiApp.ViewModel
 {
-    public partial class MainViewModel : ObservableObject
+    public partial class MainViewModel : ObservableObject //CommonBase dodać jeszcze nie wiem jak
     {
-        [ObservableProperty]
-        public bool _isBusy;
-
-        [ObservableProperty]
-        public bool _title;
-
-
-        [RelayCommand]
-        Task NavigateToRegister() => Shell.Current.GoToAsync(nameof(RegisterPage));
+      
     }
 }
