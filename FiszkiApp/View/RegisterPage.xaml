@@ -3,12 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:FiszkiApp.ViewModel"
              x:DataType="vm:RegisterViewModel"
-             x:Class="FiszkiApp.RegisterPage"            
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="FiszkiApp.RegisterPage"             
              Shell.NavBarIsVisible="False">
+    <ContentPage.BindingContext>
+        <vm:RegisterViewModel />
+    </ContentPage.BindingContext>
     <Grid BackgroundColor="White">
-
-
         <Grid RowSpacing="5" Grid.Row="1" Margin="20,20,20,0" HorizontalOptions="FillAndExpand">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -43,25 +43,25 @@
                 </Frame>
                 <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                        <Entry Text="{Binding User.Password}" Placeholder="Hasło" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
+                        <Entry Text="{Binding User.Password}" Placeholder="Hasło" IsPassword="True" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
                     </StackLayout>
                 </Frame>
                 <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                        <Entry Text="{Binding User.RepeatPassword}" Placeholder="Powtórz hasło" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
+                        <Entry Text="{Binding User.RepeatPassword}" Placeholder="Powtórz hasło" IsPassword="True" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
                     </StackLayout>
                 </Frame>
-                <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                        <Entry Text="{Binding User.Email}" Placeholder="Email" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
-                        <Label Text="{Binding [UserEmail]}" TextColor="Red" />
-                    </StackLayout>
+                <Label Text="Email" TextColor="Black" FontAttributes="Bold" Margin="0,0,50,0"/>
+                <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30" >
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                        <Entry Text="{Binding User.Email, Mode=TwoWay}"  Placeholder="Email" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
+                    </StackLayout>                    
                 </Frame>
+                <Label Text="{Binding ErrorMessages, Mode=OneWay}" TextColor="Red" />
                 
-                <Button Text="Wybierz avatar" FontAttributes="Bold" CornerRadius="30" WidthRequest="200" Margin="0,15,0,0" Command="{Binding AvatarCommand}"/>                
+                <Button Text="Wybierz avatar" FontAttributes="Bold" CornerRadius="30" WidthRequest="200" Margin="0,15,0,0" Command="{Binding AvatarCommand}"/>
 
                 <Button Text="Zarejestruj się" FontAttributes="Bold" CornerRadius="30" WidthRequest="200" Margin="0,15,0,0" Command="{Binding RegisterCommand}"/>
-
 
             </StackLayout>
         </Grid>

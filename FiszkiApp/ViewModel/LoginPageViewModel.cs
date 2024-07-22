@@ -9,11 +9,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
 using System;
+using System.ComponentModel.DataAnnotations;
 namespace FiszkiApp.ViewModel
 {
     public partial class LoginPageViewModel : MainViewModel
     {
-
+        
         [ObservableProperty]
         private string _userName;
 
