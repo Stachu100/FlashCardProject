@@ -20,6 +20,7 @@ namespace FiszkiApp.ViewModel
         {
             user = new EntityClasses.User();
         }
+
         public EntityClasses.User User
         {
             get => user;
@@ -49,9 +50,14 @@ namespace FiszkiApp.ViewModel
                             errors.Add(validationResult.ErrorMessage);
                         }
                     }
-                }
+                }              
 
                 ErrorMessages = string.Join("\n", errors);
+
+                if (!string.IsNullOrWhiteSpace(user.Password) && !string.IsNullOrWhiteSpace(user.RepeatPassword) && user.Password != User.RepeatPassword)
+                {
+                    ErrorMessages += ("\nHasła nie są takie same");
+                }
             }
             else
             {
@@ -67,7 +73,39 @@ namespace FiszkiApp.ViewModel
         [RelayCommand]
         public async void Avatar()
         {
+            try
+            {
+                var result = await FilePicker.PickAsync(new PickOptions
+                {
+                    FileTypes = FilePickerFileType.Images,
+                    PickerTitle = "Select an image"
+                });
 
+                if (result != null)
+                {
+                    // Use a `using` statement to ensure the stream is disposed of properly
+                    using (var stream = await result.OpenReadAsync())
+                    {
+                        // Create the ImageSource from the stream and set it to the property
+                        User.UploadedImage = ImageSource.FromStream(() => new MemoryStream(ReadFully(stream)));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions
+                await Application.Current.MainPage.DisplayAlert("Error", "An error occurred while uploading the image.", "OK");
+            }
         }
+
+        private byte[] ReadFully(Stream input)
+        {
+            using (var ms = new MemoryStream())
+            {
+                input.CopyTo(ms);
+                return ms.ToArray();
+            }
+        }
+
     }
 }

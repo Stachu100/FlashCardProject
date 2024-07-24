@@ -8,6 +8,7 @@
     <ContentPage.BindingContext>
         <vm:RegisterViewModel />
     </ContentPage.BindingContext>
+    <ScrollView>
     <Grid BackgroundColor="White">
         <Grid RowSpacing="5" Grid.Row="1" Margin="20,20,20,0" HorizontalOptions="FillAndExpand">
             <Grid.RowDefinitions>
@@ -21,50 +22,59 @@
             <Label Grid.Row="1" Text="Rejestracja" HorizontalOptions="Center" FontSize="Title" FontAttributes="Bold" Padding="0" Margin="0"/>
 
             <StackLayout Grid.Row="2" Orientation="Vertical" HorizontalOptions="FillAndExpand" Spacing="10">
+                <Frame HeightRequest="60" WidthRequest="60" CornerRadius="30" Padding="0" Margin="0,0,0,0" HorizontalOptions="Center">
+                    <Image Source="{Binding User.UploadedImage}" />
+                </Frame>
+                
+                <Button Text="Wybierz avatar" FontAttributes="Bold" CornerRadius="30" WidthRequest="200" Margin="0,15,0,0" Command="{Binding AvatarCommand}"/>
                 <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                         <Entry Text="{Binding User.Name}" Placeholder="Nazwa" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
                     </StackLayout>
                 </Frame>
+                
                 <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                         <Entry Text="{Binding User.FirstName}" Placeholder="Imię" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
                     </StackLayout>
                 </Frame>
+                
                 <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                         <Entry Text="{Binding User.LastName}" Placeholder="Nazwisko" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
                     </StackLayout>
                 </Frame>
+                
                 <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                        <Entry Text="{Binding User.Country}" Placeholder="Kraj pochodzenia" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
+                            <Picker x:Name="CountryPicker" Title="Wybierz kraj" TextColor="Black" FontAttributes="Bold" SelectedItem="{Binding User.Country}" HorizontalOptions="FillAndExpand"/>                            
                     </StackLayout>
                 </Frame>
+                
                 <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                         <Entry Text="{Binding User.Password}" Placeholder="Hasło" IsPassword="True" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
                     </StackLayout>
                 </Frame>
+                
                 <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                         <Entry Text="{Binding User.RepeatPassword}" Placeholder="Powtórz hasło" IsPassword="True" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
                     </StackLayout>
                 </Frame>
-                <Label Text="Email" TextColor="Black" FontAttributes="Bold" Margin="0,0,50,0"/>
+                
                 <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30" >
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
                         <Entry Text="{Binding User.Email, Mode=TwoWay}"  Placeholder="Email" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
                     </StackLayout>                    
-                </Frame>
-                <Label Text="{Binding ErrorMessages, Mode=OneWay}" TextColor="Red" />
+                </Frame>                  
+
+                    <Label Text="{Binding ErrorMessages, Mode=OneWay}" TextColor="Red" />
                 
-                <Button Text="Wybierz avatar" FontAttributes="Bold" CornerRadius="30" WidthRequest="200" Margin="0,15,0,0" Command="{Binding AvatarCommand}"/>
-
-                <Button Text="Zarejestruj się" FontAttributes="Bold" CornerRadius="30" WidthRequest="200" Margin="0,15,0,0" Command="{Binding RegisterCommand}"/>
-
-            </StackLayout>
+                    <Button Text="Zarejestruj się" FontAttributes="Bold" CornerRadius="30" WidthRequest="200" Margin="0,15,0,0" Command="{Binding RegisterCommand}"/>
+                </StackLayout>
         </Grid>
 
     </Grid>
+    </ScrollView>
 </ContentPage>

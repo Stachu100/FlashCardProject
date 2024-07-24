@@ -32,10 +32,12 @@ namespace FiszkiApp.EntityClasses
 
         [ObservableProperty]
         [Required(ErrorMessage = "Hasło jest wymagane")]
+        [MinLength(8, ErrorMessage = "Hasło musi mieć conajmniej 8 znaków")]
+        [RegularExpression(@"^(?=.*[A-Z])(?=.*[\W_])$", ErrorMessage = "Hasło musi zawierać dużą literę, znak specjalny")]
         private string password;
 
         [ObservableProperty]
-        [Required(ErrorMessage = "Hasło jest wymagana")]
+        [Required(ErrorMessage = "Potwierdzenie hasła jest wymagana")]
         private string repeatPassword;
 
 
@@ -43,6 +45,9 @@ namespace FiszkiApp.EntityClasses
         [Required(ErrorMessage = "Email jest wymagany")]
         [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage ="Niepoprawny Email")]
         private string email;
+
+        [ObservableProperty]
+        private ImageSource uploadedImage;
         public void Validate()
         {
             ValidateAllProperties();
