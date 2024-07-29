@@ -23,7 +23,7 @@
 
             <StackLayout Grid.Row="2" Orientation="Vertical" HorizontalOptions="FillAndExpand" Spacing="10">
                 <Frame HeightRequest="60" WidthRequest="60" CornerRadius="30" Padding="0" Margin="0,0,0,0" HorizontalOptions="Center">
-                    <Image Source="{Binding User.UploadedImage}" />
+                    <Image Source="{Binding UploadedImage}" />
                 </Frame>
                 
                 <Button Text="Wybierz avatar" FontAttributes="Bold" CornerRadius="30" WidthRequest="200" Margin="0,15,0,0" Command="{Binding AvatarCommand}"/>
@@ -67,8 +67,11 @@
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
                         <Entry Text="{Binding User.Email, Mode=TwoWay}"  Placeholder="Email" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
                     </StackLayout>                    
-                </Frame>                  
-
+                </Frame>
+                    <StackLayout Orientation="Horizontal" Margin="0,10,0,0" Padding="0">
+                        <CheckBox IsChecked="{Binding User.IsAcceptedPolicy}" />
+                        <Label Text="Oświadczam że, akceptuję politykę prywatności" TextColor="DarkGray" FontSize="Micro" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    </StackLayout>
                     <Label Text="{Binding ErrorMessages, Mode=OneWay}" TextColor="Red" />
                 
                     <Button Text="Zarejestruj się" FontAttributes="Bold" CornerRadius="30" WidthRequest="200" Margin="0,15,0,0" Command="{Binding RegisterCommand}"/>

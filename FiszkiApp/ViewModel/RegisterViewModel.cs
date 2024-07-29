@@ -6,13 +6,18 @@ using System.Collections.Generic;
 using static System.Net.Mime.MediaTypeNames;
 using System.ComponentModel.DataAnnotations;
 using Application = Microsoft.Maui.Controls.Application;
+using CommunityToolkit.Maui.Converters;
+using FiszkiApp.EntityClasses;
+using FiszkiApp.dbConnetcion;
+using System.IO;
+//using static Android.Webkit.WebStorage;
 
 namespace FiszkiApp.ViewModel
 
 {
     public partial class RegisterViewModel : MainViewModel
     {
-
+        private byte[] imageData;
         private EntityClasses.User user;
 
 
@@ -33,6 +38,9 @@ namespace FiszkiApp.ViewModel
 
         [ObservableProperty]
         private string errorMessages;
+
+        [ObservableProperty]
+        private ImageSource uploadedImage;
 
         [RelayCommand]
         public async void Register()
@@ -58,17 +66,21 @@ namespace FiszkiApp.ViewModel
                 {
                     ErrorMessages += ("\nHasła nie są takie same");
                 }
-            }
-            else
+            }else
             {
                 ErrorMessages = string.Empty;
             }
-
+            if (string.IsNullOrWhiteSpace(ErrorMessages))
+            {
+                User.EncryptedPassword = AesManaged.Encryption(User.Password);
+                var SqlConnection = new dbConnetcion.MySQLCreate();
+                int rowCount = await SqlConnection.UserInsertAsync(User.Name, User.EncryptedPassword, User.FirstName, User.LastName, User.Country, User.Email, User.UploadedImage, User.IsAcceptedPolicy);
+                await Application.Current.MainPage.DisplayAlert("Sukcess", "Twoje konto zostało zarejestroanwe", "OK");
+                
+            }
+            
 
         }
-
-
-
 
         [RelayCommand]
         public async void Avatar()
@@ -87,7 +99,24 @@ namespace FiszkiApp.ViewModel
                     using (var stream = await result.OpenReadAsync())
                     {
                         // Create the ImageSource from the stream and set it to the property
-                        User.UploadedImage = ImageSource.FromStream(() => new MemoryStream(ReadFully(stream)));
+                        UploadedImage = ImageSource.FromStream(() => {
+                            // Create a MemoryStream to hold the image data
+                            var memoryStream = new MemoryStream();
+                            stream.CopyTo(memoryStream);
+                            memoryStream.Position = 0; // Reset the position to the beginning
+                            return memoryStream;
+                        });
+                        stream.Position = 0;
+
+                        using (MemoryStream memoryStream = new MemoryStream())
+                        {
+                            stream.CopyTo(memoryStream);
+                            byte[] imageBytes = memoryStream.ToArray();
+                            user.UploadedImage = imageBytes;
+                        }
+
+
+
                     }
                 }
             }
@@ -106,6 +135,5 @@ namespace FiszkiApp.ViewModel
                 return ms.ToArray();
             }
         }
-
     }
 }

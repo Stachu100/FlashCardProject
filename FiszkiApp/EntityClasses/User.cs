@@ -16,14 +16,17 @@ namespace FiszkiApp.EntityClasses
 
         [ObservableProperty]
         [Required(ErrorMessage = "Nazwa jest wymagana")]
+        [MaxLength(50, ErrorMessage = "Nazwa jest za długa")]
         private string name;
 
         [ObservableProperty]
         [Required(ErrorMessage = "Imię jest wymagane")]
+        [MaxLength(50, ErrorMessage = "Imię jest za długie")]
         private string firstName;
 
         [ObservableProperty]
         [Required(ErrorMessage = "Nazwisko jest wymagane")]
+        [MaxLength(50, ErrorMessage = "Nazwisko jest za długie")]
         private string lastName;
 
         [ObservableProperty]
@@ -33,7 +36,7 @@ namespace FiszkiApp.EntityClasses
         [ObservableProperty]
         [Required(ErrorMessage = "Hasło jest wymagane")]
         [MinLength(8, ErrorMessage = "Hasło musi mieć conajmniej 8 znaków")]
-        [RegularExpression(@"^(?=.*[A-Z])(?=.*[\W_])$", ErrorMessage = "Hasło musi zawierać dużą literę, znak specjalny")]
+        [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$", ErrorMessage = "Hasło musi zawierać dużą literę, znak specjalny")]
         private string password;
 
         [ObservableProperty]
@@ -47,7 +50,15 @@ namespace FiszkiApp.EntityClasses
         private string email;
 
         [ObservableProperty]
-        private ImageSource uploadedImage;
+        private byte[] uploadedImage;
+
+        [ObservableProperty]
+        [Required(ErrorMessage = "Pole wymagane")]
+        private bool isAcceptedPolicy;
+
+        [ObservableProperty]
+        private byte[] encryptedPassword;
+
         public void Validate()
         {
             ValidateAllProperties();
