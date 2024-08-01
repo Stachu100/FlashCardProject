@@ -47,7 +47,7 @@
                 
                 <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                            <Picker x:Name="CountryPicker" Title="Wybierz kraj" TextColor="Black" FontAttributes="Bold" SelectedItem="{Binding User.Country}" HorizontalOptions="FillAndExpand"/>                            
+                            <Picker ItemsSource="{Binding CountryPicker}" Title="Wybierz kraj" TextColor="Black" FontAttributes="Bold" SelectedItem="{Binding User.Country}" HorizontalOptions="FillAndExpand"/>                            
                     </StackLayout>
                 </Frame>
                 

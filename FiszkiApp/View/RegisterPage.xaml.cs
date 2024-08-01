@@ -8,17 +8,6 @@ public partial class RegisterPage : ContentPage
     {
         InitializeComponent();
         //BindingContext = new RegisterViewModel();
-        LoadCountry();
     }
-    private void LoadCountry()
-    {
-        // Przyk³adowa lista p³ci
-        var genders = new List<string>
-            {
-                "Polska",
-                "England"                
-            };
 
-        CountryPicker.ItemsSource = genders;
-    }
 }

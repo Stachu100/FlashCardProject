@@ -51,7 +51,7 @@ namespace FiszkiApp.dbConnetcion
 {
      class MySQLCreate
     {
-        private readonly string connectionString;
+        public static string connectionString;
 
         public MySQLCreate()
         {

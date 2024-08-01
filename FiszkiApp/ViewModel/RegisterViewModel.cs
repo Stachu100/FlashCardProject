@@ -10,6 +10,7 @@ using CommunityToolkit.Maui.Converters;
 using FiszkiApp.EntityClasses;
 using FiszkiApp.dbConnetcion;
 using System.IO;
+using System.Collections.ObjectModel;
 //using static Android.Webkit.WebStorage;
 
 namespace FiszkiApp.ViewModel
@@ -17,6 +18,7 @@ namespace FiszkiApp.ViewModel
 {
     public partial class RegisterViewModel : MainViewModel
     {
+        public IAsyncRelayCommand LoadCountriesCommand { get; }
         private byte[] imageData;
         private EntityClasses.User user;
 
@@ -24,6 +26,8 @@ namespace FiszkiApp.ViewModel
         public RegisterViewModel()
         {
             user = new EntityClasses.User();
+            LoadCountriesCommand = new AsyncRelayCommand(LoadCountry);
+            LoadCountriesCommand.Execute(null);
         }
 
         public EntityClasses.User User
@@ -40,7 +44,17 @@ namespace FiszkiApp.ViewModel
         private string errorMessages;
 
         [ObservableProperty]
+        private ObservableCollection<string> countryPicker;
+
+        [ObservableProperty]
         private ImageSource uploadedImage;
+
+        private async Task LoadCountry()
+        {
+            var countriesDic = new dbConnetcion.SQLQueries.CountriesDic();
+            var countries = await countriesDic.Countries();
+            CountryPicker = new ObservableCollection<string>(countries);
+        }
 
         [RelayCommand]
         public async void Register()
@@ -73,10 +87,25 @@ namespace FiszkiApp.ViewModel
             if (string.IsNullOrWhiteSpace(ErrorMessages))
             {
                 User.EncryptedPassword = AesManaged.Encryption(User.Password);
-                var SqlConnection = new dbConnetcion.MySQLCreate();
-                int rowCount = await SqlConnection.UserInsertAsync(User.Name, User.EncryptedPassword, User.FirstName, User.LastName, User.Country, User.Email, User.UploadedImage, User.IsAcceptedPolicy);
-                await Application.Current.MainPage.DisplayAlert("Sukcess", "Twoje konto zostało zarejestroanwe", "OK");
-                
+                var creatUser = new EntityClasses.CreatUser();
+                string result = await creatUser.UserInsertAsync(User.Name, User.EncryptedPassword, User.FirstName, User.LastName, User.Country, User.Email, User.UploadedImage, User.IsAcceptedPolicy);
+                if (result == "Rejstracja zakończyła się sukcesem")
+                {
+                    await Application.Current.MainPage.DisplayAlert("Sukcess", result, "OK");
+                    User.Name = null;
+                    User.Password = null;
+                    User.RepeatPassword = null;
+                    User.FirstName = null;
+                    User.LastName = null;
+                    User.Country = null;
+                    User.UploadedImage = null;
+                    User.IsAcceptedPolicy = false;
+                    User.Email = null;
+                }
+                else
+                {
+                    ErrorMessages += (result);                    
+                } 
             }
             
 
@@ -135,5 +164,8 @@ namespace FiszkiApp.ViewModel
                 return ms.ToArray();
             }
         }
+        
+
+        
     }
 }
