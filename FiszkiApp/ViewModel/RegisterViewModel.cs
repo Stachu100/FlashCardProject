@@ -101,6 +101,7 @@ namespace FiszkiApp.ViewModel
                     User.UploadedImage = null;
                     User.IsAcceptedPolicy = false;
                     User.Email = null;
+                    user = new EntityClasses.User();
                 }
                 else
                 {
