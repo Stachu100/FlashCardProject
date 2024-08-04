@@ -37,15 +37,7 @@
             <StackLayout Grid.Row="3" Orientation="Vertical" HorizontalOptions="FillAndExpand" Spacing="10">
                 <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                        <Entry Text="{Binding UserName}" Placeholder="Nazwa" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0">
-                            <Entry.Behaviors>
-                                <toolkit:TextValidationBehavior 
-                                    x:Name="UserNameValidation"
-                                    Flags="ValidateOnValueChanged,ValidateOnAttaching"
-                                    MinimumLength="1"
-                                    MaximumLength="10" />                   
-                            </Entry.Behaviors>
-                        </Entry>
+                        <Entry Text="{Binding UserName}" Placeholder="Nazwa" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
                     </StackLayout>
                 </Frame>
                 <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
@@ -53,7 +45,7 @@
                         <Entry Text="{Binding UserPassword}" Placeholder="Hasło" IsPassword="True" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>
                     </StackLayout>
                 </Frame>
-
+                <Label Text="{Binding ErrorMessages, Mode=OneWay}" TextColor="Red" />
                 <StackLayout Orientation="Horizontal" Margin="0,10,0,0" Padding="0">
                     <CheckBox IsChecked="False"/>
                     <Label Text="Zapamiętaj mnie" TextColor="DarkGray" FontSize="Small" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>

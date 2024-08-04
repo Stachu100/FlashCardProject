@@ -15,23 +15,44 @@ namespace FiszkiApp.ViewModel
     {
         
         [ObservableProperty]
-        private string _userName;
+        [Required(ErrorMessage = "Nazwa wymagane")]
+        private string userName;
 
         [ObservableProperty]
-        private string _UserPassword;
+        [Required(ErrorMessage = "Hasło wymagane")]
+        public string userPassword;
+
+        [ObservableProperty]
+        private string errorMessages;
+
+
+       
 
         [RelayCommand] // to jest  [ICommand] ale w aktualizacaji CommunityToolkit.Mvvm.Input (8.0.0-preview4 release notes.) zmienili nazwe
         public async void LoginCommand()
         {
-            if (string.IsNullOrEmpty(UserName))
+            ValidateAllProperties();
+            if (HasErrors)
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "Wypełnij nazwę użytkownika", "OK");
+                var errors = new List<string>();
+                foreach (var propertyName in new[] { nameof(UserName), nameof(UserPassword)})
+                {             
+                    foreach (var error in GetErrors(propertyName))
+                    {
+                        if (error is ValidationResult validationResult)
+                        {
+                            errors.Add(validationResult.ErrorMessage);
+                        }
+                    }
+                }
+
+                ErrorMessages = string.Join("\n", errors);
             }
-            else if (string.IsNullOrEmpty(UserPassword))
+            else
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "Wypełnij hasło", "OK");
+                await Application.Current.MainPage.DisplayAlert("Success", "Zalogowano", "OK");
             }
         }
-        
+
     }
 }
