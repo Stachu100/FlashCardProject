@@ -10,7 +10,7 @@ namespace FiszkiApp.EntityClasses
 {
     internal class CreatUser
     {
-        public async Task<string> UserInsertAsync(string Name, byte[] Password, string FirstName, string Lastname, string Country, string Email, byte[] Image, bool IsAcceptedPolicy)
+        public async Task<string> UserInsertAsync(string Name, byte[] Password, string FirstName, string Lastname, string Country, string Email, byte[] Image, bool IsAcceptedPolicy, byte[] IV, byte[] EncryptionKey)
         {
             MySQLCreate mySQLCreate = new MySQLCreate();
             using (var conn = new MySqlConnection(MySQLCreate.connectionString))
@@ -65,8 +65,8 @@ namespace FiszkiApp.EntityClasses
                             {
                                 insertDetailsCommand.Transaction = transaction;
                                 insertDetailsCommand.CommandText = @"INSERT INTO userDetails 
-                    (ID_User, FirstName, LastName, Country, Email, Avatar, IsAcceptedPolicy) 
-                    VALUES (@UserID, @FirstName, @LastName, @Country, @Email, @Image, @IsAcceptedPolicy);";
+                                                                   (ID_User, FirstName, LastName, Country, Email, Avatar, IsAcceptedPolicy) 
+                                                                   VALUES (@UserID, @FirstName, @LastName, @Country, @Email, @Image, @IsAcceptedPolicy);";
 
                                 insertDetailsCommand.Parameters.AddWithValue("@UserID", userId);
                                 insertDetailsCommand.Parameters.AddWithValue("@FirstName", FirstName);
@@ -78,6 +78,20 @@ namespace FiszkiApp.EntityClasses
 
                                 await insertDetailsCommand.ExecuteNonQueryAsync();
                             }
+                            using (var insertKeyCommand = conn.CreateCommand())
+                            {
+                                insertKeyCommand.Transaction = transaction;
+                                insertKeyCommand.CommandText = @"INSERT INTO EncryptionKeys 
+                                                                   (ID_User, EncryptionKey, IV)
+                                                                   VALUES (@UserID, @EncryptionKey, @IV);";
+
+                                insertKeyCommand.Parameters.AddWithValue("@UserID", userId);
+                                insertKeyCommand.Parameters.AddWithValue("@EncryptionKey", EncryptionKey);
+                                insertKeyCommand.Parameters.AddWithValue("@IV", IV);
+
+
+                                await insertKeyCommand.ExecuteNonQueryAsync();
+                            }
                         }
 
                         await transaction.CommitAsync();
@@ -87,7 +101,7 @@ namespace FiszkiApp.EntityClasses
                 }
                 catch (Exception ex)
                 {
-                   // Console.WriteLine($"An error occurred: {ex.Message}");
+                    Console.WriteLine($"An error occurred: {ex.Message}");
                     return "wystąpił błąd podczas rejestracji";
                 }
 

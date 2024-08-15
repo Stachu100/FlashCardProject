@@ -9,7 +9,16 @@ namespace FiszkiApp.EntityClasses
 {
     internal class AesManaged
     {
-        public static byte[] Encryption(string ToEncrypted)
+        private static byte[] Key;
+        private static byte[] IV;
+
+        public class EncryptionResult
+        {
+            public byte[] Key { get; set; }
+            public byte[] IV { get; set; }
+            public byte[] EncryptedData { get; set; }
+        }
+        public static EncryptionResult Encryption(string ToEncrypted)
         {
 
             // Create a new instance of the Aes
@@ -21,19 +30,23 @@ namespace FiszkiApp.EntityClasses
                 // Encrypt the string to an array of bytes.
                 byte[] encryptedData = EncryptStringToBytes_Aes(ToEncrypted, myAes.Key, myAes.IV);
 
-                return encryptedData;
+                EncryptionResult result = new EncryptionResult
+                {
+                    Key = myAes.Key,
+                    IV = myAes.IV,
+                    EncryptedData = encryptedData
+                };
+
+                return result;
             }
         }
-        public static string Decryption(byte[] ToDecrypted)
+        public static string Decryption(byte[] ToDecrypted, byte[] Key, byte[] IV)
         {
-            using (Aes myAes = Aes.Create())
-            {           
 
                 // Decrypt the bytes to a string.
-                string decryptedData = DecryptStringFromBytes_Aes(ToDecrypted, myAes.Key, myAes.IV);               
+                return DecryptStringFromBytes_Aes(ToDecrypted, Key, IV);
 
-                return decryptedData;
-            }
+                       
         }
         public static byte[] EncryptStringToBytes_Aes(string plainText, byte[] Key, byte[] IV)
         {

@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
 using System;
 using System.ComponentModel.DataAnnotations;
+using FiszkiApp.dbConnetcion.SQLQueries;
+
 namespace FiszkiApp.ViewModel
 {
     public partial class LoginPageViewModel : MainViewModel
@@ -50,7 +52,17 @@ namespace FiszkiApp.ViewModel
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Success", "Zalogowano", "OK");
+                var loginInQuery = new dbConnetcion.SQLQueries.LogInQuery();
+                string result = await loginInQuery.UserLogIn(UserName, UserPassword);
+                if (result == "Zalogowano pomyślnie")
+                {
+                    await Application.Current.MainPage.DisplayAlert("Komunikat", result, "OK");
+                    ErrorMessages = null;
+                }
+                else
+                {
+                    ErrorMessages = result;
+                }
             }
         }
 

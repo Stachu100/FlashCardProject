@@ -11,6 +11,7 @@ using FiszkiApp.EntityClasses;
 using FiszkiApp.dbConnetcion;
 using System.IO;
 using System.Collections.ObjectModel;
+using static FiszkiApp.EntityClasses.AesManaged;
 //using static Android.Webkit.WebStorage;
 
 namespace FiszkiApp.ViewModel
@@ -86,9 +87,10 @@ namespace FiszkiApp.ViewModel
             }
             if (string.IsNullOrWhiteSpace(ErrorMessages))
             {
-                User.EncryptedPassword = AesManaged.Encryption(User.Password);
+                EncryptionResult encryptionResult = AesManaged.Encryption(User.Password);
+                User.EncryptedPassword = encryptionResult.EncryptedData;                
                 var creatUser = new EntityClasses.CreatUser();
-                string result = await creatUser.UserInsertAsync(User.Name, User.EncryptedPassword, User.FirstName, User.LastName, User.Country, User.Email, User.UploadedImage, User.IsAcceptedPolicy);
+                string result = await creatUser.UserInsertAsync(User.Name, User.EncryptedPassword, User.FirstName, User.LastName, User.Country, User.Email, User.UploadedImage, User.IsAcceptedPolicy, encryptionResult.IV, encryptionResult.Key);
                 if (result == "Rejstracja zakończyła się sukcesem")
                 {
                     await Application.Current.MainPage.DisplayAlert("Sukcess", result, "OK");
