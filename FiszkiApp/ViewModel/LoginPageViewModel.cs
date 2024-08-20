@@ -56,7 +56,7 @@ namespace FiszkiApp.ViewModel
                 string result = await loginInQuery.UserLogIn(UserName, UserPassword);
                 if (result == "Zalogowano pomyślnie")
                 {
-                    await Application.Current.MainPage.DisplayAlert("Komunikat", result, "OK");
+                    await Shell.Current.GoToAsync($"//{nameof(View.MainPage)}");
                     ErrorMessages = null;
                 }
                 else

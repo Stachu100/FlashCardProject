@@ -2,7 +2,7 @@ using CommunityToolkit.Maui.Behaviors;
 using FiszkiApp.ViewModel;
 using Microsoft.Maui.Controls;
 
-namespace FiszkiApp
+namespace FiszkiApp.View
 {
 	public partial class LoginPage : ContentPage
 	{

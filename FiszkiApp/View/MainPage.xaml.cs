@@ -1,6 +1,6 @@
 ﻿using FiszkiApp.ViewModel;
 
-namespace FiszkiApp
+namespace FiszkiApp.View
 {
     public partial class MainPage : ContentPage
     {

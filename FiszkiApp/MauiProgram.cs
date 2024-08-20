@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui;
+using FiszkiApp.Services;
+using Microsoft.Extensions.Logging;
 
 namespace FiszkiApp
 {
@@ -9,6 +11,7 @@ namespace FiszkiApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -18,6 +21,7 @@ namespace FiszkiApp
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+            builder.Services.AddTransient<AuthService>();
 
             return builder.Build();
         }

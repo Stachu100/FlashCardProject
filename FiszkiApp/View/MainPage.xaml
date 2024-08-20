@@ -3,17 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:FiszkiApp.ViewModel"
              x:DataType="viewmodel:MainViewModel"
-             x:Class="FiszkiApp.MainPage">
+             x:Class="FiszkiApp.View.MainPage">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            <!--<Button                 
-                Command="{Binding NavigateToRegisterCommand}"
-                Text="Zarejestruj"
-                HorizontalOptions="Center"/>-->
-        </VerticalStackLayout>
-    </ScrollView>
+    <Label 
+    Text="MainPage"
+    VerticalOptions="Center" 
+    HorizontalOptions="Center" />
 
 </ContentPage>
