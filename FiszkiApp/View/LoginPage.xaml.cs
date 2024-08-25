@@ -1,4 +1,5 @@
 using CommunityToolkit.Maui.Behaviors;
+using FiszkiApp.Services;
 using FiszkiApp.ViewModel;
 using Microsoft.Maui.Controls;
 
@@ -6,13 +7,13 @@ namespace FiszkiApp.View
 {
 	public partial class LoginPage : ContentPage
 	{
-		public LoginPage()
-		{
-			InitializeComponent();
-
-            var loginPageViewModel = new LoginPageViewModel();
+        private readonly AuthService _authService;
+        public LoginPage(AuthService authService)
+        {
+            InitializeComponent();
+            _authService = authService;
+            var loginPageViewModel = new LoginPageViewModel(_authService);
             BindingContext = loginPageViewModel;
-
         }
 
         private async void OnLabelTapped(object sender, TappedEventArgs e)

@@ -10,12 +10,18 @@ using Microsoft.Maui.Controls;
 using System;
 using System.ComponentModel.DataAnnotations;
 using FiszkiApp.dbConnetcion.SQLQueries;
+using FiszkiApp.Services;
 
 namespace FiszkiApp.ViewModel
 {
     public partial class LoginPageViewModel : MainViewModel
     {
-        
+        private readonly AuthService _authService;
+        public LoginPageViewModel(AuthService authService)
+        {
+            _authService = authService;
+        }
+
         [ObservableProperty]
         [Required(ErrorMessage = "Nazwa wymagane")]
         private string userName;
@@ -56,6 +62,7 @@ namespace FiszkiApp.ViewModel
                 string result = await loginInQuery.UserLogIn(UserName, UserPassword);
                 if (result == "Zalogowano pomyślnie")
                 {
+                    _authService.Login();
                     await Shell.Current.GoToAsync($"//{nameof(View.MainPage)}");
                     ErrorMessages = null;
                 }

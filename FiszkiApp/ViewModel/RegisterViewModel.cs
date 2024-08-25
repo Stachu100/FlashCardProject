@@ -12,7 +12,6 @@ using FiszkiApp.dbConnetcion;
 using System.IO;
 using System.Collections.ObjectModel;
 using static FiszkiApp.EntityClasses.AesManaged;
-//using static Android.Webkit.WebStorage;
 
 namespace FiszkiApp.ViewModel
 

@@ -8,6 +8,12 @@
     Shell.FlyoutBehavior="Flyout">
 
     <ShellContent
+         Title="Loading"
+         ContentTemplate="{DataTemplate view:LoadingPage}"
+         Route="LoadingPage"
+         Shell.FlyoutItemIsVisible="False"/>
+    
+    <ShellContent
         Title="Login"
         ContentTemplate="{DataTemplate view:LoginPage}"
         Route="LoginPage"
@@ -21,7 +27,7 @@
          Shell.FlyoutBehavior="Disabled"
          Shell.FlyoutItemIsVisible="False"/>
     
-    <TabBar>
+    <TabBar FlyoutDisplayOptions="AsMultipleItems">
             <ShellContent
          Title="Dom"
          ContentTemplate="{DataTemplate view:MainPage}"

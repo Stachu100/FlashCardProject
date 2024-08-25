@@ -13,6 +13,8 @@ namespace FiszkiApp
             Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
             Routing.RegisterRoute(nameof(FlashCardList), typeof(FlashCardList));
             Routing.RegisterRoute(nameof(ProfilePage), typeof(ProfilePage));
+            Routing.RegisterRoute(nameof(LoadingPage), typeof(LoadingPage));
+
 
         }
     }

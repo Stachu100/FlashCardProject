@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using FiszkiApp.Services;
+using FiszkiApp.View;
 using Microsoft.Extensions.Logging;
 
 namespace FiszkiApp
@@ -22,6 +23,9 @@ namespace FiszkiApp
     		builder.Logging.AddDebug();
 #endif
             builder.Services.AddTransient<AuthService>();
+            builder.Services.AddTransient<LoadingPage>();
+            builder.Services.AddTransient<LoginPage>();
+            builder.Services.AddTransient<ProfilePage>();
 
             return builder.Build();
         }
