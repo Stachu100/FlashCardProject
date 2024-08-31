@@ -58,11 +58,12 @@ namespace FiszkiApp.ViewModel
             }
             else
             {
-                var loginInQuery = new dbConnetcion.SQLQueries.LogInQuery();
-                string result = await loginInQuery.UserLogIn(UserName, UserPassword);
-                if (result == "Zalogowano pomyślnie")
+                string result = await _authService.Login(UserName, UserPassword);
+                //var loginInQuery = new dbConnetcion.SQLQueries.LogInQuery();
+                //string result = await loginInQuery.UserLogIn(;
+                if (result != "Hasło lub login jest nie poprawne" && result != "Wystąpił błąd podczas logowania")
                 {
-                    _authService.Login();
+                    
                     await Shell.Current.GoToAsync($"//{nameof(View.MainPage)}");
                     ErrorMessages = null;
                 }

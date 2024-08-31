@@ -91,7 +91,8 @@ namespace FiszkiApp.dbConnetcion.SQLQueries
                                     Console.WriteLine($"Decrypted Password: {decryptedPassword}");
                                     if (decryptedPassword != null && decryptedPassword == password)
                                     {
-                                        return "Zalogowano pomyślnie";
+                                        //User login Sacessfull 
+                                        return Convert.ToString(ID_user);
                                     }
                                     else
                                     {

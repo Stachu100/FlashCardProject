@@ -67,53 +67,5 @@ namespace FiszkiApp.dbConnetcion
             
         }
 
-        public async Task<int> UserInsertAsync(string Name, byte[] Password, string FirstName, string Lastname, string Country, string Email, byte[] Image, bool IsAcceptedPolicy)
-        {
-
-            using (var conn = new MySqlConnection(connectionString))
-            {
-                try
-                {
-                    await conn.OpenAsync();
-
-                    using (var transaction = await conn.BeginTransactionAsync())
-                    {
-                        using (var command = conn.CreateCommand())
-                        {
-                            command.Transaction = transaction;
-                            command.CommandText = "INSERT INTO user (UserName, UserPassword) VALUES(@Name, @Password);";
-
-                            command.Parameters.AddWithValue("@Name", Name);
-                            command.Parameters.AddWithValue("@Password", Password);
-
-                            await command.ExecuteNonQueryAsync();
-                            int userId = (int)command.LastInsertedId;
-
-                            command.CommandText = "INSERT INTO userDetails (ID_User, FirstName, LastName, Country, Email, Avatar, IsAcceptedPolicy) VALUES (@UserID, @FirstName, @Lastname, @Country, @email, @image, @IsAcceptedPolicy);";
-
-                            command.Parameters.AddWithValue("@UserID", userId);
-                            command.Parameters.AddWithValue("@FirstName", FirstName);
-                            command.Parameters.AddWithValue("@Lastname", Lastname);
-                            command.Parameters.AddWithValue("@Country", Country);
-                            command.Parameters.AddWithValue("@email", Email);
-                            command.Parameters.AddWithValue("@image", Image);
-                            command.Parameters.AddWithValue("@IsAcceptedPolicy", IsAcceptedPolicy);
-
-                            int rowCount = await command.ExecuteNonQueryAsync();
-
-                            await transaction.CommitAsync();
-
-                            return rowCount;
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"An error occurred: {ex.Message}");
-                    return 0;
-                }
-            }
-            return 0;
-        }
     }
 }
