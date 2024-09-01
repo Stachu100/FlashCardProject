@@ -78,6 +78,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="EntityClasses\ByteArrayToImageSourceConverter.cs" />
 	  <Compile Remove="ViewModel\Class1.cs" />
 	</ItemGroup>
 

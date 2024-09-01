@@ -13,4 +13,14 @@ public partial class ProfilePage : ContentPage
         var ProfileViewModel = new ProfileViewModel(_authService);
         BindingContext = ProfileViewModel;
     }
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        // SprawdŸ, czy kontekst danych jest prawid³owy i ViewModel istnieje
+        if (BindingContext is ProfileViewModel viewModel)
+        {
+            await viewModel.OnNavigatedTo(null); // Mo¿esz przekazaæ null, jeœli nie u¿ywasz NavigationEventArgs
+        }
+    }
 }

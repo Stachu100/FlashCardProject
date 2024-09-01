@@ -1,7 +1,10 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FiszkiApp.Services;
 using FiszkiApp.View;
 using System;
+using System.Drawing;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,12 +14,38 @@ namespace FiszkiApp.ViewModel
 {
     public partial class ProfileViewModel : MainViewModel
     {
-        private readonly AuthService _authService;
-
         public ProfileViewModel(AuthService authService)
         {
-            _authService = authService;
+            _authService = authService;            
         }
+
+        public async Task OnNavigatedTo(NavigationEventArgs args)
+        {
+            var (isAuthenticated, userID) = await _authService.IsAuthenticatedAsync();
+            int IntUserId = Convert.ToInt32(userID);
+            var profileDetails = new dbConnetcion.SQLQueries.ProfiileDetails();
+            var (uploadedImage, user, country) = await profileDetails.UserDetails(IntUserId);
+
+            byte[] imageAsBytes = (byte[])uploadedImage;
+            var stream = new MemoryStream(imageAsBytes);
+            UploadedImage = ImageSource.FromStream(() => stream);
+            User = user;
+            Country = country;
+
+        }
+
+        [ObservableProperty]
+        private ImageSource uploadedImage;
+
+        [ObservableProperty]
+        private string user;
+
+        [ObservableProperty]
+        private string country;
+
+        
+
+        private readonly AuthService _authService;
 
         [RelayCommand]
         public async void LogoutCommand(AuthService authService)
