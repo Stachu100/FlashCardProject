@@ -26,16 +26,17 @@ namespace FiszkiApp.ViewModel
             var profileDetails = new dbConnetcion.SQLQueries.ProfiileDetails();
             var (uploadedImage, user, country) = await profileDetails.UserDetails(IntUserId);
 
-            byte[] imageAsBytes = (byte[])uploadedImage;
-            var stream = new MemoryStream(imageAsBytes);
-            UploadedImage = ImageSource.FromStream(() => stream);
+            if (uploadedImage.Length > 0)
+            {
+                ImageAsBytes = uploadedImage;
+            }
             User = user;
             Country = country;
 
         }
 
         [ObservableProperty]
-        private ImageSource uploadedImage;
+        private byte[] imageAsBytes;
 
         [ObservableProperty]
         private string user;

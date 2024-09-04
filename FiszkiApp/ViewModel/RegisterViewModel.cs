@@ -49,6 +49,9 @@ namespace FiszkiApp.ViewModel
         [ObservableProperty]
         private ImageSource uploadedImage;
 
+        [ObservableProperty]
+        private byte[] imageAsByte;
+
         private async Task LoadCountry()
         {
             var countriesDic = new dbConnetcion.SQLQueries.CountriesDic();
@@ -129,21 +132,23 @@ namespace FiszkiApp.ViewModel
                     // Use a `using` statement to ensure the stream is disposed of properly
                     using (var stream = await result.OpenReadAsync())
                     {
-                        // Create the ImageSource from the stream and set it to the property
-                        UploadedImage = ImageSource.FromStream(() => {
-                            // Create a MemoryStream to hold the image data
-                            var memoryStream = new MemoryStream();
-                            stream.CopyTo(memoryStream);
-                            memoryStream.Position = 0; // Reset the position to the beginning
-                            return memoryStream;
-                        });
-                        stream.Position = 0;
+                        //// Create the ImageSource from the stream and set it to the property
+                        //UploadedImage = ImageSource.FromStream(() => {
+                        //    // Create a MemoryStream to hold the image data
+                        //    var memoryStream = new MemoryStream();
+                        //    stream.CopyTo(memoryStream);
+                        //    memoryStream.Position = 0; // Reset the position to the beginning
+                        //    return memoryStream;
+                        //});
+                        //stream.Position = 0;
 
-                        using (MemoryStream memoryStream = new MemoryStream())
+                        using (var memoryStream = new MemoryStream())
                         {
-                            stream.CopyTo(memoryStream);
-                            byte[] imageBytes = memoryStream.ToArray();
-                            user.UploadedImage = imageBytes;
+                            await stream.CopyToAsync(memoryStream);
+
+                            // Convert the memory stream to a byte array and assign it to the user's UploadedImage
+                            user.UploadedImage = memoryStream.ToArray();
+                            ImageAsByte = user.UploadedImage;
                         }
 
 

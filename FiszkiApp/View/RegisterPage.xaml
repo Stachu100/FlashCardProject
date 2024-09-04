@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:FiszkiApp.ViewModel"
              x:DataType="vm:RegisterViewModel"
-             x:Class="FiszkiApp.View.RegisterPage"             
+             x:Class="FiszkiApp.View.RegisterPage"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Converters;assembly=CommunityToolkit.Maui"
              Shell.NavBarIsVisible="False">
     <ContentPage.BindingContext>
         <vm:RegisterViewModel />
@@ -21,12 +22,12 @@
             </Grid.RowDefinitions>
             <Label Grid.Row="1" Text="Rejestracja" HorizontalOptions="Center" FontSize="Title" FontAttributes="Bold" Padding="0" Margin="0"/>
 
-            <StackLayout Grid.Row="2" Orientation="Vertical" HorizontalOptions="FillAndExpand" Spacing="10">
-                <Frame HeightRequest="60" WidthRequest="60" CornerRadius="30" Padding="0" Margin="0,0,0,0" HorizontalOptions="Center">
-                    <Image Source="{Binding UploadedImage}" />
-                </Frame>
-                
-                <Button Text="Wybierz avatar" FontAttributes="Bold" CornerRadius="30" WidthRequest="200" Margin="0,15,0,0" Command="{Binding AvatarCommand}"/>
+                <StackLayout Grid.Row="2" Orientation="Vertical" HorizontalOptions="FillAndExpand" Spacing="10">
+                    <Frame HeightRequest="60" WidthRequest="60" CornerRadius="30" Padding="0" Margin="0,0,0,0" HorizontalOptions="Center">
+                        <Image Source="{Binding ImageAsByte, Converter={toolkit:ByteArrayToImageSourceConverter}}" />
+                    </Frame>
+
+                    <Button Text="Wybierz avatar" FontAttributes="Bold" CornerRadius="30" WidthRequest="200" Margin="0,15,0,0" Command="{Binding AvatarCommand}"/>
                 <Frame BackgroundColor="Transparent" Padding="0" HorizontalOptions="FillAndExpand" CornerRadius="30">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                         <Entry Text="{Binding User.Name}" Placeholder="Nazwa" TextColor="Black" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,20,0"/>

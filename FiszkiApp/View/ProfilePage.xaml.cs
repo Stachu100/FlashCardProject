@@ -17,10 +17,10 @@ public partial class ProfilePage : ContentPage
     {
         base.OnAppearing();
 
-        // SprawdŸ, czy kontekst danych jest prawid³owy i ViewModel istnieje
+        
         if (BindingContext is ProfileViewModel viewModel)
         {
-            await viewModel.OnNavigatedTo(null); // Mo¿esz przekazaæ null, jeœli nie u¿ywasz NavigationEventArgs
+            await viewModel.OnNavigatedTo(null); 
         }
     }
 }

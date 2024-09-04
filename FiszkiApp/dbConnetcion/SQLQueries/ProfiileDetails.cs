@@ -15,7 +15,7 @@ namespace FiszkiApp.dbConnetcion.SQLQueries
             MySQLCreate mySQLCreate = new MySQLCreate();
             using (var conn = new MySqlConnection(MySQLCreate.connectionString))
             {
-                byte[] userImg = null;
+                byte[] userImg;
                 string firstName = "";
                 string lastName = "";
                 string country = "";
@@ -28,7 +28,7 @@ namespace FiszkiApp.dbConnetcion.SQLQueries
                         {
                             getUserDetails.Transaction = transaction;
                             getUserDetails.CommandText = "SELECT FirstName, LastName, Country, Avatar From userdetails where ID_User = @userId;";
-                            getUserDetails.Parameters.AddWithValue("userId", UserId);
+                            getUserDetails.Parameters.AddWithValue("@userId", UserId);
 
                             using (var reader = await getUserDetails.ExecuteReaderAsync())
                             {
