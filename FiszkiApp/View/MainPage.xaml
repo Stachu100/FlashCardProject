@@ -2,12 +2,27 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:FiszkiApp.ViewModel"
-             x:DataType="viewmodel:MainViewModel"
+             x:DataType="viewmodel:MainPageViewModel"
              x:Class="FiszkiApp.View.MainPage">
 
-    <Label 
-    Text="MainPage"
-    VerticalOptions="Center" 
-    HorizontalOptions="Center" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+        <StackLayout Grid.Row="0">
+            <Button  
+            Text="Dodaj kategorię" FontAttributes="Bold" CornerRadius="30" WidthRequest="200" Margin="0,15,0,0" Command="{Binding AddCategoryCommand}" />
+        </StackLayout>
+
+        <Grid Grid.Row="1" VerticalOptions="End">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5" />
+            </Grid.RowDefinitions>
+
+            <BoxView Grid.Row="0" Color="Red" />
+        </Grid>
+    </Grid>
 
 </ContentPage>
