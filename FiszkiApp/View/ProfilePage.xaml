@@ -20,7 +20,21 @@
             
             <Label Text="{Binding User}" VerticalOptions="Center" HorizontalOptions="Center"/>
             <Label Text="{Binding Country}" VerticalOptions="Center" HorizontalOptions="Center"/>
-
+            <Picker ItemsSource="{Binding CountryPicker}" SelectedItem="{Binding CountryPicked}"  Title="Wybierz język"/>
+            <ListView ItemsSource="{Binding Items}" Margin="0,20,0,0">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Padding="10">
+                                <!-- Wyświetlanie obrazu -->
+                                <Image Source="{Binding }" WidthRequest="50" HeightRequest="50"/>
+                                <!-- Wyświetlanie tekstu -->
+                                <!--<Label Text="{Binding Name}" VerticalOptions="Center" Margin="10,0,0,0"/>-->
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
             <Button Text="Wyloguj się" Command="{Binding LogoutCommandCommand}" FontAttributes="Bold" CornerRadius="30" WidthRequest="200" Margin="0,15,0,0"/>
         </StackLayout>
     </ScrollView>
