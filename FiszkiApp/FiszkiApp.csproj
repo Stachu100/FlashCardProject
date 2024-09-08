@@ -101,6 +101,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="View\AddCategoryPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\FlashCardList.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

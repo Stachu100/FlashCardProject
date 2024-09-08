@@ -65,5 +65,25 @@
             </StackLayout>
         </Grid>
 
+        <Grid Grid.Row="2" VerticalOptions="End">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+            <BoxView Grid.Row="0" Color="Red" />
+            <BoxView Grid.Row="1" Color="#512BD4"/>
+
+            <Grid Grid.Row="1" Padding="10,0" ColumnSpacing="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Text="CodeBros (c) Wszelkie prawa zastrzeżone" TextColor="White" VerticalOptions="Center" HorizontalOptions="Start"/>
+                <Label Grid.Column="1" Text="Wersja aplikacji: 1.00" TextColor="White" VerticalOptions="Center" HorizontalOptions="End"/>
+            </Grid>
+        </Grid>
+
     </Grid>
 </ContentPage>

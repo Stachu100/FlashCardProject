@@ -3,10 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FiszkiApp.View.FlashCardList"
              Title="Lista">
-    <VerticalStackLayout>
-        <Label 
-            Text="Lista"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+        <VerticalStackLayout Grid.Row="0">
+            <Label 
+                Text="Lista"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="1" VerticalOptions="End">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5" />
+            </Grid.RowDefinitions>
+
+            <BoxView Grid.Row="0" Color="Red" />
+        </Grid>
+    </Grid>
 </ContentPage>

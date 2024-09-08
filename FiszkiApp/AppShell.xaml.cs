@@ -15,7 +15,16 @@ namespace FiszkiApp
             Routing.RegisterRoute(nameof(ProfilePage), typeof(ProfilePage));
             Routing.RegisterRoute(nameof(LoadingPage), typeof(LoadingPage));
 
+            BindingContext = this;
 
         }
+
+        public Command LogoutCommand => new Command(async () => await LogoutAsync());
+
+        private async Task LogoutAsync()
+        {
+            await Shell.Current.GoToAsync("//LoginPage");
+        }
+
     }
 }

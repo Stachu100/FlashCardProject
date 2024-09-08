@@ -8,7 +8,7 @@ namespace FiszkiApp.View
         public MainPage()
         {
             InitializeComponent();
-            BindingContext = new MainViewModel();
+            BindingContext = new MainPageViewModel();
 
             Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
         }
