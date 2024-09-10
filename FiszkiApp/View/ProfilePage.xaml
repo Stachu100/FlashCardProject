@@ -4,11 +4,11 @@
              x:Class="FiszkiApp.View.ProfilePage"
              xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Converters;assembly=CommunityToolkit.Maui"
              xmlns:vm="clr-namespace:FiszkiApp.ViewModel"
-             x:DataType="vm:ProfileViewModel"
              xmlns:converters="clr-namespace:FiszkiApp.EntityClasses"
              Title="Profile">
 
     <ScrollView>
+        
         <StackLayout Padding="20" VerticalOptions="Center" HorizontalOptions="Center">
             <Label 
                 Text="Profil"
@@ -21,15 +21,15 @@
             <Label Text="{Binding User}" VerticalOptions="Center" HorizontalOptions="Center"/>
             <Label Text="{Binding Country}" VerticalOptions="Center" HorizontalOptions="Center"/>
             <Picker ItemsSource="{Binding CountryPicker}" SelectedItem="{Binding CountryPicked}"  Title="Wybierz język"/>
-            <ListView ItemsSource="{Binding Items}" Margin="0,20,0,0">
+            <ListView  ItemsSource="{Binding Items}" Margin="0,20,0,0">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" Padding="10">
                                 <!-- Wyświetlanie obrazu -->
-                                <Image Source="{Binding }" WidthRequest="50" HeightRequest="50"/>
+                                <Image Source="{Binding Image}" WidthRequest="50" HeightRequest="50"/>
                                 <!-- Wyświetlanie tekstu -->
-                                <!--<Label Text="{Binding Name}" VerticalOptions="Center" Margin="10,0,0,0"/>-->
+                                <Label Text="{Binding Name}" VerticalOptions="Center" Margin="10,0,0,0"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

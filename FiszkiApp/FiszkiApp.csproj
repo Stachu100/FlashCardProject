@@ -83,6 +83,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\Flags\flag_england.png" />
+	  <None Remove="Resources\Images\Flags\flag_espana.png" />
 	  <None Remove="Resources\Images\Flags\flag_poland.png" />
 	</ItemGroup>
 
@@ -122,6 +124,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Include="Resources\Images\Flags\flag_england.png" />
+	  <MauiImage Include="Resources\Images\Flags\flag_espana.png" />
 	  <MauiImage Include="Resources\Images\Flags\flag_poland.png" />
 	</ItemGroup>
 

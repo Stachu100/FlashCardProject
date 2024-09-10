@@ -10,8 +10,7 @@ public partial class ProfilePage : ContentPage
 	{
 		InitializeComponent();
         _authService = authService;
-        var ProfileViewModel = new ProfileViewModel(_authService);
-        BindingContext = ProfileViewModel;
+        BindingContext = new ProfileViewModel(_authService);       
     }
     protected override async void OnAppearing()
     {

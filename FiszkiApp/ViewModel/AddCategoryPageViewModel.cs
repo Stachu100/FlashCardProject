@@ -51,7 +51,7 @@ namespace FiszkiApp.ViewModel
 
         public IAsyncRelayCommand CancelCategoryCommand => new AsyncRelayCommand(CancelCategory);
 
-        // Metoda pobierania języków za pomocą CountriesDic
+       
         private async Task LoadLanguages()
         {
             var languages = await _countriesDic.Countries();
@@ -74,7 +74,7 @@ namespace FiszkiApp.ViewModel
             }
             else
             {
-                await Shell.Current.GoToAsync("//LoginPage");
+                await Shell.Current.GoToAsync("//LoginPage");                
             }
         }
 

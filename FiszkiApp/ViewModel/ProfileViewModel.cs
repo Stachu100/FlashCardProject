@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using Microsoft.Maui.Controls;
 using FiszkiApp.EntityClasses;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FiszkiApp.ViewModel
 {
@@ -19,8 +20,10 @@ namespace FiszkiApp.ViewModel
     {
 
         public IAsyncRelayCommand LoadCountriesCommand { get; }
-        public ObservableCollection<ImageSource> Items { get; } = new ObservableCollection<ImageSource>();
-        //public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
+        public IAsyncRelayCommand LoadCountriesUrlCommand { get; }
+
+        private List<(string Country, string Url)> countriesWithUrl;
+        public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
 
         [ObservableProperty]
         private byte[] imageAsBytes;
@@ -38,8 +41,15 @@ namespace FiszkiApp.ViewModel
         private string countryPicked;
         partial void OnCountryPickedChanged(string value)
         {
-                AddItem(value, "Flags/flag_poland.jpg");
-                CountryPicked = null;            
+            var isAny = Items.FirstOrDefault(x => x.Name == value);
+
+            if (isAny == null || string.IsNullOrEmpty(isAny.Name))
+            {
+                var result = countriesWithUrl.Find(x => x.Country == value);
+                AddItem(result.Country, result.Url);
+                
+            }
+            CountryPicked = null;
         }
 
         public ProfileViewModel(AuthService authService)
@@ -47,6 +57,8 @@ namespace FiszkiApp.ViewModel
             _authService = authService;
             LoadCountriesCommand = new AsyncRelayCommand(LoadCountry);
             LoadCountriesCommand.Execute(null);
+            LoadCountriesUrlCommand = new AsyncRelayCommand(LoadCountryUrl);
+            LoadCountriesUrlCommand.Execute(null);
         }
 
         public async Task OnNavigatedTo(NavigationEventArgs args)
@@ -71,6 +83,12 @@ namespace FiszkiApp.ViewModel
             var countries = await countriesDic.Countries();
             CountryPicker = new ObservableCollection<string>(countries);
         }
+        private async Task LoadCountryUrl()
+        {
+            var countriesUrl = new dbConnetcion.SQLQueries.CountriesUrl();
+            countriesWithUrl = await countriesUrl.CountriesU();
+        }
+
 
         private readonly AuthService _authService;
 
@@ -81,36 +99,16 @@ namespace FiszkiApp.ViewModel
             Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
         }
 
-        void AddItem(string strValue, string imagePath)
+        private void AddItem(string name, string imageName)
         {
-            if (!string.IsNullOrEmpty(strValue))
+            if (!string.IsNullOrEmpty(name))
             {
-
-                ImageSource imgSource = ImageSource.FromFile(imagePath);
-
-
-                if (!Items.Contains((imgSource)))
-                // if (!Items.Any(item => item.Text == strValue && item.Image == imgSource))
-                {
-                    Items.Add((imgSource));
-                    //Items.Add(new Item { Text = strValue, Image = imgSource });
-                    CountryPicked = null;
-                }
+                ImageSource imgSource = ImageSource.FromFile(imageName);
+                var item = new EntityClasses.Item { Name = name, Image = imgSource };    
+                
+                Items.Add(item);
+                
             }
         }
-        //private void AddItem(string name, string imageName)
-        //{
-        //    if (!string.IsNullOrEmpty(name))
-        //    {
-        //        ImageSource imgSource = ImageSource.FromFile(imageName);
-        //        var item = new EntityClasses.Item { Name = name, Image = imgSource };
-
-        //        // Sprawdź, czy element już istnieje, zanim go dodasz
-        //        if (!Items.Any(i => i.Name == name && i.Image == imgSource))
-        //        {
-        //            Items.Add(item);
-        //        }
-        //    }
-        //}
     }
 }
