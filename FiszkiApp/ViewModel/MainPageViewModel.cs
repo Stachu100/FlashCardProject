@@ -81,7 +81,7 @@ namespace FiszkiApp.ViewModel
 
                 if (category.CategoryID > 0)
                 {
-                    await Shell.Current.GoToAsync($"//{nameof(AddFlashcardsPage)}?CategoryId={category.CategoryID}");
+                    await Shell.Current.GoToAsync($"{nameof(AddFlashcardsPage)}?CategoryId={category.CategoryID}");
                 }
                 else
                 {
