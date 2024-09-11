@@ -63,19 +63,26 @@ namespace FiszkiApp.ViewModel
 
         public async Task OnNavigatedTo(NavigationEventArgs args)
         {
-            var (isAuthenticated, userID) = await _authService.IsAuthenticatedAsync();
-            int IntUserId = Convert.ToInt32(userID);
-            var profileDetails = new dbConnetcion.SQLQueries.ProfiileDetails();
-            var (uploadedImage, user, country) = await profileDetails.UserDetails(IntUserId);
-
-            if (uploadedImage.Length > 0)
+            try
             {
-                ImageAsBytes = uploadedImage;
-            }
-            User = user;
-            Country = "Kraj pochodzenia: " + country;
+                var (isAuthenticated, userID) = await _authService.IsAuthenticatedAsync();
+                int IntUserId = Convert.ToInt32(userID);
+                var profileDetails = new dbConnetcion.SQLQueries.ProfiileDetails();
+                var (uploadedImage, user, country) = await profileDetails.UserDetails(IntUserId);
 
+                if (uploadedImage.Length > 0)
+                {
+                    ImageAsBytes = uploadedImage;
+                }
+                User = user;
+                Country = "Kraj pochodzenia: " + country;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Wystąpił błąd podczas dodawania obrazka: {ex.Message}");
+            }
         }
+
 
         private async Task LoadCountry()
         {

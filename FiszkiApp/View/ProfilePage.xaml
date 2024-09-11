@@ -7,35 +7,50 @@
              xmlns:converters="clr-namespace:FiszkiApp.EntityClasses"
              Title="Profile">
 
-    <ScrollView>
-        
-        <StackLayout Padding="20" VerticalOptions="Center" HorizontalOptions="Center">
-            <Label 
-                Text="Profil"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
-            <Frame HeightRequest="60" WidthRequest="60" CornerRadius="30" Padding="0" Margin="0,0,0,0" HorizontalOptions="Center">
-                <Image Source="{Binding ImageAsBytes, Converter={toolkit:ByteArrayToImageSourceConverter}}" />
-            </Frame>
-            
-            <Label Text="{Binding User}" VerticalOptions="Center" HorizontalOptions="Center"/>
-            <Label Text="{Binding Country}" VerticalOptions="Center" HorizontalOptions="Center"/>
-            <Picker ItemsSource="{Binding CountryPicker}" SelectedItem="{Binding CountryPicked}"  Title="Wybierz język"/>
-            <ListView  ItemsSource="{Binding Items}" Margin="0,20,0,0">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal" Padding="10">
-                                <!-- Wyświetlanie obrazu -->
-                                <Image Source="{Binding Image}" WidthRequest="50" HeightRequest="50"/>
-                                <!-- Wyświetlanie tekstu -->
-                                <Label Text="{Binding Name}" VerticalOptions="Center" Margin="10,0,0,0"/>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <Button Text="Wyloguj się" Command="{Binding LogoutCommandCommand}" FontAttributes="Bold" CornerRadius="30" WidthRequest="200" Margin="0,15,0,0"/>
-        </StackLayout>
-    </ScrollView>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+        <ScrollView Grid.Row="0">
+            <StackLayout Padding="20" HorizontalOptions="Center">
+                <Label 
+                    Text="Profil"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center" />
+                <Frame HeightRequest="60" WidthRequest="60" CornerRadius="30" Padding="0" Margin="0,0,0,0" HorizontalOptions="Center">
+                    <Image Source="{Binding ImageAsBytes, Converter={toolkit:ByteArrayToImageSourceConverter}}" />
+                </Frame>
+
+                <Label Text="{Binding User}" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <Label Text="{Binding Country}" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <Picker ItemsSource="{Binding CountryPicker}" SelectedItem="{Binding CountryPicked}"  Title="Wybierz język"/>
+                <ListView  ItemsSource="{Binding Items}" Margin="0,20,0,0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal" Padding="10">
+                                    <!-- Wyświetlanie obrazu -->
+                                    <Image Source="{Binding Image}" WidthRequest="50" HeightRequest="50"/>
+                                    <!-- Wyświetlanie tekstu -->
+                                    <Label Text="{Binding Name}" VerticalOptions="Center" Margin="10,0,0,0"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button Text="Wyloguj się" Command="{Binding LogoutCommandCommand}" FontAttributes="Bold" CornerRadius="30" WidthRequest="200" Margin="0,15,0,0"/>
+            </StackLayout>
+        </ScrollView>
+
+        <Grid Grid.Row="1" VerticalOptions="End">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5" />
+            </Grid.RowDefinitions>
+
+            <BoxView Grid.Row="0" Color="Red" />
+        </Grid>
+    </Grid>
+
 </ContentPage>

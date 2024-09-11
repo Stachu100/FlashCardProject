@@ -69,6 +69,7 @@ namespace FiszkiApp.ViewModel
 
                 if (result == "Kategoria została dodana pomyślnie")
                 {
+                    ResetForm();
                     await Shell.Current.GoToAsync("//MainPage");
                 }
             }
@@ -80,7 +81,16 @@ namespace FiszkiApp.ViewModel
 
         private async Task CancelCategory()
         {
+            ResetForm();
             await Shell.Current.GoToAsync("//MainPage");
+        }
+
+        private void ResetForm()
+        {
+            CategoryName = string.Empty;
+            SelectedLanguageLevel = null;
+            SelectedFrontLanguage = null;
+            SelectedBackLanguage = null;
         }
     }
 }

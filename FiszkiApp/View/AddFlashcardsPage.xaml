@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:FiszkiApp.ViewModel"          
+             x:Class="FiszkiApp.View.AddFlashcardsPage"
+             x:DataType="viewmodel:AddFlashcardsPageViewModel">
+
+    <StackLayout Padding="10">
+        <Entry Placeholder="Przód fiszki" Text="{Binding FrontText}" />
+        <Entry Placeholder="Tył fiszki" Text="{Binding BackText}" />
+
+        <Button Text="Kolejna" Margin="20"  Command="{Binding AddNextFlashcardCommand}" />
+        <Button Text="Zatwierdź" Margin="20" Command="{Binding SubmitFlashcardsCommand}" />
+
+        <!-- Lista dodanych fiszek jeszcze nie działa -->
+        <ListView ItemsSource="{Binding Flashcards}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding FrontText}" Detail="{Binding BackText}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
