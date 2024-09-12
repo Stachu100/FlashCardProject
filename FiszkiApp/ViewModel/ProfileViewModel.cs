@@ -21,6 +21,7 @@ namespace FiszkiApp.ViewModel
 
         public IAsyncRelayCommand LoadCountriesCommand { get; }
         public IAsyncRelayCommand LoadCountriesUrlCommand { get; }
+        public Command<object> DeleteCommand { get; set; }
 
         private List<(string Country, string Url)> countriesWithUrl;
         public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
@@ -59,6 +60,13 @@ namespace FiszkiApp.ViewModel
             LoadCountriesCommand.Execute(null);
             LoadCountriesUrlCommand = new AsyncRelayCommand(LoadCountryUrl);
             LoadCountriesUrlCommand.Execute(null);
+            DeleteCommand = new Command<object>(OnTapped);
+        }
+
+        private void OnTapped(object obj)
+        {
+            var item = obj as Item;
+            Items.Remove(item);            
         }
 
         public async Task OnNavigatedTo(NavigationEventArgs args)

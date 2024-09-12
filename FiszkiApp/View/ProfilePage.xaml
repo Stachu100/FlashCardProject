@@ -26,16 +26,25 @@
                 <Label Text="{Binding User}" VerticalOptions="Center" HorizontalOptions="Center"/>
                 <Label Text="{Binding Country}" VerticalOptions="Center" HorizontalOptions="Center"/>
                 <Picker ItemsSource="{Binding CountryPicker}" SelectedItem="{Binding CountryPicked}"  Title="Wybierz język"/>
-                <ListView  ItemsSource="{Binding Items}" Margin="0,20,0,0">
+                <ListView  x:Name="listView" ItemsSource="{Binding Items}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout Orientation="Horizontal" Padding="10">
+                                <Grid Padding="10" VerticalOptions="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <!--<StackLayout Orientation="Horizontal" Padding="10">-->
                                     <!-- Wyświetlanie obrazu -->
-                                    <Image Source="{Binding Image}" WidthRequest="50" HeightRequest="50"/>
+                                        <Image Source="{Binding Image}" WidthRequest="50" HeightRequest="50" Grid.Column="0"/>
                                     <!-- Wyświetlanie tekstu -->
-                                    <Label Text="{Binding Name}" VerticalOptions="Center" Margin="10,0,0,0"/>
-                                </StackLayout>
+                                        <Label Text="{Binding Name}" Margin="0,0,0,0" Grid.Column="1"/>
+                                        <Button WidthRequest="70" TextColor="White" BackgroundColor="Red" HorizontalOptions="End"  Text="Usuń" Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference listView}}" CommandParameter="{Binding .}" Grid.Column="2"/>
+                                <!--</StackLayout>-->
+                                </Grid>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
