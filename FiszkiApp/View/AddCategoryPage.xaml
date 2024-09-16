@@ -6,60 +6,73 @@
              x:Class="FiszkiApp.View.AddCategoryPage"
              x:DataType="viewmodel:AddCategoryViewModel">
 
-    <StackLayout Padding="20">
-        <Label Text="Dodaj nową" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
 
-        <Label Text="Nazwa kategorii*" />
-        <Entry 
-            x:Name="CategoryNameEntry" 
-            Placeholder="Wpisz nazwę kategorii" 
-            MaxLength="50"
-            Text="{Binding CategoryName}" />
+        <StackLayout Padding="20" Grid.Row="0">
+            <Label Text="Dodaj nową" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
 
-        <Label Text="Poziom językowy" />
-        <Picker 
-            x:Name="LanguageLevelPicker" 
-            ItemsSource="{Binding LanguageLevel}" 
-            SelectedItem="{Binding SelectedLanguageLevel}" />
+            <Label Text="Nazwa kategorii*" />
+            <Entry 
+                x:Name="CategoryNameEntry" 
+                Placeholder="Wpisz nazwę kategorii" 
+                MaxLength="50"
+                Text="{Binding CategoryName}" />
 
-        <Label Text="Język przodu fiszek*" />
-        <Picker 
-            x:Name="FrontLanguagePicker" 
-            ItemsSource="{Binding FrontLanguages}" 
-            SelectedItem="{Binding SelectedFrontLanguage}" />
+            <Label Text="Poziom językowy" />
+            <Picker 
+                x:Name="LanguageLevelPicker" 
+                ItemsSource="{Binding LanguageLevel}" 
+                SelectedItem="{Binding SelectedLanguageLevel}" />
 
-        <Label Text="Język tyłu fiszek*" />
-        <Picker 
-            x:Name="BackLanguagePicker" 
-            ItemsSource="{Binding BackLanguages}" 
-            SelectedItem="{Binding SelectedBackLanguage}" />
+            <Label Text="Język przodu fiszek*" />
+            <Picker 
+                x:Name="FrontLanguagePicker" 
+                ItemsSource="{Binding FrontLanguages}" 
+                SelectedItem="{Binding SelectedFrontLanguage}" />
 
-        <Label Text="Pola oznaczone gwiazdką (*) są wymagane" 
-               HorizontalOptions="Center" 
-               FontAttributes="Italic" 
-               TextColor="Gray" />
+            <Label Text="Język tyłu fiszek*" />
+            <Picker 
+                x:Name="BackLanguagePicker" 
+                ItemsSource="{Binding BackLanguages}" 
+                SelectedItem="{Binding SelectedBackLanguage}" />
 
-        <Button 
-            Text="Zatwierdź" 
-            FontAttributes="Bold" 
-            CornerRadius="30" 
-            WidthRequest="200" 
-            Margin="0,15,0,0"
-            Command="{Binding SubmitCategoryCommand}"/>
+            <Label Text="Pola oznaczone gwiazdką (*) są wymagane" 
+                   HorizontalOptions="Center" 
+                   FontAttributes="Italic" 
+                   TextColor="Gray" />
 
-        <Label 
-            Text="Anuluj" 
-            FontAttributes="Bold"
-            TextColor="Blue" 
-            FontSize="Medium"
-            HorizontalOptions="Center"
-            VerticalOptions="EndAndExpand"
-            TextDecorations="Underline">
-            <Label.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding CancelCategoryCommand}" />
-            </Label.GestureRecognizers>
-        </Label>
+            <Button 
+                Text="Zatwierdź" 
+                FontAttributes="Bold" 
+                CornerRadius="30" 
+                WidthRequest="200" 
+                Margin="0,15,0,0"
+                Command="{Binding SubmitCategoryCommand}"/>
 
-    </StackLayout>
+            <Label 
+                Text="Anuluj" 
+                FontAttributes="Bold"
+                TextColor="Blue" 
+                FontSize="Medium"
+                HorizontalOptions="Center"
+                VerticalOptions="EndAndExpand"
+                TextDecorations="Underline">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CancelCategoryCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+        </StackLayout>
 
+        <Grid Grid.Row="1" VerticalOptions="End">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5" />
+            </Grid.RowDefinitions>
+
+            <BoxView Grid.Row="0" Color="Red" />
+        </Grid>
+    </Grid>
 </ContentPage>

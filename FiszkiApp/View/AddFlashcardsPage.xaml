@@ -5,20 +5,35 @@
              x:Class="FiszkiApp.View.AddFlashcardsPage"
              x:DataType="viewmodel:AddFlashcardsPageViewModel">
 
-    <StackLayout Padding="10">
-        <Entry Placeholder="Przód fiszki" Text="{Binding FrontText}" />
-        <Entry Placeholder="Tył fiszki" Text="{Binding BackText}" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
 
-        <Button Text="Kolejna" Margin="20"  Command="{Binding AddNextFlashcardCommand}" />
-        <Button Text="Zatwierdź" Margin="20" Command="{Binding SubmitFlashcardsCommand}" />
+        <StackLayout Padding="10" Grid.Row="0">
+            <Entry Placeholder="Przód fiszki" Text="{Binding FrontText}" />
+            <Entry Placeholder="Tył fiszki" Text="{Binding BackText}" />
 
-        <!-- Lista dodanych fiszek jeszcze nie działa -->
-        <ListView ItemsSource="{Binding Flashcards}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding FrontText}" Detail="{Binding BackText}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </StackLayout>
+            <Button Text="Kolejna" Margin="20" Command="{Binding AddNextFlashcardCommand}" />
+            <Button Text="Zatwierdź" Margin="20" Command="{Binding SubmitFlashcardsCommand}" />
+
+            <!-- Lista dodanych fiszek jeszcze nie działa -->
+            <ListView ItemsSource="{Binding Flashcards}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding FrontText}" Detail="{Binding BackText}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+
+        <Grid Grid.Row="1" VerticalOptions="End">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5" />
+            </Grid.RowDefinitions>
+
+            <BoxView Grid.Row="0" Color="Red" />
+        </Grid>
+    </Grid>
 </ContentPage>

@@ -16,6 +16,7 @@ namespace FiszkiApp
             Routing.RegisterRoute(nameof(LoadingPage), typeof(LoadingPage));
             Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
             Routing.RegisterRoute(nameof(AddFlashcardsPage), typeof(AddFlashcardsPage));
+            Routing.RegisterRoute(nameof(AddCategoryPage), typeof(AddCategoryPage));
 
             BindingContext = this;
 

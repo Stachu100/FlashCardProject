@@ -20,7 +20,7 @@ namespace FiszkiApp.ViewModel
             _countriesDic = new CountriesDic();
             _databaseService = App.Database;
 
-            LanguageLevel = new ObservableCollection<string> { "brak", "A1", "A2", "B1", "B2", "C1", "C2" };
+            LanguageLevel = new ObservableCollection<string> { "Brak", "A1", "A2", "B1", "B2", "C1", "C2" };
             LoadLanguagesCommand = new AsyncRelayCommand(LoadLanguages);
             LoadLanguagesCommand.Execute(null);
         }
@@ -61,12 +61,20 @@ namespace FiszkiApp.ViewModel
 
         private async Task SubmitCategory()
         {
+            if (string.IsNullOrWhiteSpace(CategoryName) ||
+                string.IsNullOrWhiteSpace(SelectedFrontLanguage) ||
+                string.IsNullOrWhiteSpace(SelectedBackLanguage) ||
+                string.IsNullOrWhiteSpace(SelectedLanguageLevel))
+            {
+                await Shell.Current.DisplayAlert("Błąd", "Wszystkie pola oznaczone gwiazdką (*) są wymagane.", "OK");
+                return;
+            }
             var newCategory = new LocalCategoryTable
             {
                 CategoryName = CategoryName,
                 FrontLanguage = SelectedFrontLanguage,
                 BackLanguage = SelectedBackLanguage,
-                LanguageLevel = SelectedLanguageLevel == "brak" ? null : SelectedLanguageLevel // Zamiana "brak" na null
+                LanguageLevel = SelectedLanguageLevel == "Brak" ? null : SelectedLanguageLevel // Zamiana "brak" na null
             };
 
             await _databaseService.AddCategoryAsync(newCategory);

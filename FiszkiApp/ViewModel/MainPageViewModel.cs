@@ -50,7 +50,7 @@ namespace FiszkiApp.ViewModel
         [RelayCommand]
         public async Task AddCategory()
         {
-            await Shell.Current.GoToAsync($"//{nameof(AddCategoryPage)}");
+            await Shell.Current.GoToAsync("AddCategoryPage");
         }
 
         private async Task LoadCategoriesAsync()
