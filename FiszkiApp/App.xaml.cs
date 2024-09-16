@@ -1,12 +1,15 @@
 ﻿using Microsoft.Extensions.Configuration;
+using FiszkiApp.Services;
+using System;
 using System.IO;
-
 
 namespace FiszkiApp
 {
     public partial class App : Application
     {
         public static IConfiguration Configuration { get; private set; }
+        private static DatabaseService _databaseService;
+
         public App()
         {
             InitializeComponent();
@@ -17,8 +20,20 @@ namespace FiszkiApp
 
             Configuration = builder.Build();
 
-
             MainPage = new AppShell();
+        }
+
+        public static DatabaseService Database
+        {
+            get
+            {
+                if (_databaseService == null)
+                {
+                    var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "FiszkiApp.db3");
+                    _databaseService = new DatabaseService(dbPath);
+                }
+                return _databaseService;
+            }
         }
     }
 }

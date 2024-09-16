@@ -15,29 +15,37 @@ namespace FiszkiApp.ViewModel
 {
     public partial class MainPageViewModel : MainViewModel
     {
+        private readonly DatabaseService _databaseService;
         private readonly CountriesUrl _countriesUrl;
-        private readonly AuthService _authService;
         private readonly CategoryQuery _categoryQuery;
-       
+        private readonly AuthService _authService;
+
         public MainPageViewModel()
         {
+            _databaseService = App.Database;
             _countriesUrl = new CountriesUrl();
-            _authService = new AuthService();
             _categoryQuery = new CategoryQuery();
-            Categories = new ObservableCollection<Category>();
-            ViewFlashcardsCommand = new AsyncRelayCommand<Category>(ViewFlashcardsAsync);
+            _authService = new AuthService();
+            Categories = new ObservableCollection<LocalCategoryTable>();
+            ViewFlashcardsCommand = new AsyncRelayCommand<LocalCategoryTable>(ViewFlashcardsAsync);
+            SendCategoryCommand = new AsyncRelayCommand<LocalCategoryTable>(SendCategoryAsync);
+            DeleteCategoryCommand = new AsyncRelayCommand<LocalCategoryTable>(DeleteCategoryAsync);
             LoadCategoriesCommand = new AsyncRelayCommand(LoadCategoriesAsync);
             LoadCategoriesCommand.Execute(null);
         }
 
-        [ObservableProperty]
-        private ObservableCollection<Category> categories;
+        
 
         [ObservableProperty]
-        private Category selectedCategory;
+        private ObservableCollection<LocalCategoryTable> categories;
+
+        [ObservableProperty]
+        private LocalCategoryTable selectedCategory;
 
         public IAsyncRelayCommand LoadCategoriesCommand { get; }
-        public IAsyncRelayCommand<Category> ViewFlashcardsCommand { get; }
+        public IAsyncRelayCommand<LocalCategoryTable> SendCategoryCommand { get; }
+        public IAsyncRelayCommand<LocalCategoryTable> DeleteCategoryCommand { get; }
+        public IAsyncRelayCommand<LocalCategoryTable> ViewFlashcardsCommand { get; }
 
         [RelayCommand]
         public async Task AddCategory()
@@ -47,49 +55,66 @@ namespace FiszkiApp.ViewModel
 
         private async Task LoadCategoriesAsync()
         {
-            var (isAuthenticated, userIdString) = await _authService.IsAuthenticatedAsync();
+            var categoriesFromDb = await _databaseService.GetCategoriesAsync();
 
-            if (isAuthenticated && int.TryParse(userIdString, out int userId) && userId > 0)
+            var countryUrls = await _countriesUrl.CountriesU();
+
+            Categories.Clear();
+            foreach (var category in categoriesFromDb)
             {
-                var categoriesFromDb = await _categoryQuery.GetCategoriesAsync(userId);
+                var frontFlag = countryUrls.FirstOrDefault(c => c.Country == category.FrontLanguage).Url;
+                var backFlag = countryUrls.FirstOrDefault(c => c.Country == category.BackLanguage).Url;
 
-                var countryUrls = await _countriesUrl.CountriesU();
+                category.FrontFlagUrl = frontFlag;
+                category.BackFlagUrl = backFlag;
 
-                Categories.Clear();
-                foreach (var category in categoriesFromDb)
-                {
-                    var frontFlag = countryUrls.FirstOrDefault(c => c.Country == category.FrontLanguage).Url;
-                    var backFlag = countryUrls.FirstOrDefault(c => c.Country == category.BackLanguage).Url;
-
-                    category.FrontFlagUrl = frontFlag;
-                    category.BackFlagUrl = backFlag;
-
-                    Categories.Add(category);
-                }
-            }
-            else
-            {
-                await Shell.Current.GoToAsync("//LoginPage");
+                Categories.Add(category);
             }
         }
 
-        private async Task ViewFlashcardsAsync(Category category)
+        private async Task SendCategoryAsync(LocalCategoryTable category)
         {
             if (category != null)
             {
-                Console.WriteLine($"ViewFlashcardsAsync called with CategoryID: {category.CategoryID}");
+                var (isAuthenticated, userIdString) = await _authService.IsAuthenticatedAsync();
 
-                if (category.CategoryID > 0)
+                if (isAuthenticated && int.TryParse(userIdString, out int userId) && userId > 0)
                 {
-                    await Shell.Current.GoToAsync($"{nameof(AddFlashcardsPage)}?CategoryId={category.CategoryID}");
-                }
-                else
-                {
-                    // TESTOWANIE CATEGORY ID CHWILOWO
-                    Console.WriteLine("Invalid CategoryID");
+                    var successMessage = await _categoryQuery.AddCategoryAsync(
+                        userId,
+                        category.CategoryName,
+                        category.FrontLanguage,
+                        category.BackLanguage,
+                        category.LanguageLevel);
+
+                    if (successMessage == "Kategoria została dodana pomyślnie")
+                    {
+                        category.IsSent = 1;
+                        await _databaseService.UpdateCategoryAsync(category);
+                        await LoadCategoriesAsync();
+                    }
                 }
             }
         }
 
+        private async Task DeleteCategoryAsync(LocalCategoryTable category)
+        {
+            if (category != null)
+            {
+                await _databaseService.DeleteCategoryAsync(category);
+                Categories.Remove(category);
+            }
+        }
+
+        private async Task ViewFlashcardsAsync(LocalCategoryTable category)
+        {
+            if (category != null)
+            {
+                await Shell.Current.GoToAsync($"{nameof(AddFlashcardsPage)}?CategoryId={category.IdCategory}");
+            }
+        }
     }
 }
+
+
+

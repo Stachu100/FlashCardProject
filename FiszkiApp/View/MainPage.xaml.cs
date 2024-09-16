@@ -13,5 +13,4 @@ namespace FiszkiApp.View
             Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
         }
     }
-
 }

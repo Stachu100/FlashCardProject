@@ -3,23 +3,24 @@ using CommunityToolkit.Mvvm.Input;
 using FiszkiApp.dbConnetcion.SQLQueries;
 using FiszkiApp.Services;
 using System.Collections.ObjectModel;
+using FiszkiApp.EntityClasses;
 using System.Threading.Tasks;
+using FiszkiApp.View;
+using Microsoft.Maui.Controls;
 
 namespace FiszkiApp.ViewModel
 {
     public partial class AddCategoryViewModel : MainViewModel
     {
         private readonly CountriesDic _countriesDic;
-        private readonly CategoryQuery _categoryQuery;
-        private readonly AuthService _authService;
+        private readonly DatabaseService _databaseService;
 
         public AddCategoryViewModel()
         {
             _countriesDic = new CountriesDic();
-            _categoryQuery = new CategoryQuery();
-            _authService = new AuthService();
+            _databaseService = App.Database;
 
-            LanguageLevels = new ObservableCollection<string> { "brak", "A1", "A2", "B1", "B2", "C1", "C2" };
+            LanguageLevel = new ObservableCollection<string> { "brak", "A1", "A2", "B1", "B2", "C1", "C2" };
             LoadLanguagesCommand = new AsyncRelayCommand(LoadLanguages);
             LoadLanguagesCommand.Execute(null);
         }
@@ -37,7 +38,7 @@ namespace FiszkiApp.ViewModel
         private string selectedBackLanguage;
 
         [ObservableProperty]
-        private ObservableCollection<string> languageLevels;
+        private ObservableCollection<string> languageLevel;
 
         [ObservableProperty]
         private ObservableCollection<string> frontLanguages;
@@ -51,7 +52,6 @@ namespace FiszkiApp.ViewModel
 
         public IAsyncRelayCommand CancelCategoryCommand => new AsyncRelayCommand(CancelCategory);
 
-       
         private async Task LoadLanguages()
         {
             var languages = await _countriesDic.Countries();
@@ -61,27 +61,24 @@ namespace FiszkiApp.ViewModel
 
         private async Task SubmitCategory()
         {
-            var (isAuthenticated, userIdString) = await _authService.IsAuthenticatedAsync();
-
-            if (isAuthenticated && int.TryParse(userIdString, out int userId) && userId > 0)
+            var newCategory = new LocalCategoryTable
             {
-                var result = await _categoryQuery.AddCategoryAsync(userId, CategoryName, SelectedFrontLanguage, SelectedBackLanguage, SelectedLanguageLevel);
+                CategoryName = CategoryName,
+                FrontLanguage = SelectedFrontLanguage,
+                BackLanguage = SelectedBackLanguage,
+                LanguageLevel = SelectedLanguageLevel == "brak" ? null : SelectedLanguageLevel // Zamiana "brak" na null
+            };
 
-                if (result == "Kategoria została dodana pomyślnie")
-                {
-                    ResetForm();
-                    await Shell.Current.GoToAsync("//MainPage");
-                }
-            }
-            else
-            {
-                await Shell.Current.GoToAsync("//LoginPage");                
-            }
+            await _databaseService.AddCategoryAsync(newCategory);
+            ResetForm();
+
+            await Shell.Current.GoToAsync("//MainPage");
         }
 
         private async Task CancelCategory()
         {
             ResetForm();
+
             await Shell.Current.GoToAsync("//MainPage");
         }
 
@@ -94,3 +91,4 @@ namespace FiszkiApp.ViewModel
         }
     }
 }
+

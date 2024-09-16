@@ -19,7 +19,7 @@
         <Label Text="Poziom językowy" />
         <Picker 
             x:Name="LanguageLevelPicker" 
-            ItemsSource="{Binding LanguageLevels}" 
+            ItemsSource="{Binding LanguageLevel}" 
             SelectedItem="{Binding SelectedLanguageLevel}" />
 
         <Label Text="Język przodu fiszek*" />
