@@ -5,7 +5,7 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FiszkiApp", "FiszkiApp\FiszkiApp.csproj", "{E937DA0A-D332-4EC6-B817-A23CDCD47842}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIFlashCard", "API flash card\API flash card\APIFlashCard.csproj", "{D88170E8-90FB-4AC0-8FF4-6CC3ACDE926E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIFlashCard", "APIFlashCard\APIFlashCard\APIFlashCard.csproj", "{D88170E8-90FB-4AC0-8FF4-6CC3ACDE926E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
