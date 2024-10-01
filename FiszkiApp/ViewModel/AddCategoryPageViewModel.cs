@@ -69,6 +69,13 @@ namespace FiszkiApp.ViewModel
                 await Shell.Current.DisplayAlert("Błąd", "Wszystkie pola oznaczone gwiazdką (*) są wymagane.", "OK");
                 return;
             }
+
+            if (SelectedFrontLanguage == SelectedBackLanguage)
+            {
+                await Shell.Current.DisplayAlert("Błąd", "Język przodu i tyłu muszą być różne.", "OK");
+                return;
+            }
+
             var newCategory = new LocalCategoryTable
             {
                 CategoryName = CategoryName,

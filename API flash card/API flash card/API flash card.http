@@ -1,0 +1,5 @@
+@API_flash_card_HostAddress = https://localhost:7190
+
+# Zwróæ u¿ytkownika o podanym ID
+GET {{API_flash_card_HostAddress}}/api/countries/Polska
+Accept: application/json
