@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace API_flash_card.Models
+namespace APIFlashCard.Models
 {
     public class Countries
     {

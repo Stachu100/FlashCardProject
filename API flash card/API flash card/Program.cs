@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using API_flash_card.Data;
+using APIFlashCard.Data;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,7 +1,7 @@
-﻿using API_flash_card.Models;
+﻿using APIFlashCard.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace API_flash_card.Data
+namespace APIFlashCard.Data
 {
     public class FlashCardDbContext : DbContext
     {

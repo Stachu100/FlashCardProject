@@ -1,9 +1,9 @@
-﻿using API_flash_card.Models;
+﻿using APIFlashCard.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using API_flash_card.Data;
+using APIFlashCard.Data;
 
-namespace API_flash_card.Controllers
+namespace APIFlashCard.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
