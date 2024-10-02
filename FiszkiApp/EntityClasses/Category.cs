@@ -1,4 +1,4 @@
-﻿namespace FiszkiApp.Models;
+﻿namespace FiszkiApp.EntityClasses;
 
 public class Category
 {

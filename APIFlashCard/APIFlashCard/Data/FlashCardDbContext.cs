@@ -29,6 +29,7 @@ namespace APIFlashCard.Data
                 .HasKey(ek => ek.ID);
 
             modelBuilder.Entity<Category>()
+                .ToTable("category")
                 .HasOne(c => c.User)
                 .WithMany(u => u.Categories)
                 .HasForeignKey(c => c.UserID);

@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using FiszkiApp.dbConnetcion.SQLQueries;
 using FiszkiApp.ViewModel;
 using FiszkiApp.View;
-using FiszkiApp.Models;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using FiszkiApp.Services;
@@ -17,14 +16,14 @@ namespace FiszkiApp.ViewModel
     {
         private readonly DatabaseService _databaseService;
         private readonly CountriesUrl _countriesUrl;
-        private readonly CategoryQuery _categoryQuery;
+        private readonly CategoryPost _categoryPost;
         private readonly AuthService _authService;
 
         public MainPageViewModel()
         {
             _databaseService = App.Database;
             _countriesUrl = new CountriesUrl();
-            _categoryQuery = new CategoryQuery();
+            _categoryPost = new CategoryPost();
             _authService = new AuthService();
             Categories = new ObservableCollection<LocalCategoryTable>();
             ViewFlashcardsCommand = new AsyncRelayCommand<LocalCategoryTable>(ViewFlashcardsAsync);
@@ -80,15 +79,22 @@ namespace FiszkiApp.ViewModel
 
                 if (isAuthenticated && int.TryParse(userIdString, out int userId) && userId > 0)
                 {
-                    var successMessage = await _categoryQuery.AddCategoryAsync(
-                        userId,
-                        category.CategoryName,
-                        category.FrontLanguage,
-                        category.BackLanguage,
-                        category.LanguageLevel);
-
-                    if (successMessage == "Kategoria została dodana pomyślnie")
+                    // Przygotowanie danych do wysłania
+                    var newCategory = new Category
                     {
+                        UserID = userId,
+                        CategoryName = category.CategoryName,
+                        FrontLanguage = category.FrontLanguage,
+                        BackLanguage = category.BackLanguage,
+                        LanguageLevel = category.LanguageLevel
+                    };
+
+                    // Wysyłanie danych do API
+                    var result = await _categoryPost.AddCategoryAsync(newCategory);
+
+                    if (result)
+                    {
+                        // Aktualizacja statusu lokalnie
                         category.IsSent = 1;
                         await _databaseService.UpdateCategoryAsync(category);
                         await LoadCategoriesAsync();
