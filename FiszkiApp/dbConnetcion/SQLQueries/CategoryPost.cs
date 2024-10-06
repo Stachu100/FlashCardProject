@@ -2,6 +2,7 @@
 using System.Text;
 using Newtonsoft.Json;
 using FiszkiApp.EntityClasses;
+using Microsoft.Extensions.DependencyInjection;
 
 public class CategoryPost
 {
@@ -9,8 +10,10 @@ public class CategoryPost
 
     public CategoryPost()
     {
-        _httpClient = new HttpClient();
-        _httpClient.BaseAddress = new Uri("https://localhost:7190/api/");
+        _httpClient = new HttpClient
+        {
+            BaseAddress = new Uri("http://10.0.2.2:5278/api/")
+        };
     }
 
     public async Task<bool> AddCategoryAsync(Category category)
@@ -19,27 +22,29 @@ public class CategoryPost
         {
             var json = JsonConvert.SerializeObject(category);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("Category", content);
 
-            var response = await _httpClient.PostAsync("category", content);
-
-            // Loguj odpowiedź
             var responseContent = await response.Content.ReadAsStringAsync();
             Console.WriteLine($"Response Status Code: {response.StatusCode}, Content: {responseContent}");
 
             if (response.IsSuccessStatusCode)
             {
-                return true;
+                return true; // Kategoria została dodana
             }
             else
             {
-                // Logowanie błędu lub dodatkowa obsługa
-                return false;
+                Console.WriteLine($"Błąd: {responseContent}"); // Logowanie treści błędu
+                return false; // Nie udało się dodać kategorii
             }
+        }
+        catch (HttpRequestException httpEx)
+        {
+            Console.WriteLine($"HTTP Error: {httpEx.Message}");
+            return false;
         }
         catch (Exception ex)
         {
-            // Obsługa błędów
-            Console.WriteLine($"Exception: {ex.Message}");
+            Console.WriteLine($"General Error: {ex.Message}");
             return false;
         }
     }

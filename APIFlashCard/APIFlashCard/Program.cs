@@ -4,6 +4,16 @@ using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Konfiguracja Kestrel do u¿ywania zarówno HTTP, jak i HTTPS
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5278); // Port HTTP
+    options.ListenAnyIP(7190, listenOptions => // Port HTTPS
+    {
+        listenOptions.UseHttps(); // Aktywuj HTTPS
+    });
+});
+
 // Add services to the container.
 builder.Services.AddControllers();
 
@@ -25,7 +35,6 @@ builder.Services.AddCors(options =>
         });
 });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -39,7 +48,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection(); // Usuñ tê liniê, jeœli nie chcesz korzystaæ z HTTPS
 
 app.UseCors("AllowAllOrigins");
 
