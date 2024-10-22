@@ -55,8 +55,8 @@ namespace FiszkiApp.ViewModel
         private async Task LoadCountry()
         {
             var countriesDic = new dbConnetcion.SQLQueries.CountriesDic();
-            var countries = await countriesDic.Countries();
-            CountryPicker = new ObservableCollection<string>(countries);
+            var countriesWithFlags = await countriesDic.GetCountriesWithFlagsAsync();
+            CountryPicker = new ObservableCollection<string>(countriesWithFlags.Select(c => c.Country));
         }
 
         [RelayCommand]

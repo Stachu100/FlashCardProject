@@ -15,9 +15,5 @@ namespace APIFlashCard.Models
 
         [Required]
         public byte[] UserPassword { get; set; }
-
-        public ICollection<Category> Categories { get; set; }
-        public ICollection<UserDetails> UserDetails { get; set; }
-        public ICollection<EncryptionKeys> EncryptionKeys { get; set; }
     }
 }

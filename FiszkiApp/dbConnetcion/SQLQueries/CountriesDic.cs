@@ -1,48 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Net.Http;
 using System.Threading.Tasks;
-using MySqlConnector;
-using FiszkiApp.dbConnetcion;
+using FiszkiApp.EntityClasses;
+using Newtonsoft.Json;
 
 namespace FiszkiApp.dbConnetcion.SQLQueries
 {
     public class CountriesDic
     {
-        public async Task<List<string>> Countries()
-        {
-            MySQLCreate mySQLCreate = new MySQLCreate();
-            using (var conn = new MySqlConnection(MySQLCreate.connectionString))
-            {
-                try
-                {
-                    await conn.OpenAsync();
-                    using (var transaction = await conn.BeginTransactionAsync())
-                    {
-                        using(var getCoiuntries = conn.CreateCommand())
-                        {
-                            getCoiuntries.Transaction = transaction;
-                            getCoiuntries.CommandText = "SELECT Country FROM countries";
+        private readonly HttpClient _httpClient;
 
-                            using (var reader = await getCoiuntries.ExecuteReaderAsync()) 
-                            {
-                                List<string> result = new List<string>();
-                                while (reader.Read()) 
-                                {
-                                    result.Add(reader.GetString(0));
-                                }
-                                return result;
-                            }
-                        }
-                    }
-                } 
-                catch(Exception ex)
-                {
-                    return new List<string>();
-                }
+        public CountriesDic()
+        {
+            _httpClient = new HttpClient
+            {
+                BaseAddress = new Uri("http://10.0.2.2:5278/api/")
+            };
+        }
+
+        public async Task<List<Countries>> GetCountriesWithFlagsAsync()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync("countries");
+                response.EnsureSuccessStatusCode();
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                var countriesWithFlags = JsonConvert.DeserializeObject<List<Countries>>(responseContent);
+
+                return countriesWithFlags;
             }
-            
+            catch (HttpRequestException httpEx)
+            {
+                Console.WriteLine($"HTTP Error: {httpEx.Message}");
+                return new List<Countries>();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"General Error: {ex.Message}");
+                return new List<Countries>();
+            }
         }
     }
 }

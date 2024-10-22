@@ -26,8 +26,5 @@ namespace APIFlashCard.Models
         public byte[] Avatar { get; set; }
 
         public bool IsAcceptedPolicy { get; set; }
-
-        [ForeignKey("ID_User")]
-        public User User { get; set; }
     }
 }

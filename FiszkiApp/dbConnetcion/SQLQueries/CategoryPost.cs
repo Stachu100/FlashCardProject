@@ -29,12 +29,12 @@ public class CategoryPost
 
             if (response.IsSuccessStatusCode)
             {
-                return true; // Kategoria została dodana
+                return true;
             }
             else
             {
-                Console.WriteLine($"Błąd: {responseContent}"); // Logowanie treści błędu
-                return false; // Nie udało się dodać kategorii
+                Console.WriteLine($"Błąd: {responseContent}");
+                return false;
             }
         }
         catch (HttpRequestException httpEx)

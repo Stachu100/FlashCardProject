@@ -15,14 +15,14 @@ namespace FiszkiApp.ViewModel
     public partial class MainPageViewModel : MainViewModel
     {
         private readonly DatabaseService _databaseService;
-        private readonly CountriesUrl _countriesUrl;
+        private readonly CountriesDic _countriesDic;
         private readonly CategoryPost _categoryPost;
         private readonly AuthService _authService;
 
         public MainPageViewModel()
         {
             _databaseService = App.Database;
-            _countriesUrl = new CountriesUrl();
+            _countriesDic = new CountriesDic();
             _categoryPost = new CategoryPost();
             _authService = new AuthService();
             Categories = new ObservableCollection<LocalCategoryTable>();
@@ -56,7 +56,7 @@ namespace FiszkiApp.ViewModel
         {
             var categoriesFromDb = await _databaseService.GetCategoriesAsync();
 
-            var countryUrls = await _countriesUrl.CountriesU();
+            var countryUrls = await _countriesDic.GetCountriesWithFlagsAsync();
 
             Categories.Clear();
             foreach (var category in categoriesFromDb)
@@ -64,7 +64,7 @@ namespace FiszkiApp.ViewModel
                 var frontFlag = countryUrls.FirstOrDefault(c => c.Country == category.FrontLanguage).Url;
                 var backFlag = countryUrls.FirstOrDefault(c => c.Country == category.BackLanguage).Url;
 
-                category.FrontFlagUrl = frontFlag;
+                category.FrontFlagUrl = frontFlag; //dodać domyślny url poźniej: category.FrontFlagUrl = frontFlag ?? "default_front_flag_url";
                 category.BackFlagUrl = backFlag;
 
                 Categories.Add(category);

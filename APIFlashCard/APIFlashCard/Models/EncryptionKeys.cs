@@ -16,8 +16,5 @@ namespace APIFlashCard.Models
 
         [Required]
         public byte[] IV { get; set; }
-
-        [ForeignKey("ID_User")]
-        public User User { get; set; }
     }
 }

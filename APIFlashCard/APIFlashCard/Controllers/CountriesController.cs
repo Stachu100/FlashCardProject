@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using APIFlashCard.Data;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using APIFlashCard.Data;
+
 using APIFlashCard.Models;
 
 namespace APIFlashCard.Controllers
@@ -16,7 +19,25 @@ namespace APIFlashCard.Controllers
             _context = context;
         }
 
-        // GET: api/countries/polska
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Countries>>> GetAllCountries()
+        {
+            return await _context.Countries.ToListAsync();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Countries>> GetCountryById(int id)
+        {
+            var country = await _context.Countries.FindAsync(id);
+
+            if (country == null)
+            {
+                return NotFound();
+            }
+
+            return country;
+        }
+
         [HttpGet("{countryName}")]
         public async Task<ActionResult<Countries>> GetCountryByName(string countryName)
         {

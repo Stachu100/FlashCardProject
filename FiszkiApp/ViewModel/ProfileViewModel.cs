@@ -44,11 +44,13 @@ namespace FiszkiApp.ViewModel
         {
             var isAny = Items.FirstOrDefault(x => x.Name == value);
 
-            if (isAny == null || string.IsNullOrEmpty(isAny.Name))
+            if (isAny == null)
             {
-                var result = countriesWithUrl.Find(x => x.Country == value);
-                AddItem(result.Country, result.Url);
-                
+                var result = countriesWithUrl.FirstOrDefault(x => x.Country == value);
+                if (!string.IsNullOrEmpty(result.Country))
+                {
+                    AddItem(result.Country, result.Url);
+                }
             }
             CountryPicked = null;
         }
@@ -58,17 +60,16 @@ namespace FiszkiApp.ViewModel
             _authService = authService;
             LoadCountriesCommand = new AsyncRelayCommand(LoadCountry);
             LoadCountriesCommand.Execute(null);
-            LoadCountriesUrlCommand = new AsyncRelayCommand(LoadCountryUrl);
-            LoadCountriesUrlCommand.Execute(null);
             DeleteCommand = new Command<object>(OnTapped);
         }
 
         private void OnTapped(object obj)
         {
-            var item = obj as Item;
-            Items.Remove(item);            
+            if (obj is Item item)
+            {
+                Items.Remove(item);
+            }
         }
-
         public async Task OnNavigatedTo(NavigationEventArgs args)
         {
             try
@@ -95,15 +96,11 @@ namespace FiszkiApp.ViewModel
         private async Task LoadCountry()
         {
             var countriesDic = new dbConnetcion.SQLQueries.CountriesDic();
-            var countries = await countriesDic.Countries();
-            CountryPicker = new ObservableCollection<string>(countries);
-        }
-        private async Task LoadCountryUrl()
-        {
-            var countriesUrl = new dbConnetcion.SQLQueries.CountriesUrl();
-            countriesWithUrl = await countriesUrl.CountriesU();
-        }
+            var countries = await countriesDic.GetCountriesWithFlagsAsync();
 
+            countriesWithUrl = countries.Select(c => (c.Country, c.Url)).ToList();
+            CountryPicker = new ObservableCollection<string>(countries.Select(c => c.Country));
+        }
 
         private readonly AuthService _authService;
 
@@ -111,7 +108,7 @@ namespace FiszkiApp.ViewModel
         public async void LogoutCommand(AuthService authService)
         {
             _authService.Logout();
-            Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+            await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
         }
 
         private void AddItem(string name, string imageName)

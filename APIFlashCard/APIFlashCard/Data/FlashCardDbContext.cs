@@ -16,33 +16,24 @@ namespace APIFlashCard.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>()
+                .ToTable("category")
                 .HasKey(c => c.ID_Category);
 
             modelBuilder.Entity<User>()
                 .ToTable("user")
                 .HasKey(u => u.ID_User);
 
+            modelBuilder.Entity<Countries>()
+                .ToTable("countries")
+                .HasKey(co => co.ID_Country);
+
             modelBuilder.Entity<UserDetails>()
+                .ToTable("userDetails")
                 .HasKey(ud => ud.ID_Detailed);
 
             modelBuilder.Entity<EncryptionKeys>()
+                .ToTable("encryptionKays")
                 .HasKey(ek => ek.ID);
-
-            modelBuilder.Entity<Category>()
-                .ToTable("category");
-                //.HasOne(c => c.User)
-                //.WithMany(u => u.Categories)
-                //.HasForeignKey(c => c.UserID);
-
-            modelBuilder.Entity<UserDetails>()
-                .HasOne(ud => ud.User)
-                .WithMany(u => u.UserDetails)
-                .HasForeignKey(ud => ud.ID_User);
-
-            modelBuilder.Entity<EncryptionKeys>()
-                .HasOne(ek => ek.User)
-                .WithMany(u => u.EncryptionKeys)
-                .HasForeignKey(ek => ek.ID_User);
         }
     }
 }

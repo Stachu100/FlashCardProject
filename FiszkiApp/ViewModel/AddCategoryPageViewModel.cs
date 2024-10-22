@@ -54,10 +54,11 @@ namespace FiszkiApp.ViewModel
 
         private async Task LoadLanguages()
         {
-            var languages = await _countriesDic.Countries();
-            FrontLanguages = new ObservableCollection<string>(languages);
-            BackLanguages = new ObservableCollection<string>(languages);
+            var countries = await _countriesDic.GetCountriesWithFlagsAsync();
+            FrontLanguages = new ObservableCollection<string>(countries.Select(c => c.Country).ToList());
+            BackLanguages = new ObservableCollection<string>(countries.Select(c => c.Country).ToList());
         }
+
 
         private async Task SubmitCategory()
         {
