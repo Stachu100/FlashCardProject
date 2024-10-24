@@ -4,48 +4,51 @@ using Newtonsoft.Json;
 using FiszkiApp.EntityClasses;
 using Microsoft.Extensions.DependencyInjection;
 
-public class CategoryPost
+namespace FiszkiApp.dbConnetcion.SQLQueries
 {
-    private readonly HttpClient _httpClient;
-
-    public CategoryPost()
+    public class CategoryPost
     {
-        _httpClient = new HttpClient
+        private readonly HttpClient _httpClient;
+
+        public CategoryPost()
         {
-            BaseAddress = new Uri("http://10.0.2.2:5278/api/")
-        };
-    }
-
-    public async Task<bool> AddCategoryAsync(Category category)
-    {
-        try
-        {
-            var json = JsonConvert.SerializeObject(category);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync("Category", content);
-
-            var responseContent = await response.Content.ReadAsStringAsync();
-            Console.WriteLine($"Response Status Code: {response.StatusCode}, Content: {responseContent}");
-
-            if (response.IsSuccessStatusCode)
+            _httpClient = new HttpClient
             {
-                return true;
+                BaseAddress = new Uri("http://10.0.2.2:5278/api/")
+            };
+        }
+
+        public async Task<bool> AddCategoryAsync(Category category)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(category);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync("Category", content);
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Response Status Code: {response.StatusCode}, Content: {responseContent}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine($"Błąd: {responseContent}");
+                    return false;
+                }
             }
-            else
+            catch (HttpRequestException httpEx)
             {
-                Console.WriteLine($"Błąd: {responseContent}");
+                Console.WriteLine($"HTTP Error: {httpEx.Message}");
                 return false;
             }
-        }
-        catch (HttpRequestException httpEx)
-        {
-            Console.WriteLine($"HTTP Error: {httpEx.Message}");
-            return false;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"General Error: {ex.Message}");
-            return false;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"General Error: {ex.Message}");
+                return false;
+            }
         }
     }
 }

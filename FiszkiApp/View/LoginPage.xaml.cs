@@ -21,5 +21,4 @@ namespace FiszkiApp.View
             await Navigation.PushAsync(new RegisterPage());
         }
     }
-
 }

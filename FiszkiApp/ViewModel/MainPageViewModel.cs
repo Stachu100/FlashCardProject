@@ -33,8 +33,6 @@ namespace FiszkiApp.ViewModel
             LoadCategoriesCommand.Execute(null);
         }
 
-        
-
         [ObservableProperty]
         private ObservableCollection<LocalCategoryTable> categories;
 

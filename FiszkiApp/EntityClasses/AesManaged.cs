@@ -20,7 +20,6 @@ namespace FiszkiApp.EntityClasses
         }
         public static EncryptionResult Encryption(string ToEncrypted)
         {
-
             // Create a new instance of the Aes
             // class.  This generates a new key and initialization
             // vector (IV).

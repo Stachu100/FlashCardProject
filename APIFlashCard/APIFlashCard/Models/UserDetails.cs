@@ -23,7 +23,7 @@ namespace APIFlashCard.Models
         [MaxLength(100)]
         public string Email { get; set; }
 
-        public byte[] Avatar { get; set; }
+        public byte[]? Avatar { get; set; }
 
         public bool IsAcceptedPolicy { get; set; }
     }

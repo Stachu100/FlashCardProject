@@ -17,15 +17,11 @@ public partial class LoadingPage : ContentPage
         var (isAuthenticated, userID) = await _authService.IsAuthenticatedAsync();
         if (isAuthenticated)
 		{
-            //User is logged in
-            Shell.Current.GoToAsync($"//{nameof(MainPage)}");
+            await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
         }
 		else
 		{
-			//User is not logged in
-			//redirtect to loginPage
-			// the sing // means no backButton
-			Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+			await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
 		}
 	}
 }

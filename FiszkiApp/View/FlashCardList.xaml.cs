@@ -1,9 +1,13 @@
-namespace FiszkiApp.View;
+using FiszkiApp.ViewModel;
 
-public partial class FlashCardList : ContentPage
+namespace FiszkiApp.View
 {
-	public FlashCardList()
-	{
-		InitializeComponent();
-	}
+    public partial class FlashCardList : ContentPage
+    {
+        public FlashCardList()
+        {
+            InitializeComponent();
+        }
+    }
 }
+

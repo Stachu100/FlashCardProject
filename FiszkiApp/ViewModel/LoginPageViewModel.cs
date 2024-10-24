@@ -33,11 +33,8 @@ namespace FiszkiApp.ViewModel
         [ObservableProperty]
         private string errorMessages;
 
-
-       
-
         [RelayCommand] // to jest  [ICommand] ale w aktualizacaji CommunityToolkit.Mvvm.Input (8.0.0-preview4 release notes.) zmienili nazwe
-        public async void LoginCommand()
+        public async Task LoginCommand()
         {
             ValidateAllProperties();
             if (HasErrors)
@@ -59,8 +56,7 @@ namespace FiszkiApp.ViewModel
             else
             {
                 string result = await _authService.Login(UserName, UserPassword);
-                //var loginInQuery = new dbConnetcion.SQLQueries.LogInQuery();
-                //string result = await loginInQuery.UserLogIn(;
+
                 if (result != "Hasło lub login jest nie poprawne" && result != "Wystąpił błąd podczas logowania")
                 {
                     
@@ -73,6 +69,5 @@ namespace FiszkiApp.ViewModel
                 }
             }
         }
-
     }
 }

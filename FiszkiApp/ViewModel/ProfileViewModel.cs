@@ -13,11 +13,13 @@ using System.Collections.ObjectModel;
 using Microsoft.Maui.Controls;
 using FiszkiApp.EntityClasses;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using CommunityToolkit.Maui.ImageSources;
 
 namespace FiszkiApp.ViewModel
 {
     public partial class ProfileViewModel : MainViewModel
     {
+        private readonly AuthService _authService;
 
         public IAsyncRelayCommand LoadCountriesCommand { get; }
         public IAsyncRelayCommand LoadCountriesUrlCommand { get; }
@@ -27,6 +29,7 @@ namespace FiszkiApp.ViewModel
         public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
 
         [ObservableProperty]
+
         private byte[] imageAsBytes;
 
         [ObservableProperty]
@@ -70,28 +73,38 @@ namespace FiszkiApp.ViewModel
                 Items.Remove(item);
             }
         }
+
         public async Task OnNavigatedTo(NavigationEventArgs args)
         {
             try
             {
                 var (isAuthenticated, userID) = await _authService.IsAuthenticatedAsync();
-                int IntUserId = Convert.ToInt32(userID);
-                var profileDetails = new dbConnetcion.SQLQueries.ProfiileDetails();
-                var (uploadedImage, user, country) = await profileDetails.UserDetails(IntUserId);
+                int intUserId = Convert.ToInt32(userID);
+                var profileDetails = new dbConnetcion.SQLQueries.ProfileDetails();
 
-                if (uploadedImage.Length > 0)
+                var userDetails = await profileDetails.GetUserDetailsAsync(intUserId);
+
+                if (userDetails != null)
                 {
-                    ImageAsBytes = uploadedImage;
+                    User = $"{userDetails.FirstName} {userDetails.LastName}";
+                    Country = "Kraj pochodzenia: " + userDetails.Country;
+
+                    if (userDetails.Avatar != null && userDetails.Avatar.Length > 0)
+                    {
+                        ImageAsBytes = userDetails.Avatar;
+                    }
+                    else
+                    {
+                        // dodać wczytywanie domyślnego obrazka
+                    }
                 }
-                User = user;
-                Country = "Kraj pochodzenia: " + country;
             }
+
             catch (Exception ex)
             {
-                Console.WriteLine($"Wystąpił błąd podczas dodawania obrazka: {ex.Message}");
+                Console.WriteLine($"Wystąpił błąd podczas pobierania szczegółów użytkownika: {ex.Message}");
             }
         }
-
 
         private async Task LoadCountry()
         {
@@ -102,10 +115,8 @@ namespace FiszkiApp.ViewModel
             CountryPicker = new ObservableCollection<string>(countries.Select(c => c.Country));
         }
 
-        private readonly AuthService _authService;
-
         [RelayCommand]
-        public async void LogoutCommand(AuthService authService)
+        public async Task LogoutCommand(AuthService authService)
         {
             _authService.Logout();
             await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");

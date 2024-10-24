@@ -14,14 +14,12 @@ using System.Collections.ObjectModel;
 using static FiszkiApp.EntityClasses.AesManaged;
 
 namespace FiszkiApp.ViewModel
-
 {
     public partial class RegisterViewModel : MainViewModel
     {
         public IAsyncRelayCommand LoadCountriesCommand { get; }
         private byte[] imageData;
         private EntityClasses.User user;
-
 
         public RegisterViewModel()
         {
@@ -60,7 +58,7 @@ namespace FiszkiApp.ViewModel
         }
 
         [RelayCommand]
-        public async void Register()
+        public async Task Register()
         {
             User.Validate();
             if (User.HasErrors)
@@ -112,12 +110,10 @@ namespace FiszkiApp.ViewModel
                     ErrorMessages += (result);                    
                 } 
             }
-            
-
         }
 
         [RelayCommand]
-        public async void Avatar()
+        public async Task Avatar()
         {
             try
             {
@@ -132,16 +128,6 @@ namespace FiszkiApp.ViewModel
                     // Use a `using` statement to ensure the stream is disposed of properly
                     using (var stream = await result.OpenReadAsync())
                     {
-                        //// Create the ImageSource from the stream and set it to the property
-                        //UploadedImage = ImageSource.FromStream(() => {
-                        //    // Create a MemoryStream to hold the image data
-                        //    var memoryStream = new MemoryStream();
-                        //    stream.CopyTo(memoryStream);
-                        //    memoryStream.Position = 0; // Reset the position to the beginning
-                        //    return memoryStream;
-                        //});
-                        //stream.Position = 0;
-
                         using (var memoryStream = new MemoryStream())
                         {
                             await stream.CopyToAsync(memoryStream);
@@ -150,9 +136,6 @@ namespace FiszkiApp.ViewModel
                             user.UploadedImage = memoryStream.ToArray();
                             ImageAsByte = user.UploadedImage;
                         }
-
-
-
                     }
                 }
             }
@@ -170,9 +153,6 @@ namespace FiszkiApp.ViewModel
                 input.CopyTo(ms);
                 return ms.ToArray();
             }
-        }
-        
-
-        
+        }        
     }
 }

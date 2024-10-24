@@ -1,25 +1,27 @@
 using FiszkiApp.Services;
 using FiszkiApp.ViewModel;
 
-namespace FiszkiApp.View;
-
-public partial class ProfilePage : ContentPage
+namespace FiszkiApp.View
 {
-    private readonly AuthService _authService;
-    public ProfilePage(AuthService authService)
-	{
-		InitializeComponent();
-        _authService = authService;
-        BindingContext = new ProfileViewModel(_authService);       
-    }
-    protected override async void OnAppearing()
+    public partial class ProfilePage : ContentPage
     {
-        base.OnAppearing();
-
-        
-        if (BindingContext is ProfileViewModel viewModel)
+        private readonly AuthService _authService;
+        public ProfilePage(AuthService authService)
         {
-            await viewModel.OnNavigatedTo(null); 
+            InitializeComponent();
+            _authService = authService;
+            BindingContext = new ProfileViewModel(_authService);
+        }
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+
+            if (BindingContext is ProfileViewModel viewModel)
+            {
+                await viewModel.OnNavigatedTo(null);
+            }
         }
     }
 }
+

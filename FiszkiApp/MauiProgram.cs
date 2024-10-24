@@ -29,7 +29,6 @@ namespace FiszkiApp
             builder.Services.AddTransient<LoadingPage>();
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<ProfilePage>();
-            builder.Services.AddTransient<CategoryPost>();
 
             return builder.Build();
         }
