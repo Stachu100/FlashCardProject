@@ -2,11 +2,16 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FiszkiApp.View.ProfilePage"
-             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Converters;assembly=CommunityToolkit.Maui"
              xmlns:vm="clr-namespace:FiszkiApp.ViewModel"
              xmlns:converters="clr-namespace:FiszkiApp.EntityClasses"
              Title="Profile">
-
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -20,7 +25,7 @@
                     VerticalOptions="Center" 
                     HorizontalOptions="Center" />
                 <Frame HeightRequest="60" WidthRequest="60" CornerRadius="30" Padding="0" Margin="0,0,0,0" HorizontalOptions="Center">
-                    <Image Source="{Binding ImageAsBytes, Converter={toolkit:ByteArrayToImageSourceConverter}}" />
+                    <Image Source="{Binding ImageAsBytes, Converter={StaticResource ByteArrayToImageSourceConverter}}" />
                 </Frame>
 
                 <Label Text="{Binding User}" VerticalOptions="Center" HorizontalOptions="Center"/>

@@ -1,29 +1,23 @@
-﻿using CommunityToolkit.Maui.Converters;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Maui.Controls;
 
 namespace FiszkiApp.EntityClasses
 {
-    class ByteArrayToImageSourceConverterPage : IValueConverter
+    public class ByteArrayToImageSourceConverter : IValueConverter
     {
-        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            ImageSource retSource = null;
-            if (value != null)
+            if (value is byte[] imageAsBytes && imageAsBytes.Length > 0)
             {
-                byte[] imageAsBytes = (byte[])value;
                 var stream = new MemoryStream(imageAsBytes);
-                retSource = ImageSource.FromStream(() => stream);
+                return ImageSource.FromStream(() => stream);
             }
-            return retSource;
 
+            return "gnomeprofile.png";
         }
 
-        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

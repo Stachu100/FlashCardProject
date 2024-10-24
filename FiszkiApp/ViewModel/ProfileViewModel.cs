@@ -93,10 +93,6 @@ namespace FiszkiApp.ViewModel
                     {
                         ImageAsBytes = userDetails.Avatar;
                     }
-                    else
-                    {
-                        // dodać wczytywanie domyślnego obrazka
-                    }
                 }
             }
 
