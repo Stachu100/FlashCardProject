@@ -16,21 +16,17 @@ namespace APIFlashCard.Controllers
             _context = context;
         }
 
-        // GET: api/user/{id}
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        [HttpGet]
+        public async Task<ActionResult<User>> GetUserByUsername(string username)
         {
-            var user = await _context.Users.FindAsync(id);
-
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == username);
             if (user == null)
             {
-                return NotFound(); // Zwraca 404, jeśli użytkownik nie został znaleziony
+                return NotFound();
             }
-
-            return user; // Zwraca użytkownika, jeśli został znaleziony
+            return user;
         }
 
-        // POST: api/user
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {

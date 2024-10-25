@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using FiszkiApp.EntityClasses;
+using FiszkiApp.EntityClasses.Models;
 using Newtonsoft.Json;
 
 namespace FiszkiApp.dbConnetcion.SQLQueries

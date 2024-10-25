@@ -11,7 +11,7 @@ using System.Collections;
 
 namespace FiszkiApp.EntityClasses
 {
-    public partial class User : ObservableValidator //ObservableObject
+    public partial class UserRegistration : ObservableValidator //ObservableObject
     {
 
         [ObservableProperty]

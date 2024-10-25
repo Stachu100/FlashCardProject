@@ -1,4 +1,4 @@
-﻿namespace FiszkiApp.EntityClasses
+﻿namespace FiszkiApp.EntityClasses.Models
 {
     public class UserDetails
     {

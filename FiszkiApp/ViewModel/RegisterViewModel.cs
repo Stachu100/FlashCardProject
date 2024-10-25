@@ -19,16 +19,16 @@ namespace FiszkiApp.ViewModel
     {
         public IAsyncRelayCommand LoadCountriesCommand { get; }
         private byte[] imageData;
-        private EntityClasses.User user;
+        private EntityClasses.UserRegistration user;
 
         public RegisterViewModel()
         {
-            user = new EntityClasses.User();
+            user = new EntityClasses.UserRegistration();
             LoadCountriesCommand = new AsyncRelayCommand(LoadCountry);
             LoadCountriesCommand.Execute(null);
         }
 
-        public EntityClasses.User User
+        public EntityClasses.UserRegistration User
         {
             get => user;
             set
@@ -87,10 +87,10 @@ namespace FiszkiApp.ViewModel
             }
             if (string.IsNullOrWhiteSpace(ErrorMessages))
             {
-                EncryptionResult encryptionResult = AesManaged.Encryption(User.Password);
+                EncryptionResult encryptionResult = AesManaged.Encryption((string)User.Password);
                 User.EncryptedPassword = encryptionResult.EncryptedData;                
                 var creatUser = new EntityClasses.CreatUser();
-                string result = await creatUser.UserInsertAsync(User.Name, User.EncryptedPassword, User.FirstName, User.LastName, User.Country, User.Email, User.UploadedImage, User.IsAcceptedPolicy, encryptionResult.IV, encryptionResult.Key);
+                string result = await creatUser.UserInsertAsync((string)User.Name, (byte[])User.EncryptedPassword, (string)User.FirstName, (string)User.LastName, (string)User.Country, (string)User.Email, (byte[])User.UploadedImage, (bool)User.IsAcceptedPolicy, encryptionResult.IV, encryptionResult.Key);
                 if (result == "Rejstracja zakończyła się sukcesem")
                 {
                     await Application.Current.MainPage.DisplayAlert("Sukcess", result, "OK");
@@ -103,7 +103,7 @@ namespace FiszkiApp.ViewModel
                     User.UploadedImage = null;
                     User.IsAcceptedPolicy = false;
                     User.Email = null;
-                    user = new EntityClasses.User();
+                    user = new EntityClasses.UserRegistration();
                 }
                 else
                 {
