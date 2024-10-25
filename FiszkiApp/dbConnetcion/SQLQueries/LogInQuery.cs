@@ -23,40 +23,50 @@ namespace FiszkiApp.dbConnetcion.SQLQueries
         {
             try
             {
-                var userResponse = await _httpClient.GetAsync($"user?username={name}");
+                // 1. Pobierz dane użytkownika
+                var userResponse = await _httpClient.GetAsync($"user/{name}");
                 if (!userResponse.IsSuccessStatusCode)
                 {
-                    return "Hasło lub login jest niepoprawne";
+                    return "Hasło lub login jest nie poprawne";
                 }
 
-                var user = JsonConvert.DeserializeObject<User>(await userResponse.Content.ReadAsStringAsync());
-                int userId = user.ID_User;
+                var userJson = await userResponse.Content.ReadAsStringAsync();
+                var user = JsonConvert.DeserializeObject<User>(userJson);
 
-                var encryptionResponse = await _httpClient.GetAsync($"encryptionkeys/{userId}");
-                if (!encryptionResponse.IsSuccessStatusCode)
+                if (user == null)
                 {
-                    return "Hasło lub login jest niepoprawne";
+                    return "Hasło lub login jest nie poprawne";
                 }
 
-                var encryptionKeys = JsonConvert.DeserializeObject<EncryptionKeys>(await encryptionResponse.Content.ReadAsStringAsync());
+                var keysResponse = await _httpClient.GetAsync($"encryptionkeys/{user.ID_User}");
+                if (!keysResponse.IsSuccessStatusCode)
+                {
+                    return "Wystąpił problem z pobraniem kluczy szyfrowania.";
+                }
 
-                var passwordToDecrypt = encryptionKeys.EncryptedPassword;
-                var encryptionKey = encryptionKeys.EncryptionKey;
-                var iv = encryptionKeys.IV;
+                var keysJson = await keysResponse.Content.ReadAsStringAsync();
+                var encryptionKeys = JsonConvert.DeserializeObject<EncryptionKeys>(keysJson);
 
-                string decryptedPassword = EntityClasses.AesManaged.Decryption(passwordToDecrypt, encryptionKey, iv);
+                if (encryptionKeys == null)
+                {
+                    return "Wystąpił problem z pobraniem kluczy szyfrowania.";
+                }
+
+                string decryptedPassword = EntityClasses.AesManaged.Decryption(user.UserPassword, encryptionKeys.EncryptionKey, encryptionKeys.IV);
+
                 if (decryptedPassword != null && decryptedPassword == password)
                 {
-                    return Convert.ToString(userId);
+                    return Convert.ToString(user.ID_User);
                 }
                 else
                 {
-                    return "Hasło lub login jest niepoprawne";
+                    return "Hasło lub login jest nie poprawne";
                 }
             }
             catch (Exception ex)
             {
-                return "Wystąpił błąd podczas logowania: " + ex.Message;
+                Console.WriteLine($"Błąd podczas logowania: {ex.Message}");
+                return "Wystąpił błąd podczas logowania";
             }
         }
     }

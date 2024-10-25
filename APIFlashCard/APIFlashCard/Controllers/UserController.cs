@@ -16,7 +16,7 @@ namespace APIFlashCard.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("{username}")]
         public async Task<ActionResult<User>> GetUserByUsername(string username)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == username);
