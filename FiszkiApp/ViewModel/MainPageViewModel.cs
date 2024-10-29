@@ -78,7 +78,6 @@ namespace FiszkiApp.ViewModel
 
                 if (isAuthenticated && int.TryParse(userIdString, out int userId) && userId > 0)
                 {
-                    // Przygotowanie danych do wysłania
                     var newCategory = new Category
                     {
                         UserID = userId,
@@ -88,12 +87,10 @@ namespace FiszkiApp.ViewModel
                         LanguageLevel = category.LanguageLevel
                     };
 
-                    // Wysyłanie danych do API
                     var result = await _categoryPost.AddCategoryAsync(newCategory);
 
                     if (result)
                     {
-                        // Aktualizacja statusu lokalnie
                         category.IsSent = 1;
                         await _databaseService.UpdateCategoryAsync(category);
                         await LoadCategoriesAsync();
