@@ -24,6 +24,6 @@ namespace APIFlashCard.Models
         public string BackLanguage { get; set; }
 
         [MaxLength(50)]
-        public string? LanguageLevel { get; set; } // Nullable
+        public string? LanguageLevel { get; set; }
     }
 }

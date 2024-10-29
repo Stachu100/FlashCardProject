@@ -22,12 +22,6 @@ namespace APIFlashCard.Controllers
         {
             var encryptionKeys = await _context.EncryptionKeys
                 .Where(k => k.ID_User == userId)
-                .Select(k => new EncryptionKeys
-                {
-                    ID_User = k.ID_User,
-                    EncryptionKey = k.EncryptionKey,
-                    IV = k.IV
-                })
                 .FirstOrDefaultAsync();
 
             if (encryptionKeys == null)
@@ -37,6 +31,19 @@ namespace APIFlashCard.Controllers
 
             return encryptionKeys;
         }
+
+        [HttpPost]
+        public async Task<ActionResult<EncryptionKeys>> PostEncryptionKeys(EncryptionKeys encryptionKeys)
+        {
+            if (encryptionKeys == null)
+            {
+                return BadRequest("Dane klucza szyfrowania są wymagane.");
+            }
+
+            _context.EncryptionKeys.Add(encryptionKeys);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetEncryptionKeys), new { userId = encryptionKeys.ID_User }, encryptionKeys);
+        }
     }
 }
-

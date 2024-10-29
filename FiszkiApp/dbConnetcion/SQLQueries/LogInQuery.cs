@@ -23,7 +23,6 @@ namespace FiszkiApp.dbConnetcion.SQLQueries
         {
             try
             {
-                // 1. Pobierz dane użytkownika
                 var userResponse = await _httpClient.GetAsync($"user/{name}");
                 if (!userResponse.IsSuccessStatusCode)
                 {

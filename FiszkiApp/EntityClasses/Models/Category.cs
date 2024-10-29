@@ -7,6 +7,6 @@ public class Category
     public string CategoryName { get; set; }
     public string FrontLanguage { get; set; }
     public string BackLanguage { get; set; }
-    public string? LanguageLevel { get; set; } // Użyj string? aby zaakceptować null
+    public string? LanguageLevel { get; set; }
 }
 

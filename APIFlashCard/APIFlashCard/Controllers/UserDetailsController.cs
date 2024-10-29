@@ -45,5 +45,26 @@ namespace APIFlashCard.Controllers
                 return StatusCode(500, new { message = $"Wystąpił błąd: {ex.Message}" });
             }
         }
+
+        [HttpGet("check-email/{email}")]
+        public async Task<IActionResult> CheckEmail(string email)
+        {
+            bool exists = await _context.UserDetails.AnyAsync(u => u.Email == email);
+            return Ok(exists ? "exists" : "not_exists");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PostUserDetails(UserDetails userDetails)
+        {
+            if (userDetails == null)
+            {
+                return BadRequest("Dane użytkownika są wymagane.");
+            }
+
+            _context.UserDetails.Add(userDetails);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetUserDetails", new { userId = userDetails.ID_User }, userDetails);
+        }
     }
 }

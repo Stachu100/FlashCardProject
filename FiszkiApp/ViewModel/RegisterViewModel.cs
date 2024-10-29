@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using Application = Microsoft.Maui.Controls.Application;
 using CommunityToolkit.Maui.Converters;
 using FiszkiApp.EntityClasses;
-using FiszkiApp.dbConnetcion;
+using FiszkiApp.dbConnetcion.SQLQueries;
 using System.IO;
 using System.Collections.ObjectModel;
 using static FiszkiApp.EntityClasses.AesManaged;
@@ -23,12 +23,12 @@ namespace FiszkiApp.ViewModel
 
         public RegisterViewModel()
         {
-            user = new EntityClasses.UserRegistration();
+            user = new UserRegistration();
             LoadCountriesCommand = new AsyncRelayCommand(LoadCountry);
             LoadCountriesCommand.Execute(null);
         }
 
-        public EntityClasses.UserRegistration User
+        public UserRegistration User
         {
             get => user;
             set
@@ -52,7 +52,7 @@ namespace FiszkiApp.ViewModel
 
         private async Task LoadCountry()
         {
-            var countriesDic = new dbConnetcion.SQLQueries.CountriesDic();
+            var countriesDic = new CountriesDic();
             var countriesWithFlags = await countriesDic.GetCountriesWithFlagsAsync();
             CountryPicker = new ObservableCollection<string>(countriesWithFlags.Select(c => c.Country));
         }
@@ -89,8 +89,8 @@ namespace FiszkiApp.ViewModel
             {
                 EncryptionResult encryptionResult = AesManaged.Encryption((string)User.Password);
                 User.EncryptedPassword = encryptionResult.EncryptedData;                
-                var creatUser = new EntityClasses.CreatUser();
-                string result = await creatUser.UserInsertAsync((string)User.Name, (byte[])User.EncryptedPassword, (string)User.FirstName, (string)User.LastName, (string)User.Country, (string)User.Email, (byte[])User.UploadedImage, (bool)User.IsAcceptedPolicy, encryptionResult.IV, encryptionResult.Key);
+                var createUser = new CreateUser();
+                string result = await createUser.UserInsertAsync(User);
                 if (result == "Rejstracja zakończyła się sukcesem")
                 {
                     await Application.Current.MainPage.DisplayAlert("Sukcess", result, "OK");
@@ -103,7 +103,7 @@ namespace FiszkiApp.ViewModel
                     User.UploadedImage = null;
                     User.IsAcceptedPolicy = false;
                     User.Email = null;
-                    user = new EntityClasses.UserRegistration();
+                    user = new UserRegistration();
                 }
                 else
                 {

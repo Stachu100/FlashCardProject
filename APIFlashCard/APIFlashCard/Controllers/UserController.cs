@@ -26,14 +26,25 @@ namespace APIFlashCard.Controllers
             }
             return user;
         }
+        [HttpGet("check-username/{username}")]
+        public async Task<IActionResult> CheckUsername(string username)
+        {
+            bool exists = await _context.Users.AnyAsync(u => u.UserName == username);
+            return Ok(exists ? "exists" : "not_exists");
+        }
 
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<IActionResult> PostUser(User user)
         {
+            if (user == null)
+            {
+                return BadRequest("Dane użytkownika są wymagane.");
+            }
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.ID_User }, user);
+            return CreatedAtAction(nameof(GetUserByUsername), new { username = user.UserName }, user);
         }
     }
 }

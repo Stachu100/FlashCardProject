@@ -50,7 +50,5 @@ namespace APIFlashCard.Controllers
                 return StatusCode(500, $"Wystąpił błąd: {ex.Message}");
             }
         }
-
-
     }
 }
