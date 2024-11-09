@@ -24,7 +24,6 @@ namespace FiszkiApp
             builder.Logging.AddDebug();
 #endif
 
-            // Rejestracja usług
             builder.Services.AddTransient<AuthService>();
             builder.Services.AddTransient<LoadingPage>();
             builder.Services.AddTransient<LoginPage>();

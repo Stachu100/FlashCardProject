@@ -1,7 +1,6 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using FiszkiApp.EntityClasses.Models;
+using FiszkiApp.Services;
 using Newtonsoft.Json;
 
 namespace FiszkiApp.dbConnetcion.SQLQueries
@@ -12,10 +11,7 @@ namespace FiszkiApp.dbConnetcion.SQLQueries
 
         public ProfileDetails()
         {
-            _httpClient = new HttpClient
-            {
-                BaseAddress = new Uri("http://10.0.2.2:5278/api/")
-            };
+            _httpClient = HttpClientService.Instance.HttpClient;
         }
 
         public async Task<UserDetails?> GetUserDetailsAsync(int userId)

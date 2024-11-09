@@ -7,7 +7,7 @@ namespace APIFlashCard.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
+        public int ID_encryptionKeys { get; set; }
 
         public int ID_User { get; set; }
 

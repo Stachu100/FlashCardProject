@@ -33,7 +33,7 @@ namespace APIFlashCard.Data
 
             modelBuilder.Entity<EncryptionKeys>()
                 .ToTable("encryptionKeys")
-                .HasKey(ek => ek.ID);
+                .HasKey(ek => ek.ID_encryptionKeys);
         }
     }
 }

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Net.Http;
-using System.Text;
+﻿using System.Text;
 using System.Threading.Tasks;
+using FiszkiApp.Services;
 using Newtonsoft.Json;
 using FiszkiApp.EntityClasses.Models;
 
@@ -13,10 +12,7 @@ namespace FiszkiApp.dbConnetcion.SQLQueries
 
         public LogInQuery()
         {
-            _httpClient = new HttpClient
-            {
-                BaseAddress = new Uri("http://10.0.2.2:5278/api/")
-            };
+            _httpClient = HttpClientService.Instance.HttpClient;
         }
 
         public async Task<string> UserLogIn(string name, string password)

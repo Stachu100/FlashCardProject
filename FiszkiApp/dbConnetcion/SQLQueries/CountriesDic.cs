@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using FiszkiApp.Services;
 using FiszkiApp.EntityClasses.Models;
 using Newtonsoft.Json;
 
@@ -13,10 +12,7 @@ namespace FiszkiApp.dbConnetcion.SQLQueries
 
         public CountriesDic()
         {
-            _httpClient = new HttpClient
-            {
-                BaseAddress = new Uri("http://10.0.2.2:5278/api/")
-            };
+            _httpClient = HttpClientService.Instance.HttpClient;
         }
 
         public async Task<List<Countries>> GetCountriesWithFlagsAsync()

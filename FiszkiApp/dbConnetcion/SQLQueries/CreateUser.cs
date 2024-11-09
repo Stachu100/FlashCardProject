@@ -1,8 +1,7 @@
-﻿using System;
-using System.Net.Http;
-using System.Text;
+﻿using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using FiszkiApp.Services;
 using FiszkiApp.EntityClasses.Models;
 using FiszkiApp.EntityClasses;
 using static FiszkiApp.EntityClasses.AesManaged;
@@ -15,10 +14,7 @@ namespace FiszkiApp.dbConnetcion.SQLQueries
 
         public CreateUser()
         {
-            _httpClient = new HttpClient
-            {
-                BaseAddress = new Uri("http://10.0.2.2:5278/api/")
-            };
+            _httpClient = HttpClientService.Instance.HttpClient;
         }
 
         public async Task<string> UserInsertAsync(UserRegistration userRegistration)
