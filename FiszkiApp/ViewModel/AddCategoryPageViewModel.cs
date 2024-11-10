@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using FiszkiApp.dbConnetcion.SQLQueries;
 using FiszkiApp.Services;
 using System.Collections.ObjectModel;
-using FiszkiApp.EntityClasses;
+using FiszkiApp.EntityClasses.Models;
 using System.Threading.Tasks;
 using FiszkiApp.View;
 using Microsoft.Maui.Controls;

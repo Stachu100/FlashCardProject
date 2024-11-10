@@ -1,8 +1,8 @@
 ﻿using SQLite;
 using System.IO;
 using System.Threading.Tasks;
-using FiszkiApp.EntityClasses;
 using System.Collections.Generic;
+using FiszkiApp.EntityClasses.Models;
 
 namespace FiszkiApp.Services
 {

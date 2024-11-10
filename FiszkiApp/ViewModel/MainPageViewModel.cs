@@ -6,7 +6,6 @@ using FiszkiApp.View;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using FiszkiApp.Services;
-using FiszkiApp.EntityClasses;
 using FiszkiApp.EntityClasses.Models;
 using System.Linq;
 using System.Collections.Generic;

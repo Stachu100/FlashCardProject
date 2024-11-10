@@ -13,7 +13,7 @@ namespace FiszkiApp.ViewModel
         public AddFlashcardsPageViewModel(int categoryId)
         {
             _categoryId = categoryId;
-            Flashcards = new ObservableCollection<Flashcard>();
+            Flashcards = new ObservableCollection<FlashcardItem>();
         }
 
         [ObservableProperty]
@@ -23,12 +23,12 @@ namespace FiszkiApp.ViewModel
         private string backText;
 
         [ObservableProperty]
-        private ObservableCollection<Flashcard> flashcards;
+        private ObservableCollection<FlashcardItem> flashcards;
 
         [RelayCommand]
         public void AddNextFlashcard()
         {
-            Flashcards.Add(new Flashcard
+            Flashcards.Add(new FlashcardItem
             {
                 FrontText = FrontText,
                 BackText = BackText
