@@ -2,7 +2,6 @@
 using FiszkiApp.Services;
 using FiszkiApp.View;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace FiszkiApp
 {
@@ -28,6 +27,7 @@ namespace FiszkiApp
             builder.Services.AddTransient<LoadingPage>();
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<ProfilePage>();
+            builder.Services.AddTransient<MainPage>();
 
             return builder.Build();
         }

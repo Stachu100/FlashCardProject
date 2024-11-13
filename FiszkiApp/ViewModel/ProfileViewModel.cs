@@ -3,17 +3,10 @@ using CommunityToolkit.Mvvm.Input;
 using FiszkiApp.Services;
 using FiszkiApp.View;
 using System;
-using System.Drawing;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using Microsoft.Maui.Controls;
 using FiszkiApp.EntityClasses;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using CommunityToolkit.Maui.ImageSources;
 
 namespace FiszkiApp.ViewModel
 {
@@ -80,7 +73,7 @@ namespace FiszkiApp.ViewModel
             {
                 var (isAuthenticated, userID) = await _authService.IsAuthenticatedAsync();
                 int intUserId = Convert.ToInt32(userID);
-                var profileDetails = new dbConnetcion.SQLQueries.ProfileDetails();
+                var profileDetails = new dbConnetcion.APIQueries.ProfileDetails();
 
                 var userDetails = await profileDetails.GetUserDetailsAsync(intUserId);
 
@@ -104,7 +97,7 @@ namespace FiszkiApp.ViewModel
 
         private async Task LoadCountry()
         {
-            var countriesDic = new dbConnetcion.SQLQueries.CountriesDic();
+            var countriesDic = new dbConnetcion.APIQueries.CountriesDic();
             var countries = await countriesDic.GetCountriesWithFlagsAsync();
 
             countriesWithUrl = countries.Select(c => (c.Country, c.Url)).ToList();

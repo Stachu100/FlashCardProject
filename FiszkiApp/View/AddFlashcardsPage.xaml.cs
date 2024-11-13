@@ -1,3 +1,5 @@
+using FiszkiApp.ViewModel;
+
 namespace FiszkiApp.View
 {
     [QueryProperty(nameof(CategoryId), "CategoryId")]

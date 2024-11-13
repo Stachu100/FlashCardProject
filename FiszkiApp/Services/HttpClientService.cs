@@ -1,23 +1,26 @@
-﻿public class HttpClientService
+﻿namespace FiszkiApp.Services
 {
-    private static readonly Lazy<HttpClientService> _instance = new Lazy<HttpClientService>(() => new HttpClientService());
-
-    private readonly HttpClient _httpClient;
-
-    private HttpClientService()
+    public class HttpClientService
     {
-        HttpClientHandler handler = new HttpClientHandler
-        {
-            ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true
-        };
+        private static readonly Lazy<HttpClientService> _instance = new Lazy<HttpClientService>(() => new HttpClientService());
 
-        _httpClient = new HttpClient(handler)
+        private readonly HttpClient _httpClient;
+
+        private HttpClientService()
         {
-            BaseAddress = new Uri("https://10.0.2.2:7190/api/")
-        };
+            HttpClientHandler handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true
+            };
+
+            _httpClient = new HttpClient(handler)
+            {
+                BaseAddress = new Uri("https://10.0.2.2:7190/api/")
+            };
+        }
+
+        public static HttpClientService Instance => _instance.Value;
+
+        public HttpClient HttpClient => _httpClient;
     }
-
-    public static HttpClientService Instance => _instance.Value;
-
-    public HttpClient HttpClient => _httpClient;
 }

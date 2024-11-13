@@ -1,7 +1,5 @@
-using CommunityToolkit.Maui.Behaviors;
 using FiszkiApp.Services;
 using FiszkiApp.ViewModel;
-using Microsoft.Maui.Controls;
 
 namespace FiszkiApp.View
 {

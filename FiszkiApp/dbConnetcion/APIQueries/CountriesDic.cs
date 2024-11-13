@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using FiszkiApp.Services;
 using FiszkiApp.EntityClasses.Models;
 using Newtonsoft.Json;
 
-namespace FiszkiApp.dbConnetcion.SQLQueries
+namespace FiszkiApp.dbConnetcion.APIQueries
 {
     public class CountriesDic
     {

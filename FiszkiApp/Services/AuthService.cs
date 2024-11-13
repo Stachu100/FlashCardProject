@@ -25,7 +25,7 @@ namespace FiszkiApp.Services
         }
         public async Task<string> Login(string userName, string userPassword)
         {
-            var loginInQuery = new dbConnetcion.SQLQueries.LogInQuery();
+            var loginInQuery = new dbConnetcion.APIQueries.LogInQuery();
             string result = await loginInQuery.UserLogIn(userName, userPassword);
 
             if (result != "Hasło lub login jest niepoprawne" && result != "Wystąpił błąd podczas logowania")

@@ -1,14 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using System.Text.RegularExpressions;
-using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.Generic;
-using static System.Net.Mime.MediaTypeNames;
 using System.ComponentModel.DataAnnotations;
 using Application = Microsoft.Maui.Controls.Application;
-using CommunityToolkit.Maui.Converters;
 using FiszkiApp.EntityClasses;
-using FiszkiApp.dbConnetcion.SQLQueries;
+using FiszkiApp.dbConnetcion.APIQueries;
 using System.IO;
 using System.Collections.ObjectModel;
 using static FiszkiApp.EntityClasses.AesManaged;
@@ -91,19 +86,10 @@ namespace FiszkiApp.ViewModel
                 User.EncryptedPassword = encryptionResult.EncryptedData;                
                 var createUser = new CreateUser();
                 string result = await createUser.UserInsertAsync(User);
-                if (result == "Rejstracja zakończyła się sukcesem")
+                if (result == "Rejestracja zakończyła się sukcesem")
                 {
                     await Application.Current.MainPage.DisplayAlert("Sukcess", result, "OK");
-                    User.Name = null;
-                    User.Password = null;
-                    User.RepeatPassword = null;
-                    User.FirstName = null;
-                    User.LastName = null;
-                    User.Country = null;
-                    User.UploadedImage = null;
-                    User.IsAcceptedPolicy = false;
-                    User.Email = null;
-                    user = new UserRegistration();
+                    User = new UserRegistration();
                 }
                 else
                 {

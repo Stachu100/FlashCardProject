@@ -1,10 +1,9 @@
 ﻿using System.Text;
 using Newtonsoft.Json;
 using FiszkiApp.Services;
-using Microsoft.Extensions.DependencyInjection;
 using FiszkiApp.EntityClasses.Models;
 
-namespace FiszkiApp.dbConnetcion.SQLQueries
+namespace FiszkiApp.dbConnetcion.APIQueries
 {
     public class CategoryPost
     {

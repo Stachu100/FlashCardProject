@@ -6,7 +6,7 @@ using FiszkiApp.EntityClasses.Models;
 using FiszkiApp.EntityClasses;
 using static FiszkiApp.EntityClasses.AesManaged;
 
-namespace FiszkiApp.dbConnetcion.SQLQueries
+namespace FiszkiApp.dbConnetcion.APIQueries
 {
     internal class CreateUser
     {

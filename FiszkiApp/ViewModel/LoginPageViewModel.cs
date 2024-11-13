@@ -1,16 +1,11 @@
-﻿using CommunityToolkit.Maui.Behaviors;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
-using System;
 using System.ComponentModel.DataAnnotations;
-using FiszkiApp.dbConnetcion.SQLQueries;
 using FiszkiApp.Services;
+using FiszkiApp.View;
 
 namespace FiszkiApp.ViewModel
 {
@@ -60,7 +55,7 @@ namespace FiszkiApp.ViewModel
                 if (result != "Hasło lub login jest nie poprawne" && result != "Wystąpił błąd podczas logowania")
                 {
                     
-                    await Shell.Current.GoToAsync($"//{nameof(View.MainPage)}");
+                    await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
                     ErrorMessages = null;
                 }
                 else

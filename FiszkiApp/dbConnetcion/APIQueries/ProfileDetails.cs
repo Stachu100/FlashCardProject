@@ -3,7 +3,7 @@ using FiszkiApp.EntityClasses.Models;
 using FiszkiApp.Services;
 using Newtonsoft.Json;
 
-namespace FiszkiApp.dbConnetcion.SQLQueries
+namespace FiszkiApp.dbConnetcion.APIQueries
 {
     public class ProfileDetails
     {

@@ -1,8 +1,12 @@
-﻿namespace FiszkiApp.EntityClasses.Models;
+﻿using SQLite;
 
-public class LocalFlashcardTable
+namespace FiszkiApp.EntityClasses.Models
 {
-    public int IdFlashcard { get; set; }
-    public string FrontText { get; set; }
-    public string BackText { get; set; }
+    public class LocalFlashcardTable
+    {
+        public int IdFlashcard { get; set; }
+        public string FrontText { get; set; }
+        public string BackText { get; set; }
+    }
+
 }

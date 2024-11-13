@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FiszkiApp.dbConnetcion.SQLQueries;
+using FiszkiApp.dbConnetcion.APIQueries;
 using FiszkiApp.Services;
 using System.Collections.ObjectModel;
 using FiszkiApp.EntityClasses.Models;
@@ -59,7 +59,6 @@ namespace FiszkiApp.ViewModel
             BackLanguages = new ObservableCollection<string>(countries.Select(c => c.Country).ToList());
         }
 
-
         private async Task SubmitCategory()
         {
             if (string.IsNullOrWhiteSpace(CategoryName) ||
@@ -107,4 +106,3 @@ namespace FiszkiApp.ViewModel
         }
     }
 }
-

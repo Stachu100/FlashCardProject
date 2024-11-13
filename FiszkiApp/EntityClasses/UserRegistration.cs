@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Collections;
 
 namespace FiszkiApp.EntityClasses
 {
@@ -36,11 +31,11 @@ namespace FiszkiApp.EntityClasses
         [ObservableProperty]
         [Required(ErrorMessage = "Hasło jest wymagane")]
         [MinLength(8, ErrorMessage = "Hasło musi mieć conajmniej 8 znaków")]
-        [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$", ErrorMessage = "Hasło musi zawierać dużą literę, znak specjalny")]
+        [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$", ErrorMessage = "Hasło musi zawierać dużą literę, liczbę oraz znak specjalny")]
         private string password;
 
         [ObservableProperty]
-        [Required(ErrorMessage = "Potwierdzenie hasła jest wymagana")]
+        [Required(ErrorMessage = "Potwierdzenie hasła jest wymagane")]
         private string repeatPassword;
 
 
@@ -65,4 +60,3 @@ namespace FiszkiApp.EntityClasses
         }
     }
 }
-

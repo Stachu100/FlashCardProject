@@ -1,4 +1,3 @@
-using Microsoft.Maui.Controls;
 using FiszkiApp.ViewModel;
 
 namespace FiszkiApp.View

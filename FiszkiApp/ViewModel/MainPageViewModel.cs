@@ -1,14 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FiszkiApp.dbConnetcion.SQLQueries;
+using FiszkiApp.dbConnetcion.APIQueries;
 using FiszkiApp.ViewModel;
 using FiszkiApp.View;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using FiszkiApp.Services;
 using FiszkiApp.EntityClasses.Models;
-using System.Linq;
-using System.Collections.Generic;
+using Microsoft.Maui.Controls;
 
 namespace FiszkiApp.ViewModel
 {
@@ -116,6 +115,3 @@ namespace FiszkiApp.ViewModel
         }
     }
 }
-
-
-

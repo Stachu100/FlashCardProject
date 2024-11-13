@@ -4,7 +4,7 @@ using FiszkiApp.Services;
 using Newtonsoft.Json;
 using FiszkiApp.EntityClasses.Models;
 
-namespace FiszkiApp.dbConnetcion.SQLQueries
+namespace FiszkiApp.dbConnetcion.APIQueries
 {
     internal class LogInQuery
     {
