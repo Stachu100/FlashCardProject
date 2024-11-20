@@ -30,6 +30,7 @@ namespace FiszkiApp.ViewModel
             DeleteCategoryCommand = new AsyncRelayCommand<LocalCategoryTable>(DeleteCategoryAsync);
             LoadCategoriesCommand = new AsyncRelayCommand(LoadCategoriesAsync);
             LoadCategoriesCommand.Execute(null);
+            CategoryTappedCommand = new AsyncRelayCommand<LocalCategoryTable>(OnCategoryTappedAsync);
         }
 
         [ObservableProperty]
@@ -42,6 +43,7 @@ namespace FiszkiApp.ViewModel
         public IAsyncRelayCommand<LocalCategoryTable> SendCategoryCommand { get; }
         public IAsyncRelayCommand<LocalCategoryTable> DeleteCategoryCommand { get; }
         public IAsyncRelayCommand<LocalCategoryTable> ViewFlashcardsCommand { get; }
+        public IAsyncRelayCommand<LocalCategoryTable> CategoryTappedCommand { get; }
 
         [RelayCommand]
         public async Task AddCategory()
@@ -111,6 +113,14 @@ namespace FiszkiApp.ViewModel
             if (category != null)
             {
                 await Shell.Current.GoToAsync($"{nameof(AddFlashcardsPage)}?CategoryId={category.IdCategory}");
+            }
+        }
+
+        private async Task OnCategoryTappedAsync(LocalCategoryTable selectedCategory)
+        {
+            if (selectedCategory != null)
+            {
+                await Shell.Current.GoToAsync($"{nameof(FlipCardPage)}?CategoryId={selectedCategory.IdCategory}");
             }
         }
     }
