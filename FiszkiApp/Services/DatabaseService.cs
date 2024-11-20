@@ -13,6 +13,7 @@ namespace FiszkiApp.Services
         {
             _database = new SQLiteAsyncConnection(dbPath);
             _database.CreateTableAsync<LocalCategoryTable>().Wait();
+            _database.CreateTableAsync<LocalFlashcardTable>().Wait();
         }
 
         public Task<int> AddCategoryAsync(LocalCategoryTable category)
@@ -25,9 +26,10 @@ namespace FiszkiApp.Services
             return _database.UpdateAsync(category);
         }
 
-        public Task<int> DeleteCategoryAsync(LocalCategoryTable category)
+        public async Task<int> DeleteCategoryAsync(LocalCategoryTable category)
         {
-            return _database.DeleteAsync(category);
+            await DeleteFlashcardsByCategoryId(category.IdCategory);
+            return await _database.DeleteAsync(category);
         }
 
         public Task<List<LocalCategoryTable>> GetCategoriesAsync()
@@ -38,6 +40,31 @@ namespace FiszkiApp.Services
         public Task<LocalCategoryTable> GetCategoryByIdAsync(int id)
         {
             return _database.Table<LocalCategoryTable>().Where(i => i.IdCategory == id).FirstOrDefaultAsync();
+        }
+
+        public Task<int> AddFlashcardAsync(LocalFlashcardTable flashcard)
+        {
+            return _database.InsertAsync(flashcard);
+        }
+
+        public Task<List<LocalFlashcardTable>> GetFlashcardsByCategoryIdAsync(int categoryId)
+        {
+            return _database.Table<LocalFlashcardTable>().Where(f => f.IdCategory == categoryId).ToListAsync();
+        }
+
+        public Task<int> DeleteFlashcardsByCategoryId(int categoryId)
+        {
+            return _database.Table<LocalFlashcardTable>().Where(f => f.IdCategory == categoryId).DeleteAsync();
+        }
+
+        public Task<int> DeleteFlashcardAsync(LocalFlashcardTable flashcard)
+        {
+            return _database.DeleteAsync(flashcard);
+        }
+
+        public Task<int> UpdateFlashcardAsync(LocalFlashcardTable flashcard)
+        {
+            return _database.UpdateAsync(flashcard);
         }
     }
 }

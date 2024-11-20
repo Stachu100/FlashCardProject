@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FiszkiApp.Services;
+using FiszkiApp.EntityClasses.Models;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using FiszkiApp.EntityClasses;
+using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
 
 namespace FiszkiApp.ViewModel
@@ -10,12 +12,26 @@ namespace FiszkiApp.ViewModel
     public partial class AddFlashcardsPageViewModel : MainViewModel
     {
         private readonly int _categoryId;
+        private readonly DatabaseService _databaseService;
 
         public AddFlashcardsPageViewModel(int categoryId)
         {
             _categoryId = categoryId;
-            Flashcards = new ObservableCollection<FlashcardItem>();
+            _databaseService = App.Database;
+            Flashcards = new ObservableCollection<LocalFlashcardTable>();
+
+            LoadFlashcardsCommand = new AsyncRelayCommand(LoadFlashcardsAsync);
+            LoadFlashcardsCommand.Execute(null);
+
+            AddFlashcardCommand = new AsyncRelayCommand(AddFlashcardAsync);
+            SubmitFlashcardsCommand = new AsyncRelayCommand(SubmitFlashcardsAsync);
         }
+
+        [ObservableProperty]
+        private ObservableCollection<LocalFlashcardTable> flashcards;
+
+        [ObservableProperty]
+        private LocalFlashcardTable selectedFlashcard;
 
         [ObservableProperty]
         private string frontText;
@@ -23,32 +39,60 @@ namespace FiszkiApp.ViewModel
         [ObservableProperty]
         private string backText;
 
-        [ObservableProperty]
-        private ObservableCollection<FlashcardItem> flashcards;
+        public IAsyncRelayCommand AddFlashcardCommand { get; }
+        public IAsyncRelayCommand SubmitFlashcardsCommand { get; }
+        public IAsyncRelayCommand LoadFlashcardsCommand { get; }
 
-        [RelayCommand]
-        public void AddNextFlashcard()
+        private async Task LoadFlashcardsAsync()
         {
-            Flashcards.Add(new FlashcardItem
+            var flashcardsFromDb = await _databaseService.GetFlashcardsByCategoryIdAsync(_categoryId);
+
+            Flashcards.Clear();
+            int lpNumber = 1;
+            foreach (var flashcard in flashcardsFromDb)
             {
-                FrontText = FrontText,
-                BackText = BackText
-            });
+                flashcard.Lp = lpNumber++;
+                Flashcards.Add(flashcard);
+            }
+        }
+
+        private async Task AddFlashcardAsync()
+        {
+            if (string.IsNullOrWhiteSpace(FrontText) || string.IsNullOrWhiteSpace(BackText))
+            {
+                await Shell.Current.DisplayAlert("Błąd", "Wszystkie pola muszą być wypełnione.", "OK");
+                return;
+            }
+
+            var newFlashcard = new LocalFlashcardTable
+            {
+                FrontFlashCard = FrontText,
+                BackFlashCard = BackText,
+                IdCategory = _categoryId
+            };
+
+            await _databaseService.AddFlashcardAsync(newFlashcard);
 
             FrontText = string.Empty;
             BackText = string.Empty;
+
+            await LoadFlashcardsAsync();
         }
 
-        [RelayCommand]
-        public async Task SubmitFlashcards()
+        private async Task SubmitFlashcardsAsync()
         {
-            await SaveFlashcardsToDatabase();
-        }
+            if (!string.IsNullOrWhiteSpace(FrontText) || !string.IsNullOrWhiteSpace(BackText))
+            {
+                var newFlashcard = new LocalFlashcardTable
+                {
+                    FrontFlashCard = FrontText,
+                    BackFlashCard = BackText,
+                    IdCategory = _categoryId
+                };
+                await _databaseService.AddFlashcardAsync(newFlashcard);
+            }
 
-        private Task SaveFlashcardsToDatabase()
-        {
-            // CHWILOWO PUSTO
-            return Task.CompletedTask;
+            await Shell.Current.GoToAsync("..");
         }
     }
 }

@@ -4,9 +4,13 @@ namespace FiszkiApp.EntityClasses.Models
 {
     public class LocalFlashcardTable
     {
-        public int IdFlashcard { get; set; }
-        public string FrontText { get; set; }
-        public string BackText { get; set; }
-    }
+        [PrimaryKey, AutoIncrement]
+        public int ID_Flashcard { get; set; }
+        public int IdCategory { get; set; }
+        public string FrontFlashCard { get; set; }
+        public string BackFlashCard { get; set; }
 
+        [Ignore]
+        public int Lp { get; set; }
+    }
 }
