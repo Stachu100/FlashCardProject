@@ -18,7 +18,7 @@ namespace FiszkiApp.ViewModel
         public IAsyncRelayCommand LoadCountriesUrlCommand { get; }
         public Command<object> DeleteCommand { get; set; }
 
-        private List<(string Country, string Url)> countriesWithUrl;
+        private List<(int ID_Country, string Country, string Url)> countriesWithUrl;
         public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
 
         [ObservableProperty]
@@ -100,7 +100,7 @@ namespace FiszkiApp.ViewModel
             var countriesDic = new dbConnetcion.APIQueries.CountriesDic();
             var countries = await countriesDic.GetCountriesWithFlagsAsync();
 
-            countriesWithUrl = countries.Select(c => (c.Country, c.Url)).ToList();
+            countriesWithUrl = countries.Select(c => (c.ID_Country ,c.Country, c.Url)).ToList();
             CountryPicker = new ObservableCollection<string>(countries.Select(c => c.Country));
         }
 
