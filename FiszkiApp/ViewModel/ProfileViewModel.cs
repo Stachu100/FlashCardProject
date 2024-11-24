@@ -18,6 +18,8 @@ namespace FiszkiApp.ViewModel
         public IAsyncRelayCommand LoadCountriesUrlCommand { get; }
         public Command<object> DeleteCommand { get; set; }
 
+        public int intUserId;
+
         private List<(int ID_Country, string Country, string Url)> countriesWithUrl;
         public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
 
@@ -45,7 +47,8 @@ namespace FiszkiApp.ViewModel
                 var result = countriesWithUrl.FirstOrDefault(x => x.Country == value);
                 if (!string.IsNullOrEmpty(result.Country))
                 {
-                    AddItem(result.Country, result.Url);
+
+                    AddItem(intUserId, result.ID_Country ,result.Country, result.Url);
                 }
             }
             CountryPicked = null;
@@ -64,6 +67,7 @@ namespace FiszkiApp.ViewModel
             if (obj is Item item)
             {
                 Items.Remove(item);
+
             }
         }
 
@@ -72,7 +76,7 @@ namespace FiszkiApp.ViewModel
             try
             {
                 var (isAuthenticated, userID) = await _authService.IsAuthenticatedAsync();
-                int intUserId = Convert.ToInt32(userID);
+                intUserId = Convert.ToInt32(userID);
                 var profileDetails = new dbConnetcion.APIQueries.ProfileDetails();
 
                 var userDetails = await profileDetails.GetUserDetailsAsync(intUserId);
@@ -111,12 +115,22 @@ namespace FiszkiApp.ViewModel
             await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
         }
 
-        private void AddItem(string name, string imageName)
+        private async void AddItem(int UserId, int CountryId, string name, string imageName)
         {
             if (!string.IsNullOrEmpty(name))
             {
+                var newUserCountry = new EntityClasses.Models.UserCountries
+                {
+                    ID_User = UserId,
+                    ID_Country = CountryId
+                };
+                var service = new dbConnetcion.APIQueries.UserCountriesService();
+                var isAdded = await service.AddUserCountryAsync(newUserCountry);
+
                 ImageSource imgSource = ImageSource.FromFile(imageName);
-                var item = new EntityClasses.Item { Name = name, Image = imgSource };    
+                var item = new EntityClasses.Item
+                    { Name = name,
+                      Image = imgSource };    
                 
                 Items.Add(item);
                 
