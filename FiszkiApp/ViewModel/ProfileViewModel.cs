@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using Microsoft.Maui.Controls;
 using FiszkiApp.EntityClasses;
+using FiszkiApp.dbConnetcion.APIQueries;
+using static SQLite.SQLite3;
 
 namespace FiszkiApp.ViewModel
 {
@@ -48,7 +50,7 @@ namespace FiszkiApp.ViewModel
                 if (!string.IsNullOrEmpty(result.Country))
                 {
 
-                    AddItem(intUserId, result.ID_Country ,result.Country, result.Url);
+                    AddItem(true ,intUserId, result.ID_Country ,result.Country, result.Url);
                 }
             }
             CountryPicked = null;
@@ -92,6 +94,25 @@ namespace FiszkiApp.ViewModel
                         ImageAsBytes = userDetails.Avatar;
                     }
                 }
+                var service = new dbConnetcion.APIQueries.UserCountriesService();
+                var userCountries = await service.GetUserCountriesByUserIdAsync(intUserId);
+                if (userCountries != null)
+                {
+                    var countriesDic = new dbConnetcion.APIQueries.CountriesDic();
+                    var countries = await countriesDic.GetCountriesWithFlagsAsync();
+
+                    // Iteruj przez UserCountries i dopasuj do krajów
+                    foreach (var userCountry in userCountries)
+                    {
+                        var country = countries.FirstOrDefault(c => c.ID_Country == userCountry.ID_Country);
+
+                        if (country != null)
+                        {
+                            Console.WriteLine($"Country Name: {country.Country}, Flag URL: {country.Url}");
+                            AddItem(false, null, country.ID_Country, country.Country, country.Url);
+                        }
+                    }
+                }
             }
 
             catch (Exception ex)
@@ -116,17 +137,21 @@ namespace FiszkiApp.ViewModel
             await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
         }
 
-        private async void AddItem(int UserId, int CountryId, string name, string imageName)
+        private async void AddItem(bool AddToDB, int? UserId, int CountryId, string name, string imageName)
         {
             if (!string.IsNullOrEmpty(name))
             {
-                var newUserCountry = new EntityClasses.Models.UserCountries
+                if (AddToDB)
                 {
-                    ID_User = UserId,
-                    ID_Country = CountryId
-                };
-                var service = new dbConnetcion.APIQueries.UserCountriesService();
-                var isAdded = await service.AddUserCountryAsync(newUserCountry);
+                    var newUserCountry = new EntityClasses.Models.UserCountries
+                    {
+                        ID_User = UserId.Value,
+                        ID_Country = CountryId
+                    };
+                    var service = new dbConnetcion.APIQueries.UserCountriesService();
+                    var isAdded = await service.AddUserCountryAsync(newUserCountry);
+                }
+                
 
                 ImageSource imgSource = ImageSource.FromFile(imageName);
                 var item = new EntityClasses.Item

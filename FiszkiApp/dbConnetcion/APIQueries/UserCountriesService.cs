@@ -39,6 +39,33 @@ namespace FiszkiApp.dbConnetcion.APIQueries
             }
         }
 
+        // GET: Pobierz listę UserCountries dla konkretnego ID_User
+        public async Task<List<UserCountries>> GetUserCountriesByUserIdAsync(int userId)
+        {
+            try
+            {
+                // Budowanie URL z parametrem ID_User
+                var response = await _httpClient.GetAsync($"usercountries/user/{userId}");
+                response.EnsureSuccessStatusCode();
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+                var userCountries = JsonConvert.DeserializeObject<List<UserCountries>>(responseContent);
+
+                return userCountries;
+            }
+            catch (HttpRequestException httpEx)
+            {
+                Console.WriteLine($"HTTP Error: {httpEx.Message}");
+                return new List<UserCountries>();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"General Error: {ex.Message}");
+                return new List<UserCountries>();
+            }
+        }
+
+
         // POST: Dodaj nowy UserCountry
         public async Task<bool> AddUserCountryAsync(UserCountries userCountry)
         {

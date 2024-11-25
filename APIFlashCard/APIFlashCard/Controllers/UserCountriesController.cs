@@ -36,6 +36,23 @@ namespace APIFlashCard.Controllers
 
             return userCountry;
         }
+        // GET: api/UserCountries/user/{userId}
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<IEnumerable<UserCountries>>> GetUserCountriesByUserId(int userId)
+        {
+            // Pobierz rekordy, które pasują do podanego ID_User
+            var userCountries = await _context.UserCountries
+                                               .Where(uc => uc.ID_User == userId)
+                                               .ToListAsync();
+
+            if (userCountries == null || userCountries.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return userCountries;
+        }
+
 
         // POST: api/UserCountries
         [HttpPost]
