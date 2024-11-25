@@ -62,12 +62,13 @@ namespace FiszkiApp.ViewModel
             DeleteCommand = new Command<object>(OnTapped);
         }
 
-        private void OnTapped(object obj)
+        private async void OnTapped(object obj)
         {
             if (obj is Item item)
             {
                 Items.Remove(item);
-
+                var service = new dbConnetcion.APIQueries.UserCountriesService();
+                bool isDeleted = await service.DeleteUserCountryAsync(intUserId, item.ID_Country);
             }
         }
 
@@ -129,7 +130,8 @@ namespace FiszkiApp.ViewModel
 
                 ImageSource imgSource = ImageSource.FromFile(imageName);
                 var item = new EntityClasses.Item
-                    { Name = name,
+                    { ID_Country = CountryId,
+                      Name = name,
                       Image = imgSource };    
                 
                 Items.Add(item);

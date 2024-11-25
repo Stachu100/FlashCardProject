@@ -52,22 +52,26 @@ namespace APIFlashCard.Controllers
             return CreatedAtAction(nameof(GetUserCountry), new { id = userCountry.ID_UserCountries }, userCountry);
         }
 
-        // DELETE: api/UserCountries/{id}
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUserCountry(int id)
+        // DELETE: api/UserCountries?userId={userId}&countryId={countryId}
+        [HttpDelete]
+        public async Task<IActionResult> DeleteUserCountry(int userId, int countryId)
         {
-            var userCountry = await _context.UserCountries.FindAsync(id);
+            // Wyszukaj rekord na podstawie UserID i CountryID
+            var userCountry = await _context.UserCountries
+                                             .FirstOrDefaultAsync(uc => uc.ID_User == userId && uc.ID_Country == countryId);
 
             if (userCountry == null)
             {
                 return NotFound();
             }
 
+            // Usuń rekord
             _context.UserCountries.Remove(userCountry);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
+
 
     }
 }

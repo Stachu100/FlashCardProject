@@ -64,12 +64,15 @@ namespace FiszkiApp.dbConnetcion.APIQueries
             }
         }
 
-        // DELETE: Usuń UserCountry po ID
-        public async Task<bool> DeleteUserCountryAsync(int id)
+        public async Task<bool> DeleteUserCountryAsync(int userId, int countryId)
         {
             try
             {
-                var response = await _httpClient.DeleteAsync($"usercountries/{id}");
+                // Konstrukcja URL z parametrami zapytania
+                var url = $"usercountries?userId={userId}&countryId={countryId}";
+
+                // Wysyłanie żądania DELETE
+                var response = await _httpClient.DeleteAsync(url);
                 response.EnsureSuccessStatusCode();
 
                 return true;
@@ -85,5 +88,6 @@ namespace FiszkiApp.dbConnetcion.APIQueries
                 return false;
             }
         }
+
     }
 }
