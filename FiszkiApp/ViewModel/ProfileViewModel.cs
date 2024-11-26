@@ -9,6 +9,7 @@ using Microsoft.Maui.Controls;
 using FiszkiApp.EntityClasses;
 using FiszkiApp.dbConnetcion.APIQueries;
 using static SQLite.SQLite3;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FiszkiApp.ViewModel
 {
@@ -96,7 +97,7 @@ namespace FiszkiApp.ViewModel
                 }
                 var service = new dbConnetcion.APIQueries.UserCountriesService();
                 var userCountries = await service.GetUserCountriesByUserIdAsync(intUserId);
-                if (userCountries != null)
+                if (userCountries != null && Items.Count == 0)
                 {
                     var countriesDic = new dbConnetcion.APIQueries.CountriesDic();
                     var countries = await countriesDic.GetCountriesWithFlagsAsync();
@@ -108,7 +109,6 @@ namespace FiszkiApp.ViewModel
 
                         if (country != null)
                         {
-                            Console.WriteLine($"Country Name: {country.Country}, Flag URL: {country.Url}");
                             AddItem(false, null, country.ID_Country, country.Country, country.Url);
                         }
                     }
