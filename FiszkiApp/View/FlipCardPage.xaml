@@ -7,6 +7,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
@@ -21,11 +22,13 @@
             <Grid x:Name="FlashCard" VerticalOptions="Start" HorizontalOptions="Center" Margin="0, 50, 0, 10" Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Frame Grid.Row="1" Padding="20"
+            <Frame 
+                   x:Name="FlashCardFrame"
+                   Grid.Row="1" Padding="20"
                    BackgroundColor="#512BD4"
                    BorderColor="DodgerBlue"
                    CornerRadius="15"
@@ -34,23 +37,26 @@
                    WidthRequest="350" HeightRequest="225"
                    IsClippedToBounds="True">
 
-                    <Grid x:Name="FlashCardContent" VerticalOptions="Center" HorizontalOptions="Center">
-                        <Label x:Name="FrontCard" Text="{Binding CurrentFlashcard.FrontFlashCard}"
-                           FontSize="48" HorizontalOptions="Center" VerticalOptions="Center"
-                           IsVisible="{Binding IsFrontVisible}" />
+                <Grid x:Name="FlashCardContent" VerticalOptions="Center" HorizontalOptions="Center">
+                    
+                    <Label x:Name="FrontCard" Text="{Binding CurrentFlashcard.FrontFlashCard}"
+               FontSize="48" HorizontalOptions="Center" VerticalOptions="Center"
+               IsVisible="{Binding IsFrontVisible}" />
+                    
+                    <Label x:Name="BackCard" Text="{Binding CurrentFlashcard.BackFlashCard}"
+               FontSize="48" HorizontalOptions="Center" VerticalOptions="Center"
+               IsVisible="{Binding IsBackVisible}" />
+                    
+                </Grid>
 
-                        <Label x:Name="BackCard" Text="{Binding CurrentFlashcard.BackFlashCard}"
-                           FontSize="48" HorizontalOptions="Center" VerticalOptions="Center"
-                           IsVisible="{Binding IsBackVisible}" />
-                    </Grid>
-                </Frame>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnFlipCardTapped" />
+                </Frame.GestureRecognizers>
 
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding FlipCardCommand}" />
-                </Grid.GestureRecognizers>
-            </Grid>
+            </Frame>
+        </Grid>
 
-        <Grid Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Center" Margin="0, -100, 0, 10">
+        <Grid Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Center" Margin="0, 50, 0, 10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />

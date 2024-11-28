@@ -14,10 +14,12 @@ namespace FiszkiApp.ViewModel
     {
         private readonly CountriesDic _countriesDic;
         private readonly DatabaseService _databaseService;
+        private readonly AuthService _authService;
 
         public AddCategoryViewModel()
         {
             _countriesDic = new CountriesDic();
+            _authService = new AuthService();
             _databaseService = App.Database;
 
             LanguageLevel = new ObservableCollection<string> { "Brak", "A1", "A2", "B1", "B2", "C1", "C2" };
@@ -76,12 +78,20 @@ namespace FiszkiApp.ViewModel
                 return;
             }
 
+            var (isAuthenticated, userIdString) = await _authService.IsAuthenticatedAsync();
+            if (!isAuthenticated || !int.TryParse(userIdString, out int userId) || userId <= 0)
+            {
+                await Shell.Current.DisplayAlert("Błąd", "Nie udało się pobrać identyfikatora użytkownika.", "OK");
+                return;
+            }
+
             var newCategory = new LocalCategoryTable
             {
                 CategoryName = CategoryName,
                 FrontLanguage = SelectedFrontLanguage,
                 BackLanguage = SelectedBackLanguage,
-                LanguageLevel = SelectedLanguageLevel == "Brak" ? null : SelectedLanguageLevel // Zamiana "brak" na null
+                LanguageLevel = SelectedLanguageLevel == "Brak" ? null : SelectedLanguageLevel, // Zamiana "brak" na null
+                UserID = userId
             };
 
             await _databaseService.AddCategoryAsync(newCategory);

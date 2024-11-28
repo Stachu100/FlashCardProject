@@ -44,7 +44,6 @@ namespace FiszkiApp.dbConnetcion.APIQueries
         {
             try
             {
-                // Budowanie URL z parametrem ID_User
                 var response = await _httpClient.GetAsync($"usercountries/user/{userId}");
                 response.EnsureSuccessStatusCode();
 
@@ -64,7 +63,6 @@ namespace FiszkiApp.dbConnetcion.APIQueries
                 return new List<UserCountries>();
             }
         }
-
 
         // POST: Dodaj nowy UserCountry
         public async Task<bool> AddUserCountryAsync(UserCountries userCountry)
@@ -95,10 +93,8 @@ namespace FiszkiApp.dbConnetcion.APIQueries
         {
             try
             {
-                // Konstrukcja URL z parametrami zapytania
                 var url = $"usercountries?userId={userId}&countryId={countryId}";
 
-                // Wysyłanie żądania DELETE
                 var response = await _httpClient.DeleteAsync(url);
                 response.EnsureSuccessStatusCode();
 
@@ -115,6 +111,5 @@ namespace FiszkiApp.dbConnetcion.APIQueries
                 return false;
             }
         }
-
     }
 }

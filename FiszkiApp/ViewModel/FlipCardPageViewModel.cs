@@ -4,6 +4,7 @@ using FiszkiApp.Services;
 using FiszkiApp.EntityClasses.Models;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace FiszkiApp.ViewModel
 {
@@ -22,7 +23,6 @@ namespace FiszkiApp.ViewModel
             _currentFlashcardIndex = 0;
 
             LoadFlashcardsCommand = new AsyncRelayCommand(LoadFlashcardsAsync);
-            FlipCardCommand = new AsyncRelayCommand(FlipCardAsync);
             NextFlashcardCommand = new AsyncRelayCommand(NextFlashcardAsync);
             PreviousFlashcardCommand = new AsyncRelayCommand(PreviousFlashcardAsync);
 
@@ -65,17 +65,6 @@ namespace FiszkiApp.ViewModel
 
             OnPropertyChanged(nameof(CanGoNext));
             OnPropertyChanged(nameof(CanGoPrevious));
-        }
-
-        private async Task FlipCardAsync()
-        {
-            IsFrontVisible = !IsFrontVisible;
-            IsBackVisible = !IsBackVisible;
-
-            OnPropertyChanged(nameof(IsFrontVisible));
-            OnPropertyChanged(nameof(IsBackVisible));
-
-            await Task.CompletedTask;
         }
 
         private async Task NextFlashcardAsync()

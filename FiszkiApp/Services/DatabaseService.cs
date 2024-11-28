@@ -37,6 +37,11 @@ namespace FiszkiApp.Services
             return _database.Table<LocalCategoryTable>().ToListAsync();
         }
 
+        public Task<List<LocalCategoryTable>> GetCategoriesByUserIdAsync(int userId)
+        {
+            return _database.Table<LocalCategoryTable>().Where(c => c.UserID == userId).ToListAsync();
+        }
+
         public Task<LocalCategoryTable> GetCategoryByIdAsync(int id)
         {
             return _database.Table<LocalCategoryTable>().Where(i => i.IdCategory == id).FirstOrDefaultAsync();

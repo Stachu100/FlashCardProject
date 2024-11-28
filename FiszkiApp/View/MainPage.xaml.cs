@@ -11,5 +11,15 @@ namespace FiszkiApp.View
 
             Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
         }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (BindingContext is MainPageViewModel viewModel)
+            {
+                await viewModel.LoadCategoriesAsync();
+            }
+        }
     }
 }

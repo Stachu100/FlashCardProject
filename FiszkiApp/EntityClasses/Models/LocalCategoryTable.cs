@@ -16,6 +16,8 @@ namespace FiszkiApp.EntityClasses.Models
         public string LanguageLevel { get; set; }
         public int IsSent { get; set; }
 
+        public int UserID { get; set; }
+
         [Ignore]
         public string FrontFlagUrl { get; set; }
         [Ignore]

@@ -51,22 +51,27 @@ namespace FiszkiApp.ViewModel
             await Shell.Current.GoToAsync("AddCategoryPage");
         }
 
-        private async Task LoadCategoriesAsync()
+        public async Task LoadCategoriesAsync()
         {
-            var categoriesFromDb = await _databaseService.GetCategoriesAsync();
+            var (isAuthenticated, userIdString) = await _authService.IsAuthenticatedAsync();
 
-            var countryUrls = await _countriesDic.GetCountriesWithFlagsAsync();
-
-            Categories.Clear();
-            foreach (var category in categoriesFromDb)
+            if (isAuthenticated && int.TryParse(userIdString, out int userId) && userId > 0)
             {
-                var frontFlag = countryUrls.FirstOrDefault(c => c.Country == category.FrontLanguage).Url;
-                var backFlag = countryUrls.FirstOrDefault(c => c.Country == category.BackLanguage).Url;
+                var categoriesFromDb = await _databaseService.GetCategoriesByUserIdAsync(userId);
 
-                category.FrontFlagUrl = frontFlag; //dodać domyślny url poźniej: category.FrontFlagUrl = frontFlag ?? "default_front_flag_url";
-                category.BackFlagUrl = backFlag;
+                var countryUrls = await _countriesDic.GetCountriesWithFlagsAsync();
 
-                Categories.Add(category);
+                Categories.Clear();
+                foreach (var category in categoriesFromDb)
+                {
+                    var frontFlag = countryUrls.FirstOrDefault(c => c.Country == category.FrontLanguage).Url;
+                    var backFlag = countryUrls.FirstOrDefault(c => c.Country == category.BackLanguage).Url;
+
+                    category.FrontFlagUrl = frontFlag; //dodać domyślny url poźniej: category.FrontFlagUrl = frontFlag ?? "default_front_flag_url";
+                    category.BackFlagUrl = backFlag;
+
+                    Categories.Add(category);
+                }
             }
         }
 

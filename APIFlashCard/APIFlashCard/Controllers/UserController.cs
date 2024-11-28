@@ -26,6 +26,7 @@ namespace APIFlashCard.Controllers
             }
             return user;
         }
+
         [HttpGet("check-username/{username}")]
         public async Task<IActionResult> CheckUsername(string username)
         {

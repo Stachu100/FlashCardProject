@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using Microsoft.Maui.Controls;
 using FiszkiApp.EntityClasses;
+using FiszkiApp.EntityClasses.Models;
 using FiszkiApp.dbConnetcion.APIQueries;
-using static SQLite.SQLite3;
-using Microsoft.IdentityModel.Tokens;
 
 namespace FiszkiApp.ViewModel
 {
@@ -70,7 +69,7 @@ namespace FiszkiApp.ViewModel
             if (obj is Item item)
             {
                 Items.Remove(item);
-                var service = new dbConnetcion.APIQueries.UserCountriesService();
+                var service = new UserCountriesService();
                 bool isDeleted = await service.DeleteUserCountryAsync(intUserId, item.ID_Country);
             }
         }
@@ -81,7 +80,7 @@ namespace FiszkiApp.ViewModel
             {
                 var (isAuthenticated, userID) = await _authService.IsAuthenticatedAsync();
                 intUserId = Convert.ToInt32(userID);
-                var profileDetails = new dbConnetcion.APIQueries.ProfileDetails();
+                var profileDetails = new ProfileDetails();
 
                 var userDetails = await profileDetails.GetUserDetailsAsync(intUserId);
 
@@ -95,14 +94,13 @@ namespace FiszkiApp.ViewModel
                         ImageAsBytes = userDetails.Avatar;
                     }
                 }
-                var service = new dbConnetcion.APIQueries.UserCountriesService();
+                var service = new UserCountriesService();
                 var userCountries = await service.GetUserCountriesByUserIdAsync(intUserId);
                 if (userCountries != null && Items.Count == 0)
                 {
-                    var countriesDic = new dbConnetcion.APIQueries.CountriesDic();
+                    var countriesDic = new CountriesDic();
                     var countries = await countriesDic.GetCountriesWithFlagsAsync();
 
-                    // Iteruj przez UserCountries i dopasuj do krajów
                     foreach (var userCountry in userCountries)
                     {
                         var country = countries.FirstOrDefault(c => c.ID_Country == userCountry.ID_Country);
@@ -123,7 +121,7 @@ namespace FiszkiApp.ViewModel
 
         private async Task LoadCountry()
         {
-            var countriesDic = new dbConnetcion.APIQueries.CountriesDic();
+            var countriesDic = new CountriesDic();
             var countries = await countriesDic.GetCountriesWithFlagsAsync();
 
             countriesWithUrl = countries.Select(c => (c.ID_Country ,c.Country, c.Url)).ToList();
@@ -143,18 +141,17 @@ namespace FiszkiApp.ViewModel
             {
                 if (AddToDB)
                 {
-                    var newUserCountry = new EntityClasses.Models.UserCountries
+                    var newUserCountry = new UserCountries
                     {
                         ID_User = UserId.Value,
                         ID_Country = CountryId
                     };
-                    var service = new dbConnetcion.APIQueries.UserCountriesService();
+                    var service = new UserCountriesService();
                     var isAdded = await service.AddUserCountryAsync(newUserCountry);
-                }
-                
+                }               
 
                 ImageSource imgSource = ImageSource.FromFile(imageName);
-                var item = new EntityClasses.Item
+                var item = new Item
                     { ID_Country = CountryId,
                       Name = name,
                       Image = imgSource };    

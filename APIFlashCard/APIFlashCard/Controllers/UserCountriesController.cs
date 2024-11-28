@@ -36,14 +36,14 @@ namespace APIFlashCard.Controllers
 
             return userCountry;
         }
+
         // GET: api/UserCountries/user/{userId}
         [HttpGet("user/{userId}")]
         public async Task<ActionResult<IEnumerable<UserCountries>>> GetUserCountriesByUserId(int userId)
         {
-            // Pobierz rekordy, które pasują do podanego ID_User
             var userCountries = await _context.UserCountries
-                                               .Where(uc => uc.ID_User == userId)
-                                               .ToListAsync();
+                                              .Where(uc => uc.ID_User == userId)
+                                              .ToListAsync();
 
             if (userCountries == null || userCountries.Count == 0)
             {
@@ -52,7 +52,6 @@ namespace APIFlashCard.Controllers
 
             return userCountries;
         }
-
 
         // POST: api/UserCountries
         [HttpPost]
@@ -73,22 +72,18 @@ namespace APIFlashCard.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteUserCountry(int userId, int countryId)
         {
-            // Wyszukaj rekord na podstawie UserID i CountryID
             var userCountry = await _context.UserCountries
-                                             .FirstOrDefaultAsync(uc => uc.ID_User == userId && uc.ID_Country == countryId);
+                                            .FirstOrDefaultAsync(uc => uc.ID_User == userId && uc.ID_Country == countryId);
 
             if (userCountry == null)
             {
                 return NotFound();
             }
 
-            // Usuń rekord
             _context.UserCountries.Remove(userCountry);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
-
-
     }
 }
