@@ -36,15 +36,18 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
                             <Label Text="{Binding CategoryName}" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Start" FontSize="Medium" />
 
-                            <Label Text="{Binding FrontLanguage}" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Margin="0,0,10,0" />
+                            <Label Text="{Binding LanguageLevel}" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Margin="0,0,10,0"/>
 
-                            <Label Text="{Binding BackLanguage}" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Margin="0,0,10,0" />
+                            <Label Text="{Binding FrontLanguage}" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Margin="0,0,10,0" />
 
-                            <Button Text="+" Grid.Column="3" WidthRequest="35" HeightRequest="35" Margin="3" 
+                            <Label Text="{Binding BackLanguage}" Grid.Column="3" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Margin="0,0,10,0" />
+
+                            <Button Text="+" Grid.Column="4" WidthRequest="35" HeightRequest="35" Margin="3" 
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type local:FlashCardListViewModel}}, Path=AddToLocalCommand}" 
                                     CommandParameter="{Binding .}" HorizontalOptions="Center" VerticalOptions="Center" />
                         </Grid>
