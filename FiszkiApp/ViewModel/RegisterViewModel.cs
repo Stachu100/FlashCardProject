@@ -14,7 +14,7 @@ namespace FiszkiApp.ViewModel
     {
         public IAsyncRelayCommand LoadCountriesCommand { get; }
         private byte[] imageData;
-        private EntityClasses.UserRegistration user;
+        private UserRegistration user;
 
         public RegisterViewModel()
         {

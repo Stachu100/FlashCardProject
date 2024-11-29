@@ -7,6 +7,17 @@ namespace FiszkiApp.View
         public FlashCardList()
         {
             InitializeComponent();
+            BindingContext = new FlashCardListViewModel();
+        }
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            var viewModel = BindingContext as FlashCardListViewModel;
+            if (viewModel != null)
+            {
+                await viewModel.LoadUserLanguagesAsync();
+            }
         }
     }
 }

@@ -90,7 +90,7 @@ namespace FiszkiApp.ViewModel
                 CategoryName = CategoryName,
                 FrontLanguage = SelectedFrontLanguage,
                 BackLanguage = SelectedBackLanguage,
-                LanguageLevel = SelectedLanguageLevel == "Brak" ? null : SelectedLanguageLevel, // Zamiana "brak" na null
+                LanguageLevel = SelectedLanguageLevel,
                 UserID = userId
             };
 

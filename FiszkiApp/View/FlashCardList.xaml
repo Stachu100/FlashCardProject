@@ -1,27 +1,60 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:FiszkiApp.ViewModel"
              x:Class="FiszkiApp.View.FlashCardList"
              Title="Lista">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
 
-        <VerticalStackLayout Grid.Row="0">
-            <Label 
-                Text="Lista"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
+        <VerticalStackLayout Grid.Row="0" Padding="10" Spacing="10">
+            <Entry Placeholder="Szukaj kategorii" x:Name="CategorySearchEntry" Text="{Binding CategorySearch}" />
+
+            <Picker x:Name="LanguageLevelPicker" Title="Poziom językowy" ItemsSource="{Binding LanguageLevels}" SelectedItem="{Binding SelectedLanguageLevel}" />
+
+            <Entry Placeholder="Fiszki użytkownika" x:Name="UserSearchEntry" Text="{Binding UserSearch}" />
+
+            <Picker x:Name="LanguagePicker" Title="Język" ItemsSource="{Binding UserLanguages}" SelectedItem="{Binding SelectedLanguage}" />
+
+            <Button Text="Wyszukaj" Command="{Binding SearchCommand}" />
         </VerticalStackLayout>
+        
+        <ListView Grid.Row="1"
+                  ItemsSource="{Binding SearchResults}"
+                  x:Name="ResultsListView"
+                  Margin="10"
+                  HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="10" VerticalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-        <Grid Grid.Row="1" VerticalOptions="End">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="5" />
-            </Grid.RowDefinitions>
+                            <Label Text="{Binding CategoryName}" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Start" FontSize="Medium" />
 
-            <BoxView Grid.Row="0" Color="Red" />
+                            <Label Text="{Binding FrontLanguage}" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Margin="0,0,10,0" />
+
+                            <Label Text="{Binding BackLanguage}" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center" FontSize="Small" Margin="0,0,10,0" />
+
+                            <Button Text="+" Grid.Column="3" WidthRequest="35" HeightRequest="35" Margin="3" 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:FlashCardListViewModel}}, Path=AddToLocalCommand}" 
+                                    CommandParameter="{Binding .}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Grid Grid.Row="2" VerticalOptions="End">
+            <BoxView Color="Red" HeightRequest="5" />
         </Grid>
     </Grid>
 </ContentPage>
