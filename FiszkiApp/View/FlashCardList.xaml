@@ -21,7 +21,7 @@
 
             <Button Text="Wyszukaj" Command="{Binding SearchCommand}" />
         </VerticalStackLayout>
-        
+
         <ListView Grid.Row="1"
                   ItemsSource="{Binding SearchResults}"
                   x:Name="ResultsListView"
