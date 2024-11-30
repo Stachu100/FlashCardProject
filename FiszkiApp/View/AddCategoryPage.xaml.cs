@@ -9,5 +9,11 @@ namespace FiszkiApp.View
             InitializeComponent();
             BindingContext = new AddCategoryViewModel();
         }
+
+        private void OnSelectedFrontLanguageChanged(object sender, EventArgs e)
+        {
+            var viewModel = (AddCategoryViewModel)BindingContext;
+            viewModel.OnSelectedFrontLanguageChanged();
+        }
     }
 }

@@ -12,22 +12,11 @@ using System.Windows.Input;
 
 namespace FiszkiApp.ViewModel
 {
-    public class FlashCardListViewModel : MainViewModel
+    public partial class FlashCardListViewModel : ObservableObject
     {
         private readonly CategorySearchService _categorySearchService;
         private readonly DatabaseService _databaseService;
         private readonly AuthService _authService;
-
-        public ObservableCollection<LocalCategoryTable> SearchResults { get; set; } = new ObservableCollection<LocalCategoryTable>();
-        public string CategorySearch { get; set; }
-        public string UserSearch { get; set; }
-        public string SelectedLanguageLevel { get; set; }
-        public string SelectedLanguage { get; set; }
-        public ObservableCollection<string> LanguageLevels { get; set; }
-        public ObservableCollection<string> UserLanguages { get; set; } = new ObservableCollection<string>();
-
-        public ICommand SearchCommand { get; }
-        public ICommand AddToLocalCommand { get; }
 
         public FlashCardListViewModel()
         {
@@ -37,13 +26,48 @@ namespace FiszkiApp.ViewModel
 
             LanguageLevels = new ObservableCollection<string> { "Brak", "A1", "A2", "B1", "B2", "C1", "C2" };
             UserLanguages = new ObservableCollection<string>();
-            SearchCommand = new Command(async () => await SearchCategoriesAsync());
-            AddToLocalCommand = new Command<LocalCategoryTable>(async category => await AddToLocalAsync(category));
+
+            SearchCommand = new AsyncRelayCommand(SearchCategoriesAsync);
+            AddToLocalCommand = new AsyncRelayCommand<LocalCategoryTable>(AddToLocalAsync);
         }
+
+        [ObservableProperty]
+        private ObservableCollection<LocalCategoryTable> searchResults = new();
+
+        [ObservableProperty]
+        private string categorySearch;
+
+        [ObservableProperty]
+        private string userSearch;
+
+        [ObservableProperty]
+        private string selectedLanguageLevel;
+
+        [ObservableProperty]
+        private string selectedLanguage;
+
+        [ObservableProperty]
+        private ObservableCollection<string> userLanguages;
+
+        public ObservableCollection<string> LanguageLevels { get; }
+
+        public IAsyncRelayCommand SearchCommand { get; }
+        public IAsyncRelayCommand<LocalCategoryTable> AddToLocalCommand { get; }
+
+        [RelayCommand]
+        private void ClearCategorySearch() => CategorySearch = string.Empty;
+
+        [RelayCommand]
+        private void ClearUserSearch() => UserSearch = string.Empty;
+
+        [RelayCommand]
+        private void ClearSelectedLanguageLevel() => SelectedLanguageLevel = null;
+
+        [RelayCommand]
+        private void ClearSelectedLanguage() => SelectedLanguage = null;
 
         private async Task SearchCategoriesAsync()
         {
-
             if (UserLanguages == null || UserLanguages.Count == 0)
             {
                 return;
@@ -53,7 +77,7 @@ namespace FiszkiApp.ViewModel
                 CategorySearch,
                 UserSearch,
                 SelectedLanguageLevel,
-                SelectedLanguage);
+            SelectedLanguage);
 
             SearchResults.Clear();
 
@@ -70,6 +94,20 @@ namespace FiszkiApp.ViewModel
                         UserID = category.UserID,
                         IsSent = 1
                     });
+                }
+            }
+        }
+
+        private async Task AddToLocalAsync(LocalCategoryTable category)
+        {
+            if (category != null)
+            {
+                var (isAuthenticated, userIdString) = await _authService.IsAuthenticatedAsync();
+
+                if (isAuthenticated && int.TryParse(userIdString, out int userId) && userId > 0)
+                {
+                    category.UserID = userId;
+                    await _databaseService.AddCategoryAsync(category);
                 }
             }
         }
@@ -98,20 +136,6 @@ namespace FiszkiApp.ViewModel
                     {
                         UserLanguages.Add(language);
                     }
-                }
-            }
-        }
-
-        private async Task AddToLocalAsync(LocalCategoryTable category)
-        {
-            if (category != null)
-            {
-                var (isAuthenticated, userIdString) = await _authService.IsAuthenticatedAsync();
-
-                if (isAuthenticated && int.TryParse(userIdString, out int userId) && userId > 0)
-                {
-                    category.UserID = userId;
-                    await _databaseService.AddCategoryAsync(category);
                 }
             }
         }

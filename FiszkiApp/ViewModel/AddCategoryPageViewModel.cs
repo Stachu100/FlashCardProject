@@ -48,6 +48,15 @@ namespace FiszkiApp.ViewModel
         [ObservableProperty]
         private ObservableCollection<string> backLanguages;
 
+        [ObservableProperty]
+        private ObservableCollection<string> _allLanguages;
+
+        [ObservableProperty]
+        private bool isBackLanguageEnabled;
+
+        [ObservableProperty]
+        private bool isFrontLanguageEmpty;
+
         public IAsyncRelayCommand LoadLanguagesCommand { get; }
 
         public IAsyncRelayCommand SubmitCategoryCommand => new AsyncRelayCommand(SubmitCategory);
@@ -57,8 +66,12 @@ namespace FiszkiApp.ViewModel
         private async Task LoadLanguages()
         {
             var countries = await _countriesDic.GetCountriesWithFlagsAsync();
-            FrontLanguages = new ObservableCollection<string>(countries.Select(c => c.Country).ToList());
-            BackLanguages = new ObservableCollection<string>(countries.Select(c => c.Country).ToList());
+            _allLanguages = new ObservableCollection<string>(countries.Select(c => c.Country).ToList());
+
+            FrontLanguages = new ObservableCollection<string>(_allLanguages);
+            BackLanguages = new ObservableCollection<string>();
+            IsBackLanguageEnabled = false;
+            IsFrontLanguageEmpty = true;
         }
 
         private async Task SubmitCategory()
@@ -98,6 +111,27 @@ namespace FiszkiApp.ViewModel
             ResetForm();
 
             await Shell.Current.GoToAsync("//MainPage");
+        }
+
+        public void OnSelectedFrontLanguageChanged()
+        {
+            if (SelectedFrontLanguage != null)
+            {
+                if (SelectedFrontLanguage == "Polska")
+                {
+                    BackLanguages = new ObservableCollection<string>(_allLanguages.Where(f => f != "Polska"));
+                    SelectedBackLanguage = null;
+                    IsBackLanguageEnabled = true;
+                    IsFrontLanguageEmpty = false;
+                }
+                else
+                {
+                    BackLanguages = new ObservableCollection<string> { "Polska" };
+                    SelectedBackLanguage = null;
+                    IsBackLanguageEnabled = true;
+                    IsFrontLanguageEmpty = false;
+                }
+            }              
         }
 
         private async Task CancelCategory()

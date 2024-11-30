@@ -29,16 +29,11 @@
                 SelectedItem="{Binding SelectedLanguageLevel}" />
 
             <Label Text="Język przodu fiszek*" />
-            <Picker 
-                x:Name="FrontLanguagePicker" 
-                ItemsSource="{Binding FrontLanguages}" 
-                SelectedItem="{Binding SelectedFrontLanguage}" />
+            <Picker x:Name="FrontLanguagePicker" ItemsSource="{Binding FrontLanguages}" SelectedItem="{Binding SelectedFrontLanguage}" SelectedIndexChanged="OnSelectedFrontLanguageChanged" />
 
             <Label Text="Język tyłu fiszek*" />
-            <Picker 
-                x:Name="BackLanguagePicker" 
-                ItemsSource="{Binding BackLanguages}" 
-                SelectedItem="{Binding SelectedBackLanguage}" />
+            <Label Text="Najpierw wybierz język przodu fiszek" TextColor="Red" IsVisible="{Binding IsFrontLanguageEmpty}" FontAttributes="Bold"/>
+            <Picker x:Name="BackLanguagePicker" ItemsSource="{Binding BackLanguages}" SelectedItem="{Binding SelectedBackLanguage}" IsEnabled="{Binding IsBackLanguageEnabled}" />
 
             <Label Text="Pola oznaczone gwiazdką (*) są wymagane" 
                    HorizontalOptions="Center" 
