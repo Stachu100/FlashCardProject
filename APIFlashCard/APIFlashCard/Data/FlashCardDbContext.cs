@@ -13,6 +13,7 @@ namespace APIFlashCard.Data
         public DbSet<Countries> Countries { get; set; }
         public DbSet<EncryptionKeys> EncryptionKeys { get; set; }
         public DbSet<UserCountries> UserCountries { get; set; }
+        public DbSet<FlashCard> FlashCards { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,6 +40,10 @@ namespace APIFlashCard.Data
             modelBuilder.Entity<UserCountries>()
                 .ToTable("usercountries")
                 .HasKey(uc => uc.ID_UserCountries);
+
+            modelBuilder.Entity<FlashCard>()
+                .ToTable("flashcard")
+                .HasKey(fc => fc.ID_flashcard);
         }
     }
 }

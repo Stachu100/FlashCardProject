@@ -92,13 +92,20 @@ namespace FiszkiApp.ViewModel
                         LanguageLevel = category.LanguageLevel
                     };
 
-                    var result = await _categoryPost.AddCategoryAsync(newCategory);
+                    var flashcards = await _databaseService.GetFlashcardsByCategoryIdAsync(category.IdCategory);
+
+                    var categoryPost = new CategoryPost();
+                    var result = await categoryPost.AddCategoryAndFlashcardsAsync(newCategory, flashcards);
 
                     if (result)
                     {
                         category.IsSent = 1;
                         await _databaseService.UpdateCategoryAsync(category);
                         await LoadCategoriesAsync();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Błąd podczas wysyłania kategorii i fiszek.");
                     }
                 }
             }

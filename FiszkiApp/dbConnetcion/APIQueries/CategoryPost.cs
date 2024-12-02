@@ -14,35 +14,58 @@ namespace FiszkiApp.dbConnetcion.APIQueries
             _httpClient = HttpClientService.Instance.HttpClient;
         }
 
-        public async Task<bool> AddCategoryAsync(Category category)
+        public async Task<bool> AddCategoryAndFlashcardsAsync(Category category, List<LocalFlashcardTable> flashcards)
         {
             try
             {
-                var json = JsonConvert.SerializeObject(category);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await _httpClient.PostAsync("Category", content);
+                var jsonCategory = JsonConvert.SerializeObject(category);
+                var contentCategory = new StringContent(jsonCategory, Encoding.UTF8, "application/json");
+                var responseCategory = await _httpClient.PostAsync("Category", contentCategory);
+                var responseCategoryContent = await responseCategory.Content.ReadAsStringAsync();
 
-                var responseContent = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"Response Status Code: {response.StatusCode}, Content: {responseContent}");
+                if (responseCategory.IsSuccessStatusCode)
+                {
+                    var categoryResponse = JsonConvert.DeserializeObject<Category>(responseCategoryContent);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    return true;
+                    var newCategoryId = categoryResponse?.ID_Category;
+                    if (newCategoryId.HasValue)
+                    {
+                        var flashcardsToSend = flashcards.Select(f => new FlashCard
+                        {
+                            ID_flashcard = f.ID_Flashcard,
+                            ID_Category = newCategoryId.Value,
+                            FrontFlashCard = f.FrontFlashCard,
+                            BackFlashCard = f.BackFlashCard
+                        }).ToList();
+
+                        var jsonFlashcards = JsonConvert.SerializeObject(flashcardsToSend);
+                        var contentFlashcards = new StringContent(jsonFlashcards, Encoding.UTF8, "application/json");
+                        var responseFlashcards = await _httpClient.PostAsync("Flashcard/batch", contentFlashcards);
+                        var responseFlashcardsContent = await responseFlashcards.Content.ReadAsStringAsync();
+
+                        if (responseFlashcards.IsSuccessStatusCode)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Błąd podczas wysyłania fiszek: {responseFlashcardsContent}");
+                            return false;
+                        }
+                    }
                 }
-                else
-                {
-                    Console.WriteLine($"Błąd: {responseContent}");
-                    return false;
-                }
+
+                Console.WriteLine($"Błąd podczas dodawania kategorii: {responseCategoryContent}");
+                return false;
             }
             catch (HttpRequestException httpEx)
             {
-                Console.WriteLine($"HTTP Error: {httpEx.Message}");
+                Console.WriteLine($"Błąd HTTP: {httpEx.Message}");
                 return false;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"General Error: {ex.Message}");
+                Console.WriteLine($"Błąd: {ex.Message}");
                 return false;
             }
         }
