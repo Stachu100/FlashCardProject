@@ -1,8 +1,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:FiszkiApp.ViewModel"
+             xmlns:vm="clr-namespace:FiszkiApp.ViewModel"
              x:Class="FiszkiApp.View.FlashCardList"
-             Title="Lista">
+             x:Name="List">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -50,6 +51,11 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Path=BindingContext.LookFlashCardTappedCommand, Source={x:Reference Name=List}}"
+                                              CommandParameter="{Binding .}" />
+                            </Grid.GestureRecognizers>
 
                             <Label Text="{Binding CategoryName}" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Start" FontSize="Medium" />
 

@@ -1,0 +1,73 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:FiszkiApp.ViewModel"
+             xmlns:vm="clr-namespace:FiszkiApp.ViewModel"
+             x:Class="FiszkiApp.View.LookFlashCardPage"
+             Title="Lista Fiszek">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+        <StackLayout Padding="10" Grid.Row="0">
+            <Label Text="Flashcards" FontSize="Large" />
+        </StackLayout>
+
+        <Grid Grid.Row="1" BackgroundColor="LightGray" Padding="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Lp" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0" />
+            <Label Text="ID Fiszki" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="1" />
+            <Label Text="Przód Fiszki" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="2" />
+            <Label Text="Tył Fiszki" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="3" />
+        </Grid>
+
+        <ScrollView Grid.Row="2" Padding="10">
+            <StackLayout>
+                <ListView ItemsSource="{Binding Flashcards}"
+                          SelectedItem="{Binding SelectedFlashcard, Mode=TwoWay}"
+                          SelectionMode="Single">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Padding="10" VerticalOptions="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding Lp}" 
+                                           Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center" />
+                                    <Label Text="{Binding ID_flashcard}" 
+                                           Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" />
+                                    <Label Text="{Binding FrontFlashCard}" 
+                                           Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center" />
+                                    <Label Text="{Binding BackFlashCard}" 
+                                           Grid.Column="3" VerticalOptions="Center" HorizontalOptions="Center" />
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
+
+        <Grid Grid.Row="3" VerticalOptions="End">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5" />
+            </Grid.RowDefinitions>
+
+            <BoxView Grid.Row="0" Color="Red" />
+        </Grid>
+    </Grid>
+</ContentPage>

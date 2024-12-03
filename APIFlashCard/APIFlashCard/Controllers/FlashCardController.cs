@@ -45,6 +45,29 @@ namespace APIFlashCard.Controllers
             {
                 var flashcards = await _context.FlashCards
                     .Where(f => f.ID_Category == categoryId)
+                    .Select(f => new { f.FrontFlashCard, f.BackFlashCard })
+                    .ToListAsync();
+
+                return Ok(flashcards);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Wystąpił błąd: {ex.Message}" });
+            }
+        }
+
+        [HttpGet("display/{categoryId}/{page}")]
+        public async Task<ActionResult<IEnumerable<FlashCard>>> GetFlashCardsForDisplay(int categoryId, int page = 1)
+        {
+            try
+            {
+                const int pageSize = 10;
+
+                var flashcards = await _context.FlashCards
+                    .Where(f => f.ID_Category == categoryId)
+                    .OrderBy(f => f.ID_flashcard)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
                     .ToListAsync();
 
                 return Ok(flashcards);

@@ -21,6 +21,20 @@ namespace FiszkiApp.Services
             return _database.InsertAsync(category);
         }
 
+        public async Task<int> AddCategoryAndGetIdAsync(LocalCategoryTable category)
+        {
+            await _database.InsertAsync(category);
+
+            if (category.IdCategory > 0)
+            {
+                return category.IdCategory;
+            }
+            else
+            {
+                throw new Exception("Nie udało się uzyskać ID kategorii.");
+            }
+        }
+
         public Task<int> UpdateCategoryAsync(LocalCategoryTable category)
         {
             return _database.UpdateAsync(category);

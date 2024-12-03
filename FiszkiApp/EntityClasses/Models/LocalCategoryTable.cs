@@ -22,5 +22,8 @@ namespace FiszkiApp.EntityClasses.Models
         public string FrontFlagUrl { get; set; }
         [Ignore]
         public string BackFlagUrl { get; set; }
+
+        [Ignore]
+        public int API_ID_Category { get; set; }
     }
 }

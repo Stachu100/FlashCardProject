@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using FiszkiApp.Services;
 using FiszkiApp.EntityClasses.Models;
 using Microsoft.Maui.Controls;
-using System.Windows.Input;
 
 namespace FiszkiApp.ViewModel
 {
@@ -17,18 +16,22 @@ namespace FiszkiApp.ViewModel
         private readonly CategorySearchService _categorySearchService;
         private readonly DatabaseService _databaseService;
         private readonly AuthService _authService;
+        private readonly FlashCardService _flashCardService;
 
         public FlashCardListViewModel()
         {
             _categorySearchService = new CategorySearchService();
             _databaseService = App.Database;
             _authService = new AuthService();
+            _flashCardService = new FlashCardService();
 
             LanguageLevels = new ObservableCollection<string> { "Brak", "A1", "A2", "B1", "B2", "C1", "C2" };
             UserLanguages = new ObservableCollection<string>();
 
             SearchCommand = new AsyncRelayCommand(SearchCategoriesAsync);
             AddToLocalCommand = new AsyncRelayCommand<LocalCategoryTable>(AddToLocalAsync);
+            LookFlashCardTappedCommand = new AsyncRelayCommand<LocalCategoryTable>(OnLookFlashCardTappedAsync);
+
         }
 
         [ObservableProperty]
@@ -54,6 +57,8 @@ namespace FiszkiApp.ViewModel
         public IAsyncRelayCommand SearchCommand { get; }
         public IAsyncRelayCommand<LocalCategoryTable> AddToLocalCommand { get; }
 
+        public IAsyncRelayCommand<LocalCategoryTable> LookFlashCardTappedCommand { get; }
+
         [RelayCommand]
         private void ClearCategorySearch() => CategorySearch = string.Empty;
 
@@ -77,7 +82,7 @@ namespace FiszkiApp.ViewModel
                 CategorySearch,
                 UserSearch,
                 SelectedLanguageLevel,
-            SelectedLanguage);
+                SelectedLanguage);
 
             SearchResults.Clear();
 
@@ -92,7 +97,8 @@ namespace FiszkiApp.ViewModel
                         BackLanguage = category.BackLanguage,
                         LanguageLevel = category.LanguageLevel,
                         UserID = category.UserID,
-                        IsSent = 1
+                        IsSent = 1,
+                        API_ID_Category = category.ID_Category
                     });
                 }
             }
@@ -107,7 +113,24 @@ namespace FiszkiApp.ViewModel
                 if (isAuthenticated && int.TryParse(userIdString, out int userId) && userId > 0)
                 {
                     category.UserID = userId;
-                    await _databaseService.AddCategoryAsync(category);
+                    var localCategoryId = await _databaseService.AddCategoryAndGetIdAsync(category);
+
+                    if (localCategoryId > 0 && category.API_ID_Category > 0)
+                    {
+                        var apiFlashcards = await _flashCardService.GetFlashCardsByCategoryAsync(category.API_ID_Category);
+
+                        foreach (var flashcard in apiFlashcards)
+                        {
+                            var localFlashcard = new LocalFlashcardTable
+                            {
+                                FrontFlashCard = flashcard.FrontFlashCard,
+                                BackFlashCard = flashcard.BackFlashCard,
+                                IdCategory = localCategoryId
+                            };
+
+                            await _databaseService.AddFlashcardAsync(localFlashcard);
+                        }
+                    }
                 }
             }
         }
@@ -137,6 +160,14 @@ namespace FiszkiApp.ViewModel
                         UserLanguages.Add(language);
                     }
                 }
+            }
+        }
+
+        private async Task OnLookFlashCardTappedAsync(LocalCategoryTable selectedCategory)
+        {
+            if (selectedCategory != null)
+            {
+                await Shell.Current.GoToAsync($"{nameof(LookFlashCardPage)}?API_ID_Category={selectedCategory.API_ID_Category}");
             }
         }
     }

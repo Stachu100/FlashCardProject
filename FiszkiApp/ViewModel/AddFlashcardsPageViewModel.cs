@@ -4,7 +4,6 @@ using FiszkiApp.Services;
 using FiszkiApp.EntityClasses.Models;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
 
 namespace FiszkiApp.ViewModel

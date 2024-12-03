@@ -1,4 +1,6 @@
-﻿namespace FiszkiApp.EntityClasses.Models
+﻿using SQLite;
+
+namespace FiszkiApp.EntityClasses.Models
 {
     public class FlashCard
     {
@@ -6,5 +8,8 @@
         public int ID_Category { get; set; }
         public string FrontFlashCard { get; set; }
         public string BackFlashCard { get; set; }
+
+        [Ignore]
+        public int Lp { get; set; }
     }
 }
