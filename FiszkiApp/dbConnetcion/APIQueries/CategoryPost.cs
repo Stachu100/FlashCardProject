@@ -32,7 +32,6 @@ namespace FiszkiApp.dbConnetcion.APIQueries
                     {
                         var flashcardsToSend = flashcards.Select(f => new FlashCard
                         {
-                            ID_flashcard = f.ID_Flashcard,
                             ID_Category = newCategoryId.Value,
                             FrontFlashCard = f.FrontFlashCard,
                             BackFlashCard = f.BackFlashCard

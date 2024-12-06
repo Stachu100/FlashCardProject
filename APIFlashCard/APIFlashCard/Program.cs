@@ -7,11 +7,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
-// Dodaj konfiguracjê dla Entity Framework Core i po³¹czenia z baz¹ danych
+//Webio.pl Db
+//builder.Services.AddDbContext<FlashCardDbContext>(options =>
+//    options.UseMySql(
+//        builder.Configuration.GetConnectionString("WebioDb"),
+//        new MySqlServerVersion(new Version(5, 7, 32))
+//    )
+//);
+
+// LocalDb
 builder.Services.AddDbContext<FlashCardDbContext>(options =>
-    options.UseMySql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        new MySqlServerVersion(new Version(5, 7, 32))
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("FiszkiApp")
     )
 );
 
