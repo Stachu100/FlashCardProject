@@ -132,6 +132,12 @@ namespace FiszkiApp.ViewModel
             }
         }
 
+        [RelayCommand]
+        private async Task NavigateToPrivacy()
+        {
+            await Shell.Current.GoToAsync("///PrivacyPolicyPage");
+        }
+
         private byte[] ReadFully(Stream input)
         {
             using (var ms = new MemoryStream())

@@ -83,10 +83,22 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiAsset Remove="Resources\Raw\RegulaminFlashCardApp.pdf" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\Images\Flags\flag_england.png" />
 	  <None Remove="Resources\Images\Flags\flag_espana.png" />
 	  <None Remove="Resources\Images\Flags\flag_gnomlandia.png" />
 	  <None Remove="Resources\Images\Flags\flag_poland.png" />
+	  <None Remove="Resources\Raw\RegulaminFlashCardApp.pdf" />
+	  <None Remove="Resources\Raw\RegulaminFlashCardApp1.pdf" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="Resources\Raw\RegulaminFlashCardApp.pdf">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -126,6 +138,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\LookFlashCardPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\PrivacyPolicyPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\ProfilePage.xaml">

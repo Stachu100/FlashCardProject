@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FiszkiApp.View.PrivacyPolicyPage"
+              Shell.NavBarIsVisible="False">
+    <ScrollView>
+        <StackLayout>
+            <!-- Nagłówek -->
+            <Label Text="Regulamin Użytkowania Aplikacji"
+                   FontSize="Large"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   Margin="0,10,0,10"/>
+
+            <!-- Rozdział 1 -->
+            <Label Text="§1. Postanowienia Ogólne"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   Margin="0,10,0,5"/>
+            <Label Text="1. Regulamin określa zasady korzystania z aplikacji oraz prawa i obowiązki użytkowników."/>
+            <Label Text="2. Każdy użytkownik zobowiązany jest do przestrzegania zasad określonych w niniejszym regulaminie."/>
+            <Label Text="3. Korzystanie z aplikacji oznacza akceptację postanowień niniejszego regulaminu."/>
+
+            <!-- Rozdział 2 -->
+            <Label Text="§2. Zasady dotyczące nazw użytkowników (loginów)"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   Margin="0,10,0,5"/>
+            <Label Text="1. Zabronione jest używanie w nazwie użytkownika treści rasistowskich, obraźliwych, wulgarnych lub w inny sposób naruszających normy społeczne i prawne."/>
+            <Label Text="2. Administrator zastrzega sobie prawo do zablokowania lub zmiany nieodpowiednich nazw użytkowników."/>
+
+            <!-- Rozdział 3 -->
+            <Label Text="§3. Avatar użytkownika"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   Margin="0,10,0,5"/>
+            <Label Text="1. Użytkownik jest zobowiązany do wyboru avatara, który nie przedstawia:"/>
+            <Label Text="    a. Treści wrażliwych (np. scen przemocy, nagości)."/>
+            <Label Text="    b. Treści nieodpowiednich wiekowo (np. o charakterze erotycznym)."/>
+            <Label Text="2. Administrator może usunąć lub zablokować konto użytkownika w przypadku naruszenia powyższych zasad."/>
+
+            <!-- Rozdział 4 -->
+            <Label Text="§4. Zakaz rozpowszechniania i kopiowania aplikacji"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   Margin="0,10,0,5"/>
+            <Label Text="1. Niedozwolone jest kopiowanie, dystrybucja, udostępnianie lub odsprzedaż aplikacji lub jej części bez uprzedniej zgody właściciela aplikacji."/>
+            <Label Text="2. Wszelkie działania tego rodzaju mogą skutkować odpowiedzialnością prawną zgodnie z obowiązującymi przepisami prawa."/>
+
+            <!-- Rozdział 5 -->
+            <Label Text="§5. Wykorzystywanie aplikacji"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   Margin="0,10,0,5"/>
+            <Label Text="1. Aplikacja jest przeznaczona wyłącznie do użytku prywatnego."/>
+            <Label Text="2. Zabrania się korzystania z aplikacji w celach komercyjnych, promocyjnych lub innych, które wykraczają poza jej zamierzone przeznaczenie bez zgody właściciela aplikacji."/>
+            <Label Text="3. Wykorzystywanie aplikacji w sposób naruszający jej integralność lub cel może prowadzić do trwałego zablokowania konta."/>
+
+            <!-- Rozdział 6 -->
+            <Label Text="§6. Postanowienia końcowe"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   Margin="0,10,0,5"/>
+            <Label Text="1. Administrator zastrzega sobie prawo do modyfikacji regulaminu w dowolnym momencie. O zmianach użytkownicy będą informowani z odpowiednim wyprzedzeniem."/>
+            <Label Text="2. Wszelkie kwestie sporne rozstrzyga właściciel aplikacji zgodnie z obowiązującymi przepisami prawa."/>
+            <Label Text="3. W przypadku naruszenia regulaminu konto użytkownika może zostać zablokowane lub usunięte bez uprzedzenia."/>
+
+            <!-- Podziękowanie -->
+            <Label Text="Dziękujemy za przestrzeganie zasad i życzymy przyjemnego korzystania z aplikacji!"
+                   FontSize="Small"
+                   HorizontalOptions="Center"
+                   Margin="0,20,0,10"/>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
