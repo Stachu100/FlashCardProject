@@ -48,7 +48,8 @@ namespace FiszkiApp.EntityClasses
         private byte[] uploadedImage;
 
         [ObservableProperty]
-        [Required(ErrorMessage = "Pole wymagane")]
+        [Required(ErrorMessage = "Akceptacja polityki prywatności i regulaminu jest wymagana")]
+        [CustomValidation(typeof(UserRegistration), nameof(ValidateTrue))]
         private bool isAcceptedPolicy;
 
         [ObservableProperty]
@@ -57,6 +58,12 @@ namespace FiszkiApp.EntityClasses
         public void Validate()
         {
             ValidateAllProperties();
+        }
+        public static ValidationResult? ValidateTrue(bool value, ValidationContext context)
+        {
+            return value
+                ? ValidationResult.Success
+                : new ValidationResult("Akceptacja polityki prywatności i regulaminu jest wymagana");
         }
     }
 }

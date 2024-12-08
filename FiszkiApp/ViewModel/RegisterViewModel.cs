@@ -59,7 +59,7 @@ namespace FiszkiApp.ViewModel
             if (User.HasErrors)
             {
                 var errors = new List<string>();
-                foreach (var propertyName in new[] { nameof(User.Name), nameof(User.FirstName), nameof(User.LastName), nameof(User.Password), nameof(User.RepeatPassword), nameof(User.Country), nameof(User.Email) })
+                foreach (var propertyName in new[] { nameof(User.Name), nameof(User.FirstName), nameof(User.LastName), nameof(User.Password), nameof(User.RepeatPassword), nameof(User.Country), nameof(User.Email), nameof(User.IsAcceptedPolicy) })
                 {
                     foreach (var error in User.GetErrors(propertyName))
                     {
