@@ -96,12 +96,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Include="Resources\Raw\RegulaminFlashCardApp.pdf">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </Content>
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.2" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.1" />
