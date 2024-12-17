@@ -35,5 +35,21 @@ namespace FiszkiApp
                 return _databaseService;
             }
         }
+
+        protected override void OnSleep()
+        {
+            bool rememberMe = Preferences.Default.Get("RememberMe", false);
+
+            if (!rememberMe)
+            {
+                Preferences.Clear();
+            }
+        }
+        //protected override void OnStart()
+        //{
+        //    Preferences.Clear(); 
+        //}
+
+
     }
 }
