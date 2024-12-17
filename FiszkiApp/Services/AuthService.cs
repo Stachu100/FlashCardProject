@@ -23,17 +23,20 @@ namespace FiszkiApp.Services
 
             return (false, null);
         }
-        public async Task<string> Login(string userName, string userPassword)
+        public async Task<string> Login(string userName, string userPassword, bool RememberMe)
         {
             var loginInQuery = new dbConnetcion.APIQueries.LogInQuery();
             string result = await loginInQuery.UserLogIn(userName, userPassword);
 
             if (result != "Hasło lub login jest niepoprawne" && result != "Wystąpił błąd podczas logowania")
             {
-                Preferences.Default.Set(AuthStateKey, true);
-                Preferences.Default.Set(UserNameKey, userName);
-                Preferences.Default.Set(UserPasswordKey, userPassword);
-                Preferences.Default.Set(UserIdKey, result);
+                if (RememberMe == true)
+                {
+                    Preferences.Default.Set(AuthStateKey, true);
+                    Preferences.Default.Set(UserNameKey, userName);
+                    Preferences.Default.Set(UserPasswordKey, userPassword);
+                    Preferences.Default.Set(UserIdKey, result);
+                }
                 Console.WriteLine($"Logged in user: {userName} with ID: {result}");
                 return result;
             }

@@ -28,6 +28,9 @@ namespace FiszkiApp.ViewModel
         [ObservableProperty]
         private string errorMessages;
 
+        [ObservableProperty]
+        private bool rememberMe;
+
         [RelayCommand] // to jest  [ICommand] ale w aktualizacaji CommunityToolkit.Mvvm.Input (8.0.0-preview4 release notes.) zmienili nazwe
         public async Task LoginCommand()
         {
@@ -50,7 +53,7 @@ namespace FiszkiApp.ViewModel
             }
             else
             {
-                string result = await _authService.Login(UserName, UserPassword);
+                string result = await _authService.Login(UserName, UserPassword, rememberMe);
 
                 if (result != "Hasło lub login jest nie poprawne" && result != "Wystąpił błąd podczas logowania")
                 {

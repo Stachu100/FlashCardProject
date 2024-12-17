@@ -47,7 +47,7 @@
                 </Frame>
                 <Label Text="{Binding ErrorMessages, Mode=OneWay}" TextColor="Red" />
                 <StackLayout Orientation="Horizontal" Margin="0,10,0,0" Padding="0">
-                    <CheckBox IsChecked="False"/>
+                    <CheckBox IsChecked="{Binding RememberMe}"/>
                     <Label Text="Zapamiętaj mnie" TextColor="DarkGray" FontSize="Small" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                     <Label Text="Nie pamiętam hasła" TextColor="Black" FontAttributes="Bold" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                 </StackLayout>
