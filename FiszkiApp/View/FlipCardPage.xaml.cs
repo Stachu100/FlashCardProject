@@ -50,5 +50,12 @@ namespace FiszkiApp.View
 
             _isAnimating = false;
         }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            var savedColor = Preferences.Get("FlashcardBackgroundColor", "#512BD4");
+            Console.WriteLine($"Pobrany kolor: {savedColor}");
+            FlashCardFrame.BackgroundColor = Color.FromArgb(savedColor);
+        }
     }
 }

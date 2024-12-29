@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:FiszkiApp.ViewModel"
+             x:Class="FiszkiApp.View.SettingsPage"
+             x:DataType="viewmodel:SettingsPageViewModel">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+        <Label Text="Ustawienia"
+               FontSize="36"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               Margin="0,20,0,20" Grid.Row="0" />
+
+        <StackLayout Padding="20" Grid.Row="1">
+
+            <Label Text="Wybierz kolor tła fiszki:"
+                   FontSize="18"
+                   Margin="0,10,0,10"/>
+
+            <HorizontalStackLayout Margin="0,10,0,10" Spacing="15">
+                <Button BackgroundColor="#512BD4" TextColor="White" Command="{Binding SetColorCommand}" CommandParameter="#512BD4" />
+                <Button BackgroundColor="#0000FF" TextColor="White" Command="{Binding SetColorCommand}" CommandParameter="#0000FF" />
+                <Button BackgroundColor="#32CD32" TextColor="White" Command="{Binding SetColorCommand}" CommandParameter="#32CD32" />
+                <Button BackgroundColor="#FF0000" TextColor="White" Command="{Binding SetColorCommand}" CommandParameter="#FF0000" />
+                <Button BackgroundColor="#FFD700" TextColor="White" Command="{Binding SetColorCommand}" CommandParameter="#FFD700" />
+                <Button BackgroundColor="#87CEFA" TextColor="White" Command="{Binding SetColorCommand}" CommandParameter="#87CEFA" />
+            </HorizontalStackLayout>
+
+            <Label Text="Lub wpisz kod koloru:"
+                   FontSize="18"
+                   Margin="0,10,0,10" />
+            <Entry Text="{Binding CustomColor}" Margin="0,10,0,10"/>
+            <Button Text="Ustaw własny kolor" Command="{Binding SetCustomColorCommand}" Margin="0,10,0,15"/>
+
+            <Label Text="Usuń dane w bazie:"
+                   FontSize="18"
+                   Margin="0,10,0,10" />
+            <Button Text="Usuń dane" BackgroundColor="Red" TextColor="White" Command="{Binding DeleteDataCommand}" Margin="0,10,0,15"/>
+
+            <Label Text="Wersja aplikacji: 1.0.0"
+                   FontSize="18"
+                   Margin="0,10,0,10"/>
+
+            <Label FontAttributes="Bold" Text="Twórcy aplikacji:"
+                   FontSize="18"
+                   Margin="0,10,0,5"/>
+            
+            <Label Text="Bartosz Łukowski oraz Miłosz Stachowiak"
+                   FontSize="18"
+                   Margin="0,10,0,10"/>
+        </StackLayout>
+
+        <Grid Grid.Row="2" VerticalOptions="End">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5" />
+            </Grid.RowDefinitions>
+
+            <BoxView Grid.Row="0" Color="Red" />
+        </Grid>
+    </Grid>
+</ContentPage>

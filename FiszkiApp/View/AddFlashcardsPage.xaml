@@ -27,12 +27,14 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="30" />
             </Grid.ColumnDefinitions>
 
             <Label Text="Lp" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0" />
             <Label Text="ID Fiszki" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="1" />
             <Label Text="Przód Fiszki" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="2" />
             <Label Text="Tył Fiszki" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="3" />
+            <Label Grid.Column="4" />
         </Grid>
         <ScrollView Grid.Row="2" Padding="10">
             <StackLayout>
@@ -48,6 +50,7 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="30" />
                                     </Grid.ColumnDefinitions>
                                     <Label Text="{Binding Lp}" 
                                            Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center" />
@@ -57,6 +60,8 @@
                                            Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center" />
                                     <Label Text="{Binding BackFlashCard}" 
                                            Grid.Column="3" VerticalOptions="Center" HorizontalOptions="Center" />
+                                    <Button BackgroundColor="Red" CornerRadius="15" WidthRequest="30" HeightRequest="30"
+                                            Command="{Binding Source={x:Reference AddFlashcardsPageContent}, Path=BindingContext.DeleteFlashcardCommand}" CommandParameter="{Binding .}" Grid.Column="4" />
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>

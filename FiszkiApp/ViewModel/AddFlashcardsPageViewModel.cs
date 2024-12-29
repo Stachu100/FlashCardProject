@@ -24,6 +24,7 @@ namespace FiszkiApp.ViewModel
 
             AddFlashcardCommand = new AsyncRelayCommand(AddFlashcardAsync);
             SubmitFlashcardsCommand = new AsyncRelayCommand(SubmitFlashcardsAsync);
+            DeleteFlashcardCommand = new AsyncRelayCommand<LocalFlashcardTable?>(DeleteFlashcardAsync);
         }
 
         [ObservableProperty]
@@ -41,6 +42,7 @@ namespace FiszkiApp.ViewModel
         public IAsyncRelayCommand AddFlashcardCommand { get; }
         public IAsyncRelayCommand SubmitFlashcardsCommand { get; }
         public IAsyncRelayCommand LoadFlashcardsCommand { get; }
+        public IAsyncRelayCommand<LocalFlashcardTable> DeleteFlashcardCommand { get; }
 
         private async Task LoadFlashcardsAsync()
         {
@@ -92,6 +94,16 @@ namespace FiszkiApp.ViewModel
             }
 
             await Shell.Current.GoToAsync("..");
+        }
+
+        private async Task DeleteFlashcardAsync(LocalFlashcardTable? flashcard)
+        {
+            if (flashcard == null)
+                return;
+
+            await _databaseService.DeleteFlashcardAsync(flashcard);
+
+            Flashcards.Remove(flashcard);
         }
     }
 }

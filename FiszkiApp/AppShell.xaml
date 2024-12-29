@@ -80,4 +80,8 @@
     Text="Wyloguj się"
     Command="{Binding LogoutCommand}"/>
 
+    <MenuItem
+    Text="Ustawienia"  
+    Command="{Binding SettingsCommand}"/>
+
 </Shell>
