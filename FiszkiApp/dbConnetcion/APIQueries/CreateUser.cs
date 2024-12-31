@@ -17,23 +17,24 @@ namespace FiszkiApp.dbConnetcion.APIQueries
             _httpClient = HttpClientService.Instance.HttpClient;
         }
 
-        public async Task<string> UserInsertAsync(UserRegistration userRegistration)
+        public async Task<string> UserInsertAsync(string name, byte[] encryptedPassword, string firstName, string lastName, string country,
+                                                  string email, byte[] uploadedImage, bool isAcceptedPolicy, byte[] iv, byte[] key)
         {
             try
             {
-                var emailCheckResponse = await _httpClient.GetAsync($"userdetails/check-email/{userRegistration.Email}");
+                var emailCheckResponse = await _httpClient.GetAsync($"userdetails/check-email/{email}");
                 if (emailCheckResponse.IsSuccessStatusCode && (await emailCheckResponse.Content.ReadAsStringAsync()) == "exists")
                 {
                     return "Istnieje już użytkownik o podanym emailu";
                 }
 
-                var usernameCheckResponse = await _httpClient.GetAsync($"user/check-username/{userRegistration.Name}");
+                var usernameCheckResponse = await _httpClient.GetAsync($"user/check-username/{name}");
                 if (usernameCheckResponse.IsSuccessStatusCode && (await usernameCheckResponse.Content.ReadAsStringAsync()) == "exists")
                 {
                     return "Istnieje już użytkownik o podanej nazwie";
                 }
 
-                var user = new User { UserName = userRegistration.Name, UserPassword = userRegistration.EncryptedPassword };
+                var user = new User { UserName = name, UserPassword = encryptedPassword };
                 var userContent = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
                 var userResponse = await _httpClient.PostAsync("user", userContent);
 
@@ -48,12 +49,12 @@ namespace FiszkiApp.dbConnetcion.APIQueries
                 var userDetails = new UserDetails
                 {
                     ID_User = userId,
-                    FirstName = userRegistration.FirstName,
-                    LastName = userRegistration.LastName,
-                    Country = userRegistration.Country,
-                    Email = userRegistration.Email,
-                    Avatar = userRegistration.UploadedImage,
-                    IsAcceptedPolicy = userRegistration.IsAcceptedPolicy
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Country = country,
+                    Email = email,
+                    Avatar = uploadedImage,
+                    IsAcceptedPolicy = isAcceptedPolicy
                 };
                 var detailsContent = new StringContent(JsonConvert.SerializeObject(userDetails), Encoding.UTF8, "application/json");
                 var detailsResponse = await _httpClient.PostAsync("userdetails", detailsContent);
@@ -63,13 +64,11 @@ namespace FiszkiApp.dbConnetcion.APIQueries
                     return "Wystąpił błąd podczas rejestracji szczegółów użytkownika";
                 }
 
-                var encryptionResult = AesManaged.Encryption(userRegistration.Password);
-
                 var encryptionKeys = new EncryptionKeys
                 {
                     ID_User = userId,
-                    EncryptionKey = encryptionResult.EncryptedData,
-                    IV = encryptionResult.IV
+                    EncryptionKey = key,
+                    IV = iv
                 };
 
                 var keysContent = new StringContent(JsonConvert.SerializeObject(encryptionKeys), Encoding.UTF8, "application/json");
@@ -88,5 +87,6 @@ namespace FiszkiApp.dbConnetcion.APIQueries
                 return "Wystąpił błąd podczas rejestracji";
             }
         }
+
     }
 }
