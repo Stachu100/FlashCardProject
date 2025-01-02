@@ -10,12 +10,14 @@ namespace FiszkiApp.ViewModel
         private string customColor;
 
         public ICommand SetColorCommand { get; }
+        public ICommand SetTextColorCommand { get; }
         public ICommand SetCustomColorCommand { get; }
         public IAsyncRelayCommand DeleteDataCommand { get; }
 
         public SettingsPageViewModel()
         {
             SetColorCommand = new RelayCommand<string>(SetColor);
+            SetTextColorCommand = new RelayCommand<string>(SetTextColor);
             SetCustomColorCommand = new RelayCommand(SetCustomColor);
             DeleteDataCommand = new AsyncRelayCommand(DeleteData);
         }
@@ -23,6 +25,11 @@ namespace FiszkiApp.ViewModel
         private void SetColor(string color)
         {
             Preferences.Set("FlashcardBackgroundColor", color);
+        }
+
+        private void SetTextColor(string color)
+        {
+            Preferences.Set("FlashcardTextColor", color);
         }
 
         private void SetCustomColor()

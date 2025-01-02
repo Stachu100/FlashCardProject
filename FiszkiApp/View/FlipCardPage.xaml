@@ -30,7 +30,7 @@
                    x:Name="FlashCardFrame"
                    Grid.Row="1" Padding="20"
                    BackgroundColor="{Binding FlashcardBackgroundColor}"
-                   BorderColor="DodgerBlue"
+                   BorderColor="#808080"
                    CornerRadius="15"
                    HasShadow="True"
                    VerticalOptions="Center" HorizontalOptions="Center"
@@ -41,11 +41,11 @@
 
                     <Label x:Name="FrontCard" Text="{Binding CurrentFlashcard.FrontFlashCard}"
                FontSize="48" HorizontalOptions="Center" VerticalOptions="Center"
-               IsVisible="{Binding IsFrontVisible}" />
+               IsVisible="{Binding IsFrontVisible}" TextColor="{Binding FlashcardTextColor}" />
 
                     <Label x:Name="BackCard" Text="{Binding CurrentFlashcard.BackFlashCard}"
                FontSize="48" HorizontalOptions="Center" VerticalOptions="Center"
-               IsVisible="{Binding IsBackVisible}" />
+               IsVisible="{Binding IsBackVisible}" TextColor="{Binding FlashcardTextColor}" />
 
                 </Grid>
 

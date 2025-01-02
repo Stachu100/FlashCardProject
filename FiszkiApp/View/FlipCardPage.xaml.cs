@@ -54,8 +54,13 @@ namespace FiszkiApp.View
         {
             base.OnAppearing();
             var savedColor = Preferences.Get("FlashcardBackgroundColor", "#512BD4");
-            Console.WriteLine($"Pobrany kolor: {savedColor}");
+
             FlashCardFrame.BackgroundColor = Color.FromArgb(savedColor);
+
+            var savedTextColor = Preferences.Get("FlashcardTextColor", "#000000");
+
+            FrontCard.TextColor = Color.FromArgb(savedTextColor);
+            BackCard.TextColor = Color.FromArgb(savedTextColor);
         }
     }
 }
