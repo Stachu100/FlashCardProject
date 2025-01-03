@@ -1,9 +1,10 @@
-namespace FiszkiApp.View;
-
-public partial class PrivacyPolicyPage : ContentPage
+namespace FiszkiApp.View
 {
-	public PrivacyPolicyPage()
-	{
-		InitializeComponent();
-	}
+    public partial class PrivacyPolicyPage : ContentPage
+    {
+        public PrivacyPolicyPage()
+        {
+            InitializeComponent();
+        }
+    }
 }

@@ -113,6 +113,7 @@ namespace FiszkiApp.ViewModel
                 if (isAuthenticated && int.TryParse(userIdString, out int userId) && userId > 0)
                 {
                     category.UserID = userId;
+
                     var localCategoryId = await _databaseService.AddCategoryAndGetIdAsync(category);
 
                     if (localCategoryId > 0 && category.API_ID_Category > 0)
@@ -130,6 +131,15 @@ namespace FiszkiApp.ViewModel
 
                             await _databaseService.AddFlashcardAsync(localFlashcard);
                         }
+                    }
+
+                    var categoryToRemove = SearchResults.FirstOrDefault(c => c.API_ID_Category == category.API_ID_Category);
+
+                    if (categoryToRemove != null)
+                    {
+                        SearchResults.Remove(categoryToRemove);
+
+                        SearchResults = new ObservableCollection<LocalCategoryTable>(SearchResults);
                     }
                 }
             }

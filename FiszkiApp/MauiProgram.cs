@@ -28,6 +28,14 @@ namespace FiszkiApp
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<ProfilePage>();
             builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<RegisterPage>();
+            builder.Services.AddTransient<FlashCardList>();
+            builder.Services.AddTransient<PrivacyPolicyPage>();
+            builder.Services.AddTransient<SettingsPage>();
+            builder.Services.AddTransient<LookFlashCardPage>();
+            builder.Services.AddTransient<AddFlashcardsPage>();
+            builder.Services.AddTransient<AddCategoryPage>();
+            builder.Services.AddTransient<FlipCardPage>();;
 
             return builder.Build();
         }

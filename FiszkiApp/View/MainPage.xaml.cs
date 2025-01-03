@@ -8,8 +8,6 @@ namespace FiszkiApp.View
         {
             InitializeComponent();
             BindingContext = new MainPageViewModel();
-
-            Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
         }
 
         protected override async void OnAppearing()

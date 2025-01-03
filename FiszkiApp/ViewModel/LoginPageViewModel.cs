@@ -31,7 +31,7 @@ namespace FiszkiApp.ViewModel
         [ObservableProperty]
         private bool rememberMe;
 
-        [RelayCommand] // to jest  [ICommand] ale w aktualizacaji CommunityToolkit.Mvvm.Input (8.0.0-preview4 release notes.) zmienili nazwe
+        [RelayCommand]
         public async Task LoginCommand()
         {
             ValidateAllProperties();

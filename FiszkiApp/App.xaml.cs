@@ -45,11 +45,5 @@ namespace FiszkiApp
                 Preferences.Clear();
             }
         }
-        //protected override void OnStart()
-        //{
-        //    Preferences.Clear(); 
-        //}
-
-
     }
 }
