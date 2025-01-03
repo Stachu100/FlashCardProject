@@ -34,12 +34,6 @@
                     <Button BackgroundColor="#87CEFA" Command="{Binding SetColorCommand}" CommandParameter="#87CEFA" />
                 </HorizontalStackLayout>
 
-                <Label Text="Lub wpisz kod koloru:"
-                   FontSize="18"
-                   Margin="0,10,0,10" />
-                <Entry Text="{Binding CustomColor}" Margin="0,10,0,10"/>
-                <Button Text="Ustaw własny kolor" Command="{Binding SetCustomColorCommand}" Margin="0,10,0,15"/>
-
                 <Label Text="Wybierz kolor czcionki na fiszce:"
            FontSize="18"
            Margin="0,10,0,10"/>
@@ -53,10 +47,16 @@
                     <Button BackgroundColor="#32CD32" Command="{Binding SetTextColorCommand}" CommandParameter="#32CD32" />
                 </HorizontalStackLayout>
 
-                <Label Text="Usuń dane w bazie:"
+                <Label Text="Usuń dane użytkownika:"
                    FontSize="18"
                    Margin="0,10,0,10" />
-                <Button Text="Usuń dane" BackgroundColor="Red" TextColor="White" Command="{Binding DeleteDataCommand}" Margin="0,10,0,15"/>
+                <Button Text="Usuń dane" BackgroundColor="Red" TextColor="White" Command="{Binding DeleteDataCommand}" Margin="0,10,0,10"/>
+
+                <Label Text="Regulamin" FontSize="18" TextColor="Blue" FontAttributes="Bold" Margin="0,10,0,10">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToPrivacyPolicyCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
 
                 <Label Text="Wersja aplikacji: 1.0.0"
                    FontSize="18"
@@ -64,7 +64,7 @@
 
                 <Label FontAttributes="Bold" Text="Twórcy aplikacji:"
                    FontSize="18"
-                   Margin="0,10,0,5"/>
+                   Margin="0,10,0,10"/>
 
                 <Label Text="Bartosz Łukowski oraz Miłosz Stachowiak"
                    FontSize="18"
