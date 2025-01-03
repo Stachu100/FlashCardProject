@@ -49,7 +49,6 @@
                 <StackLayout Orientation="Horizontal" Margin="0,10,0,0" Padding="0">
                     <CheckBox IsChecked="{Binding RememberMe}"/>
                     <Label Text="Zapamiętaj mnie" TextColor="DarkGray" FontSize="Small" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                    <Label Text="Nie pamiętam hasła" TextColor="Black" FontAttributes="Bold" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                 </StackLayout>
                 <Button Text="Zaloguj się" FontAttributes="Bold" CornerRadius="30" WidthRequest="200" Margin="0,15,0,0" Command="{Binding LoginCommandCommand}"/>
 
