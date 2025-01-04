@@ -13,6 +13,7 @@ namespace APIFlashCard.Models
         [MaxLength(255)]
         public string Country { get; set; }
 
+        [Required]
         [MaxLength(255)]
         public string Url { get; set; }
     }

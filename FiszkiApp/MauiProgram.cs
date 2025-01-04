@@ -30,7 +30,6 @@ namespace FiszkiApp
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<RegisterPage>();
             builder.Services.AddTransient<FlashCardList>();
-            builder.Services.AddTransient<PrivacyPolicyPage>();
             builder.Services.AddTransient<SettingsPage>();
             builder.Services.AddTransient<LookFlashCardPage>();
             builder.Services.AddTransient<AddFlashcardsPage>();

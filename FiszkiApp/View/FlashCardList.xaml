@@ -13,7 +13,7 @@
 
         <VerticalStackLayout Grid.Row="0" Padding="10" Spacing="10">
             <StackLayout Orientation="Horizontal" Spacing="5" VerticalOptions="Center">
-                <Entry Placeholder="Szukaj kategorii" x:Name="CategorySearchEntry" Text="{Binding CategorySearch}" HorizontalOptions="FillAndExpand" />
+                <Entry Placeholder="Szukaj kategorii" MaxLength="50" x:Name="CategorySearchEntry" Text="{Binding CategorySearch}" HorizontalOptions="FillAndExpand" />
                 <Button BackgroundColor="Red" CornerRadius="15" WidthRequest="30" HeightRequest="30" Command="{Binding ClearCategorySearchCommand}" />
             </StackLayout>
 
@@ -23,7 +23,7 @@
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" Spacing="5" VerticalOptions="Center">
-                <Entry Placeholder="Fiszki użytkownika" x:Name="UserSearchEntry" Text="{Binding UserSearch}" HorizontalOptions="FillAndExpand" />
+                <Entry Placeholder="Fiszki użytkownika" MaxLength="50" x:Name="UserSearchEntry" Text="{Binding UserSearch}" HorizontalOptions="FillAndExpand" />
                 <Button BackgroundColor="Red" CornerRadius="15" WidthRequest="30" HeightRequest="30" Command="{Binding ClearUserSearchCommand}" />
             </StackLayout>
 

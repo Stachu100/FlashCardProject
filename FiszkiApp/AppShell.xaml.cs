@@ -22,7 +22,6 @@ namespace FiszkiApp
             Routing.RegisterRoute(nameof(FlipCardPage), typeof(FlipCardPage));
             Routing.RegisterRoute(nameof(LookFlashCardPage), typeof(LookFlashCardPage));
             Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
-            Routing.RegisterRoute(nameof(PrivacyPolicyPage), typeof(PrivacyPolicyPage));
 
             BindingContext = this;
 
@@ -34,6 +33,8 @@ namespace FiszkiApp
 
         private async Task LogoutAsync()
         {
+            Preferences.Remove("FlashcardBackgroundColor");
+            Preferences.Remove("FlashcardTextColor");
             _authService.Logout();
             await Shell.Current.GoToAsync("//LoginPage");
         }

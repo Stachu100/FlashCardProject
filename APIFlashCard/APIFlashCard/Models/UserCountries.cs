@@ -8,10 +8,11 @@ namespace APIFlashCard.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-
         public int ID_UserCountries { get; set; }
+
         [Required]
         public int ID_User { get; set; }
+
         [Required]
         public int ID_Country { get; set; }
     }

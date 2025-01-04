@@ -9,12 +9,17 @@ namespace APIFlashCard.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID_encryptionKeys { get; set; }
 
+        [Required]
         public int ID_User { get; set; }
 
         [Required]
+        [MinLength(32)]
+        [MaxLength(32)]
         public byte[] EncryptionKey { get; set; }
 
         [Required]
+        [MinLength(16)]
+        [MaxLength(16)]
         public byte[] IV { get; set; }
     }
 }

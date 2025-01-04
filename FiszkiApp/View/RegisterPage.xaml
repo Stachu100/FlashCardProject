@@ -83,8 +83,8 @@
                         <CheckBox IsChecked="{Binding User.IsAcceptedPolicy}" />
                         <Label Text="Oświadczam że, akceptuję " TextColor="DarkGray" FontSize="Micro" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
                         <Label Text="politykę prywatności i regulamin" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Micro">
-                            <Label.GestureRecognizers>                                
-                                <TapGestureRecognizer Command="{Binding NavigateToPrivacyCommand}" />
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnPrivacyPolicyTapped" />
                             </Label.GestureRecognizers>
                         </Label>
                     </StackLayout>

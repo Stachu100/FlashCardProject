@@ -77,11 +77,5 @@ namespace FiszkiApp.ViewModel
                 await Shell.Current.DisplayAlert("B³¹d", $"Wyst¹pi³ b³¹d podczas usuwania danych: {ex.Message}", "OK");
             }
         }
-
-        [RelayCommand]
-        private async Task NavigateToPrivacyPolicyAsync()
-        {
-            await Shell.Current.GoToAsync("///PrivacyPolicyPage");
-        }
     }
 }

@@ -54,7 +54,7 @@
 
                 <Label Text="Regulamin" FontSize="18" TextColor="Blue" FontAttributes="Bold" Margin="0,10,0,10">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavigateToPrivacyPolicyCommand}" />
+                        <TapGestureRecognizer Tapped="OnPrivacyPolicyTapped" />
                     </Label.GestureRecognizers>
                 </Label>
 

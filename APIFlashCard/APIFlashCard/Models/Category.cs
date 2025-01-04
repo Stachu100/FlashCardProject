@@ -9,6 +9,7 @@ namespace APIFlashCard.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID_Category { get; set; }
 
+        [Required]
         public int UserID { get; set; }
 
         [Required]

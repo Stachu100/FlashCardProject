@@ -14,8 +14,8 @@
         </Grid.RowDefinitions>
 
         <StackLayout Padding="10" Grid.Row="0">
-            <Entry Placeholder="Przód fiszki" Text="{Binding FrontText}" />
-            <Entry Placeholder="Tył fiszki" Text="{Binding BackText}" />
+            <Entry Placeholder="Przód fiszki" MaxLength="50" Text="{Binding FrontText}" />
+            <Entry Placeholder="Tył fiszki" MaxLength="50" Text="{Binding BackText}" />
 
             <Button Text="Kolejna" Margin="5" Command="{Binding AddFlashcardCommand}" />
             <Button Text="Zatwierdź" Margin="5" Command="{Binding SubmitFlashcardsCommand}" />

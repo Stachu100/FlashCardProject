@@ -14,6 +14,7 @@ namespace APIFlashCard.Models
         public string UserName { get; set; }
 
         [Required]
+        [MaxLength(255)]
         public byte[] UserPassword { get; set; }
     }
 }

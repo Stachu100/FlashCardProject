@@ -51,11 +51,6 @@
         Route="LookFlashCardPage"
         Shell.FlyoutItemIsVisible="False"/>
 
-    <ShellContent 
-        Route="PrivacyPolicyPage" 
-        ContentTemplate="{DataTemplate view:PrivacyPolicyPage}"
-        Shell.FlyoutItemIsVisible="False"/>
-
     <TabBar FlyoutDisplayOptions="AsMultipleItems" Shell.TabBarBackgroundColor="#512BD4" Shell.TabBarForegroundColor="White" Shell.TabBarTitleColor="White" Shell.TabBarUnselectedColor="LightGray">
         <ShellContent
          Icon="homebuttonicon.png"

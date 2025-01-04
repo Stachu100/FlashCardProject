@@ -1,3 +1,4 @@
+using FiszkiApp.Services;
 using FiszkiApp.ViewModel;
 
 namespace FiszkiApp.View
@@ -8,6 +9,13 @@ namespace FiszkiApp.View
         {
             InitializeComponent();
             BindingContext = new SettingsPageViewModel();
+        }
+
+        private async void OnPrivacyPolicyTapped(object sender, EventArgs e)
+        {
+            string policyContent = PrivacyPolicyService.GetPrivacyPolicy();
+            policyContent = policyContent.Replace("\n", "\n\n");
+            await DisplayAlert("Regulamin U¿ytkowania", policyContent, "OK");
         }
     }
 }
